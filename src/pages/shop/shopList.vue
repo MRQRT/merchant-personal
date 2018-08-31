@@ -1,5 +1,5 @@
 <template>
-    <div class="shop-list">
+    <div class="shopList">
         <!-- 头部标题部分 -->
         <head-top :headTitle=title class="head-top nomal-font" ref="topHead">
             <img slot='head_goback' src='../../images/back.png' class="head_goback" @click="$router.go(-1)">
@@ -10,41 +10,42 @@
             <div class="current-address">
                 <div class="left-text" @click="showCity">当前位置：{{localPosition}}</div>
                 <div class="right-text" @click="myPosition">
-                    <span class="icon" :class="{'icon-rotate':rotateStatus}"></span>重新定位
+                    <!-- <span class="icon" :class="{'icon-rotate':rotateStatus}"></span>重新定位 -->
+                    <span class="icon"></span>重新定位
                 </div>
             </div>
             <!-- 列表部分 -->
-            <div class="list-wrap" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-                <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded"
-    				:auto-fill="false" bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
-                <ul>
-                    <li class="shop-item" v-for="(item,index) in shopList" :key="index" @click="$router.push({path:'/shopDetail',query:{id:1}})">
-                        <div class="left-img">
-                            <img src="" alt="">
-                        </div>
-                        <div class="right-text">
-                            <h3>{{item.name}}</h3>
-                            <p class="detail-address">{{item.address}}</p>
-                            <div class="star" :class="starJson[judgeStar(item.starNum)].className">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
+            <div class="list-wrap" v-show="showStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
+                <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
+                    bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
+                    <ul class="shop-list">
+                        <li class="shop-item" v-for="(item,index) in shopList" :key="index" @click="goDetail($event,item.id,item.name)">
+                            <div class="left-img">
+                                <img :src="item.url" alt="">
                             </div>
-                            <div class="bottom">
-                                <div class="labels">
-                                    <span v-for="labelItem in item.labels">{{labelItem.name}}</span>
+                            <div class="right-text">
+                                <h3>{{item.name}}</h3>
+                                <p class="detail-address">{{item.address}}</p>
+                                <div class="star" :class="starJson[judgeStar(item.star)].className">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
                                 </div>
-                                <div class="distans">
-                                    <span>{{item.distance}}km</span>
-                                    <span class="left-line" v-if="item.instruction"></span>
-                                    <span class="instruction" v-if="item.instruction">{{instructionJson[index]}}</span>
+                                <div class="bottom">
+                                    <div class="labels">
+                                        <span v-for="labelItem in item.label">{{labelItem}}</span>
+                                    </div>
+                                    <div class="distans">
+                                        <span>{{item.distance}}km</span>
+                                        <span class="left-line" v-if="index<=2"></span>
+                                        <span class="instruction">{{instructionJson[index]}}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
                 </mt-loadmore>
             </div>
         </div>
@@ -53,7 +54,7 @@
             <div class="top-address">
                 <div class="location">
                     <div>当前位置：</div>
-                    <div>{{this.currentPosition}}</div>
+                    <div>{{this.localPosition}}</div>
                 </div>
                 <div class="positioning" @click="myPosition">
                     <span class="icon"></span>
@@ -62,7 +63,8 @@
             </div>
             <mt-index-list>
                 <mt-index-section v-for="(letter,index) in citySortArr" :key="index" :index="letter">
-                    <mt-cell  v-for="(cityName,index) in cityArr"  :key="index" v-if="cityName.key == letter" :title="cityName.value" @click.native="chooseCity(cityName.value)"></mt-cell>
+                    <!-- <mt-cell  v-for="(cityName,index) in cityArr"  :key="index" v-if="cityName.key == letter" :title="cityName.value" @click.native="chooseCity(cityName.value)"></mt-cell> -->
+                    <mt-cell  v-for="(item,index) in cityArr" :key="index" v-if="item.spell==letter" :title="item.cityName" @click.native="chooseCity(item)"></mt-cell>
                 </mt-index-section>
             </mt-index-list>
         </div>
@@ -74,12 +76,13 @@ import headTop from '@/components/header/head.vue'
 import city from "@/json/city"             //导入所有城市的JSON
 import { makePy } from "@/config/pinying"  //导入插件获取所有城市中文的大写首字母
 import {mapState,mapMutations} from 'vuex';
-
-
+import { shopList, cityList } from '@/service/getData.js';
+import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 
     export default {
         data(){
             return{
+                showStatus:false,    // 是否显示内容
                 wrapperHeight:0,     // 加载内容动态高度
                 title:'更多门店',
                 starNum:'',            // 星级
@@ -87,20 +90,23 @@ import {mapState,mapMutations} from 'vuex';
                 rotateStatus:false,   // 定位图标旋转
                 cityShow:false,
                 allLoaded:false,
+                lat:'', //经度
+                lng:'', //纬度
                 searchCondition: {   // 分页属性
-                    pageNo: 1,
+                    pageNo: 0,
                     pageSize: 10
                 },
                 pages:'',             // 总页数
                 instructionJson:{
                     '0':'离我最近',
                     '1':'回收最多',
-                    '2':'评价最高',
+                    '2':'评分最高',
                 },
+                spell:'', //选择城市的首字母
                 arr: [],//存放初始筛选的城市名称
                 cityArr: [],//存放第二次筛选后所有城市名称
                 citySort: [],//存放初始获取城市首字母大写的数组
-                citySortArr: [],//存放第二次筛选重复，不存在的城市首字母数组
+                citySortArr: ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "W", "X", "Y", "Z"],//存放第二次筛选重复，不存在的城市首字母数组
                 starJson:{
                     '2.5':{className:'twoHalf'},
                     '3':{className:'threeStar'},
@@ -109,128 +115,7 @@ import {mapState,mapMutations} from 'vuex';
                     '4.5':{className:'fourHalf'},
                     '5':{className:'fullStar'},
                 },
-                shopList:[
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:20,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'回购',
-                            },
-                        ],
-                        distance:'1.7',
-                        instruction:'离我最近'
-
-                    },
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:55,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'回购',
-                            },
-                        ],
-                        distance:'1.7',
-                        instruction:'评分最高'
-
-                    },
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:66,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'回购',
-                            },
-                        ],
-                        distance:'1.7',
-                        instruction:'回收最多'
-
-                    },
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:77,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'回购',
-                            },
-                        ],
-                        distance:'1.7',
-                    },
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:88,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                        ],
-                        distance:'1.7',
-                    },
-                    {
-                        name:'周生生(当代广场店)',
-                        address:'海淀区中关村大街40号当代商城F1',
-                        starNum:99,
-                        labels:[
-                            {
-                                name:'回购',
-                            },
-                            {
-                                name:'提金'
-                            },
-                            {
-                                name:'提金'
-                            },
-                        ],
-                        distance:'1.7',
-                    },
-                ]
+                shopList:'',
             }
         },
         components:{
@@ -279,50 +164,80 @@ import {mapState,mapMutations} from 'vuex';
             // 点击对应城市
             chooseCity(val){
                 this.cityShow = false;
-                this.localPosition = val
+                this.localPosition = val.cityName;
+                this.lat = val.latitude;
+                this.lng = val.longitude;
+                this.requestList();
             },
-
+            // 点击跳转详情
+            goDetail(event,id,name){
+                var className = event.currentTarget.querySelector('.star').className;
+                this.$router.push({
+                    path:'/shopDetail',
+                    query:{
+                        id:id,
+                        className:className,
+                        name:name
+                    }
+                })
+            },
             // 首次进入请求数据
             async requestList(){
-                var res=await query_list(this.searchCondition.pageNo,this.searchCondition.pageSize);
-                if(res.code==200){
-                    this.shopList = res.data.list;
+                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize);
+                if(res.code=='000000'){
+                    this.showStatus = true;
+                    Indicator.close();
+                    this.shopList = res.data;
                     this.pages=res.data.pages;
                     if(this.searchCondition.pageNo>=this.pages){
                        this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
                     }
+                }else{
+                    Toast(res.message)
                 }
-                return timestamp1;
             },
             // 加载更多
-            // loadMore(){
-            //     this.searchCondition.pageNo=this.searchCondition.pageNo+1;
-            //     var res=await query_list(this.searchCondition.pageNo,this.searchCondition.pageSize);
-            //     if(res.code==200){
-            //       this.shopList=this.shopList.concat(res.data.list);
-            //       if(this.searchCondition.pageNo>=this.pages){
-            //            this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
-            //       }
-            //     }
-            // },
+            async loadMore(){
+                this.searchCondition.pageNo=this.searchCondition.pageNo+1;
+                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize);
+                if(res.code=='000000'){
+                  this.shopList=this.shopList.concat(res.data);
+                  if(this.searchCondition.pageNo>=this.pages){
+                       this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
+                  }
+                }
+            },
             // 上拉加载
             loadBottom(){
                 var that = this;
                 setTimeout(function(){
-                    // that.loadMore();
-                    that.allLoaded = true;
+                    that.loadMore();
                     that.$refs.loadmore.onBottomLoaded();
                 },800)
             },
+            // 获取城市列表
+            async cityList(){
+                var that = this;
+                var res = await cityList(this.spell);
+                if(res.code=='000000'){
+                    this.cityArr = res.data;
+                }
+            },
+            // 获取当前位置
             myPosition(){
                 var that = this;
                 this.rotateStatus = true;
+                this.localPosition = '正在获取位置...';
 
                 var geolocation = new BMap.Geolocation();
                 geolocation.getCurrentPosition(function(r){
         			if(this.getStatus() == BMAP_STATUS_SUCCESS){
         				//以指定的经度与纬度创建一个坐标点
         				var pt = new BMap.Point(r.point.lng,r.point.lat);
+                        that.lat = r.point.lat;
+                        that.lng = r.point.lng;
+                        that.requestList(); // 调用请求数据函数
+
         				//创建一个地理位置解析器
         				var geoc = new BMap.Geocoder();
         				geoc.getLocation(pt, function(rs){//解析格式：城市，区县，街道
@@ -362,55 +277,61 @@ import {mapState,mapMutations} from 'vuex';
         		},{enableHighAccuracy: true})//指示浏览器获取高精度的位置，默认false
             },
         },
-        created () {
-            /**
-             * 将json数据中的无用数据剔除
-             */
-            for (let i in city) {
-              if (city[i].name != "请选择") {//将第一层数据中为 “请选择” 的剔除掉
-                this.arr.push(city[i].name);
-                for (let j in city[i].sub) {//将第二层数据中为 “请选择 和 其他” 的剔除掉
-                  if (
-                    city[i].sub[j].name != "请选择" &&
-                    city[i].sub[j].name != "其他"
-                  ) {
-                    this.arr.push(city[i].sub[j].name);//将处理后的数据存放在数组中，等待第二次筛选处理
-                  }
-                }
-              }
-            }
-
-            /**
-             * 配置相关数据
-             */
-            for (let k in this.arr) {
-              let cityKey = makePy(this.arr[k])[0].substring(0, 1);//获取每一个市区的首字母
-              let cityValue = this.arr[k];//获取所有市区
-              this.citySort[cityKey] = cityKey;//利用对象特性，剔除重复的字母，并将剔除后的字母存进对象中
-
-              //将所有市区信息 以（ 字母 - 市区名 ）的格式存在至数组中
-              this.cityArr[k] = {
-                key: cityKey,
-                value: cityValue
-              };
-            }
-
-            /**
-             * 将处理后的首字母数据对象，存放至数组中
-             */
-            for (let p in this.citySort) {
-                this.citySortArr.push(this.citySort[p]);
-            }
-
-            /**
-             * 将真实存在的市区首字母按A-Z进行排序
-             */
-            this.citySortArr = this.citySortArr.sort();
-        },
+        // created () {
+        //     /**
+        //      * 将json数据中的无用数据剔除
+        //      */
+        //     for (let i in city) {
+        //       if (city[i].name != "请选择") {//将第一层数据中为 “请选择” 的剔除掉
+        //         this.arr.push(city[i].name);
+        //         for (let j in city[i].sub) {//将第二层数据中为 “请选择 和 其他” 的剔除掉
+        //           if (
+        //             city[i].sub[j].name != "请选择" &&
+        //             city[i].sub[j].name != "其他"
+        //           ) {
+        //             this.arr.push(city[i].sub[j].name);//将处理后的数据存放在数组中，等待第二次筛选处理
+        //           }
+        //         }
+        //       }
+        //     }
+        //
+        //     /**
+        //      * 配置相关数据
+        //      */
+        //     for (let k in this.arr) {
+        //       let cityKey = makePy(this.arr[k])[0].substring(0, 1);//获取每一个市区的首字母
+        //       let cityValue = this.arr[k];//获取所有市区
+        //       this.citySort[cityKey] = cityKey;//利用对象特性，剔除重复的字母，并将剔除后的字母存进对象中
+        //
+        //       //将所有市区信息 以（ 字母 - 市区名 ）的格式存在至数组中
+        //       this.cityArr[k] = {
+        //         key: cityKey,
+        //         value: cityValue
+        //       };
+        //     }
+        //
+        //     /**
+        //      * 将处理后的首字母数据对象，存放至数组中
+        //      */
+        //     for (let p in this.citySort) {
+        //         this.citySortArr.push(this.citySort[p]);
+        //     }
+        //
+        //     /**
+        //      * 将真实存在的市区首字母按A-Z进行排序
+        //      */
+        //     this.citySortArr = this.citySortArr.sort();
+        //     console.log(this.citySortArr)
+        // },
         mounted(){
+            Indicator.open({
+              // text: '加载中...',
+              spinnerType: 'fading-circle'
+            });
             this.myPosition();
+            this.cityList();
             // 计算滚动内容的高度
-    		this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+    		this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;;
         },
         updated(){
           if(this.allLoaded){
@@ -428,7 +349,7 @@ import {mapState,mapMutations} from 'vuex';
             p.style.height='1rem';
             p.style.lineHeight ='1rem';
             p.style.textAlign = 'center';
-            document.querySelector('.list-wrap').appendChild(p)
+            document.querySelector('.shop-list').appendChild(p)
           }
         },
     }
@@ -442,6 +363,10 @@ import {mapState,mapMutations} from 'vuex';
         background-color: #F8F8F8;
     }
     /* 城市选择容器 */
+    .mint-indexlist-content{
+        overflow: scroll;
+        padding-bottom: .2rem;
+    }
     .mint-indexlist{
         margin-top:2.08rem;
     }
@@ -526,15 +451,16 @@ import {mapState,mapMutations} from 'vuex';
     background: url('../../images/position.png') no-repeat;
     background-size: 100%;
 }
-.shop-list{
+.shopList{
     width: 100%;
     position: relative;
     background-color: #F8F8F8;
     font-family:PingFangSC-Regular;
 }
 .main-cont{
-    min-height: 100vh;
-    padding-top:.88rem;
+    width: 100%;
+    /* min-height: 100vh;
+    padding-top:.88rem; */
     background-color: #F8F8F8;
 }
 .main-cont .current-address{
@@ -583,7 +509,7 @@ import {mapState,mapMutations} from 'vuex';
 .list-wrap{
     width:100%;
     /* min-height: 100vh; */
-    padding-top:.6rem;
+    padding-top:1.48rem;
     overflow: scroll;
 }
 .list-wrap .shop-item{
@@ -635,7 +561,7 @@ import {mapState,mapMutations} from 'vuex';
 }
 .shop-item .right-text .star{
     flex-grow: 2;
-    padding-top:.05rem;
+    padding-top:.08rem;
 }
 .star span{
     display: inline-block;

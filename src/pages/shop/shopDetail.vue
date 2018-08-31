@@ -9,16 +9,17 @@
             <!-- 顶部banner -->
             <div class="banner">
                 <swiper :options="swiperOption">
-                    <swiper-slide class="banner-item" v-for="(item,index) in bannerList" :key="index">
-                        <img src="../../images/shopBanner.jpeg" alt="">
+                    <swiper-slide class="banner-item" v-for="(item,index) in detailInfo.imageUrls" :key="index">
+                        <!-- <img src="../../images/shopBanner.jpeg" alt=""> -->
+                        <img :src="item" alt="">
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
             </div>
             <!-- 店铺名称 -->
             <div class="shop-basic-info">
-                <div class="name">{{'周大福(当代广场店)'}}</div>
-                <div class="star">
+                <div class="name">{{name}}</div>
+                <div :class="className">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -26,21 +27,18 @@
                     <span></span>
                 </div>
                 <div class="labels">
-                    <span>回购</span>
-                    <span>提金</span>
-                    <span>回购</span>
-                    <span>提金</span>
+                    <span v-for="item in detailInfo.label">{{item}}</span>
                 </div>
             </div>
             <!-- 店铺介绍 -->
             <div class="shop-instruction">
                 <h3>店铺介绍</h3>
-                <p>我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银</p>
+                <p>{{detailInfo.mark}}</p>
             </div>
             <!-- 店铺地址 -->
             <div class="shop-address">
                 <h3>店铺地址</h3>
-                <p>海淀区巴沟路2号北京华联万柳购物中心F1</p>
+                <p>{{detailInfo.address}}</p>
                 <div class="position-img" id="container">
                     <img src="" alt="">
                 </div>
@@ -49,7 +47,7 @@
             <div class="appointment">
                 <div class="tel">
                     <span class="icon"></span>
-                    <span>400-166-9999</span>
+                    <span>{{detailInfo.phone}}</span>
                 </div>
                 <div class="btn">
                     <a href="tel:4001669999">立即预约</a>
@@ -62,11 +60,17 @@
 <script>
 import headTop from '@/components/header/head.vue'
 import '@/style/swiper.min.css'
+import {shopDetail} from '@/service/getData.js';
+
 
     export default {
         data(){
             return{
-                bannerList:[{},{},{},{},{}],
+                id:'',
+                className:'',
+                name:'',
+                lat:'',
+                lng:'',
                 swiperOption:{
                     notNextTick: true,
                     slidesPerView: 1,
@@ -74,6 +78,16 @@ import '@/style/swiper.min.css'
                     effect:'slide',
                     pagination:'.swiper-pagination',
                     paginationType:'fraction',
+                },
+                detailInfo:{
+                    imageUrls:[{},{},{},{}],
+                    mark:'我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银',
+                    star:90,
+                    address:'北京市北京市北京市北京市北京市',
+                    phone:17600568656,
+                    lat:'',
+                    lng:'',
+                    label:['回购','存金'],
                 },
             }
         },
@@ -87,19 +101,32 @@ import '@/style/swiper.min.css'
 
         },
         methods: {
+            // 显示店铺地图
             getMap(){
                 var map = new BMap.Map("container");        // 创建地图实例
-                var point = new BMap.Point(116.404, 39.91); // 创建点坐标
+                var point = new BMap.Point(this.lng,this.lat); // 创建点坐标
                 map.centerAndZoom(point, 15);               // 初始化
                 var marker = new BMap.Marker(point);        // 创建标注
                 map.addOverlay(marker);                     // 将标注添加到地图中
+            },
+            // 请求详情数据
+            async shopDetail(){
+                var res = await shopDetail(this.id);
+                if(res.code=='000000'){
+                    this.detailInfo = res.data;
+                    this.lat = res.data.lat; // 纬度
+                    this.lng = res.data.lng; // 经度
+                    this.getMap();           // 展示地图
+                }
             }
         },
         created(){
-
+            this.id = this.$route.query.id;
+            this.className = this.$route.query.className;
+            this.name = this.$route.query.name
         },
         mounted(){
-            this.getMap();
+            this.shopDetail();
         },
     }
 
@@ -119,6 +146,9 @@ import '@/style/swiper.min.css'
         position: absolute;
         left:86% !important;
         bottom:.3rem;
+    }
+    .swiper-container{
+        height:100% !important;
     }
 </style>
 
@@ -153,19 +183,56 @@ import '@/style/swiper.min.css'
     flex-grow: 2;
     padding:.1rem;
 }
-.shop-basic-info .star span{
+.star span{
     display: inline-block;
     width: .24rem;
     height: .24rem;
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(1){
     background: url('../../images/one-star.png') no-repeat;
     background-size: 100%;
 }
-.shop-basic-info .star span:nth-of-type(4){
+.star span:nth-of-type(2){
+    background: url('../../images/one-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(3){
+    background: url('../../images/one-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(4){
     background: url('../../images/four-star.png') no-repeat;
     background-size: 100%;
 }
-.shop-basic-info .star span:nth-of-type(5){
+.star span:nth-of-type(5){
     background: url('../../images/five-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 2.5星 */
+.twoHalf span:nth-of-type(3){
+    background: url('../../images/one-pice-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 2.5/3星 */
+.twoHalf span:nth-of-type(4), .threeStar span:nth-of-type(4){
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 3.5/4星 */
+.twoHalf span:nth-of-type(5), .threeStar span:nth-of-type(5),.threeHalf span:nth-of-type(5),.fourStar span:nth-of-type(5){
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 3.5星 */
+.threeHalf span:nth-of-type(4){
+    background: url('../../images/four-pice-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 4.5星 */
+.fourHalf span:nth-of-type(5){
+    background: url('../../images/five-pice-star.png') no-repeat;
     background-size: 100%;
 }
 .shop-basic-info  .labels span{
@@ -183,6 +250,7 @@ import '@/style/swiper.min.css'
 .shop-instruction, .shop-address{
     width:100%;
     padding:0 .3rem;
+    position: relative;
 }
 .shop-instruction h3, .shop-address h3{
     color: #000;

@@ -27,10 +27,25 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
+    // proxyTable: {
+    //     "/gold": {
+    //         // target: "http://120.133.0.86:8099/",
+    //         target: "http://101.201.197.238:8099/",
+    //         pathRewrite: {"^/gold": ""},
+    //         secure: false,
+    //         changeOrigin: true
+    //     }
+    // },
     proxyTable: {
+        "/api": {
+            target:"http://192.168.10.100:8088",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/api": ""
+            },
+        },
         "/gold": {
-            // target: "http://120.133.0.86:8099/",
-            target: "http://101.201.197.238:8099/",
+            target: "https://openapitest.au32.cn",
             pathRewrite: {"^/gold": ""},
             secure: false,
             changeOrigin: true
