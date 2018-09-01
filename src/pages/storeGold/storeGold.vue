@@ -39,6 +39,30 @@
 				<p>全程无条件赔付</p>
 			</div>
 		</section>
+		<!-- 店铺 -->
+		<section class="shoplist">
+			<div class="top-title" @click="$router.push('/shopList')">
+				<h3>门店回购</h3>
+				<span></span>
+			</div>
+			<ul>
+				<li v-for="(item,index) in shopList" :key="index" @click="goDetail($event,item.id,item.name)">
+					<div class="top-img">
+						<img :src="item.url" alt="">
+					</div>
+					<p>{{item.name}}</p>
+					<div class="star" :class="starJson[judgeStar(item.star)].className">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+					<div class="intro">{{instructionJson[item.status]}}</div>
+				</li>
+			</ul>
+		</section>
+		<div class="distance" style="height:.2rem;background:#f8f8f8"></div>
 		<!--存金流程-->
 		<div class="store_flow">
 			<section class="subtitle">黄金回收流程</section>
@@ -244,7 +268,7 @@
 <script>
 import foot from '@/components/footer/footGuid.vue'
 import headTop from '@/components/header/head.vue'
-import { queryMessagUnreadCount } from '@/service/getData'
+import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
 import {mapState} from 'vuex'
@@ -257,9 +281,26 @@ export default {
 			yjt:false,//盈吉通域名下的文案显示开关
 			pc:false,//是否是pc页面
 			clientWidth:document.documentElement.clientWidth,//页面宽度
+			lat:'', //经度
+			lng:'', //纬度
+			instructionJson:{
+				'0':'离我最近',
+				'1':'回收最多',
+				'2':'评分最高',
+			},
+			starJson:{
+				'2.5':{className:'twoHalf'},
+				'3':{className:'threeStar'},
+				'3.5':{className:'threeHalf'},
+				'4':{className:'fourStar'},
+				'4.5':{className:'fourHalf'},
+				'5':{className:'fullStar'},
+			},
+			shopList:'',
 		}
 	},
 	mounted() {
+		this.myPosition();
 		var source = this.$route.query.source,
 			invitedBy = this.$route.query.invitedBy;
 			if(source&&!invitedBy){
@@ -315,6 +356,60 @@ export default {
 			window.localStorage.setItem('page','storeGold'); //记录上一页是存金首页
             this.$router.push('/currentAndHistory')
 		},
+		// 判断星级
+		judgeStar(val){
+			if(val>=91 && val<=100){
+				return 5
+			}else if(val>=81 && val<=90){
+				return 4.5
+			}else if(val>=71 && val<=80){
+				return 4
+			}else if(val>=61 && val<=70){
+				return 3.5
+			}else if(val>=51 && val<=60){
+				return 3
+			}else{
+				return 2.5
+			}
+		},
+		// 获取当前位置
+		myPosition(){
+			var that = this;
+
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r){
+				if(this.getStatus() == BMAP_STATUS_SUCCESS){
+					//以指定的经度与纬度创建一个坐标点
+					var pt = new BMap.Point(r.point.lng,r.point.lat);
+					that.lat = r.point.lat;
+					that.lng = r.point.lng;
+					that.requestList(); // 调用请求数据函数
+				}else {
+					Toast('无法获取您的位置')
+				}
+			},{enableHighAccuracy: true})//指示浏览器获取高精度的位置，默认false
+		},
+		// 点击跳转详情
+		goDetail(event,id,name){
+			var className = event.currentTarget.querySelector('.star').className;
+			this.$router.push({
+				path:'/shopDetail',
+				query:{
+					id:id,
+					className:className,
+					name:name
+				}
+			})
+		},
+		// 请求店铺数据
+		async requestList(){
+			var res=await shopIndex(this.lat,this.lng);
+			if(res.code=='000000'){
+				this.shopList = res.data;
+			}else{
+				Toast(res.message)
+			}
+		},
 		//查询用户未读消息数量
 		async queryMessagUnreadCount(){
     		var res=await queryMessagUnreadCount();
@@ -357,7 +452,7 @@ export default {
 			if (/iphone|ipad|ipod/.test(ua)) {
 				window.location.href='http://itunes.apple.com/cn/app/jie-zou-da-shi/id1028299545?mt=8'
 			} else if (/android/.test(ua)) {
-				window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'	
+				window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'
 			}
 		}
 	},
@@ -382,7 +477,7 @@ export default {
 		//true 自定义咨询按钮 废弃系统默认按钮
 		zhiManager.set('customBtn', 'true');
 		//获取未读消息数
-		zhiManager.on("receivemessage", function(ret) {    
+		zhiManager.on("receivemessage", function(ret) {
 			// console.log(ret)
 		});
 		//获取离线客服发的消息数
@@ -395,7 +490,7 @@ export default {
 		if(this.token){
 			//设置用户信息
 			var userInfor = this.userInfo;
-			zhiManager.set('userinfo', { 
+			zhiManager.set('userinfo', {
 			tel: userInfor.telephone,   //电话或手机
 			uname: userInfor.telephone,  //昵称
 			visitTitle: '',   //对话页标题，若不传入系统将获取用户打开咨询组件时所在页面的标题
@@ -579,12 +674,120 @@ img{
 .character>div:nth-child(2){
 	margin: 0 .25rem 0 .25rem;
 }
+/*店铺列表*/
+.shoplist{
+	width: 100%;
+	min-height: 3rem;
+	padding:0 .4rem .6rem;
+	margin-top:1rem;
+}
+.shoplist .top-title{
+	width:100%;
+	margin-bottom: .3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.shoplist .top-title h3{
+	color: #333;
+	font-size: .34rem;
+	font-weight: bold;
+}
+.shoplist .top-title span{
+	display: inline-block;
+	width: .36rem;
+	height: .36rem;
+	background:url('../../images/rightArr.png') no-repeat;
+	background-size: 100%;
+}
+.shoplist ul {
+	display:flex;
+	justify-content: space-between;
+}
+.shoplist ul li{
+	width:2.1rem;
+	text-align: left;
+}
+.shoplist ul li .top-img{
+	width:2.1rem;
+	height: 2.1rem;
+	background-color: #eee;
+}
+.shoplist ul li .top-img img{
+	width: 100%;
+}
+.shoplist ul li p{
+	width:100%;
+	color: #333;
+	font-size: .3rem;
+	margin-top:.2rem;
+	overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.shoplist ul li .intro{
+	color: #999;
+	font-size: .22rem;
+}
+.star span{
+    display: inline-block;
+    width: .24rem;
+    height: .24rem;
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(1){
+    background: url('../../images/one-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(2){
+    background: url('../../images/one-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(3){
+    background: url('../../images/one-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(4){
+    background: url('../../images/four-star.png') no-repeat;
+    background-size: 100%;
+}
+.star span:nth-of-type(5){
+    background: url('../../images/five-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 2.5星 */
+.twoHalf span:nth-of-type(3){
+    background: url('../../images/one-pice-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 2.5/3星 */
+.twoHalf span:nth-of-type(4), .threeStar span:nth-of-type(4){
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 3.5/4星 */
+.twoHalf span:nth-of-type(5), .threeStar span:nth-of-type(5),.threeHalf span:nth-of-type(5),.fourStar span:nth-of-type(5){
+    background: url('../../images/empty-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 3.5星 */
+.threeHalf span:nth-of-type(4){
+    background: url('../../images/four-pice-star.png') no-repeat;
+    background-size: 100%;
+}
+/* 4.5星 */
+.fourHalf span:nth-of-type(5){
+    background: url('../../images/five-pice-star.png') no-repeat;
+    background-size: 100%;
+}
 /*存金流程*/
 .store_flow{
 	background-color: #fff;
 	width: 6.9rem;
 	height: 4rem;
-	margin-top: .6rem;
+	/* margin-top: .6rem; */
 	display: inline-block;
 }
 .resume{
@@ -649,7 +852,7 @@ img{
 	height: 8.18rem;
 	background-color: #fff;
 	display: inline-block;
-} 
+}
 .reason_top,.reason_bottom{
 	display: flex;
 	justify-content: center;
@@ -667,7 +870,7 @@ img{
 	font-size: .25rem;
 	color: #999999;
 	line-height: .4rem;
-} 
+}
 .reason_top img, .reason_bottom img{
 	width: 1.2rem;
 	height: 1.2rem;
@@ -691,7 +894,7 @@ img{
 	background-size: 90%;
 	background-position: center;
 	margin-right: .2rem;
-	
+
 }
 .subtitle:after{
 	display: inline-block;
@@ -715,7 +918,7 @@ img{
 	width: 2rem;
 	height: 2rem;
 }
-/**/ 
+/**/
 .gudong{
 	width: 100%;
 	height: 4.33rem;
@@ -723,7 +926,7 @@ img{
 	background-image: url(../../images/hgdBg.jpg);
 	background-repeat: no-repeat;
 	background-size: 100%;
-	background-color: #fff; 
+	background-color: #fff;
 	display: inline-block;
 	padding: 1.26rem .15rem 0rem .41rem;
 	overflow: hidden;
@@ -733,7 +936,7 @@ img{
 .pe{
 	width: 1.8rem;
 	height: 1.8rem;
-	background-color: rgba(239,239,239,	.8); 
+	background-color: rgba(239,239,239,	.8);
 	float: left;
 	margin-right: .2rem;
 }
@@ -790,7 +993,7 @@ img{
 }
 /*
 电话咨询
-*/ 
+*/
 .zixun{
 	width: 100%;
 	display: flex;
@@ -958,7 +1161,7 @@ img{
 	background-image: url(../../images/pczizhi.jpg);
 	background-repeat: no-repeat;
 	background-size: 100%;
-	padding-top: 60px; 
+	padding-top: 60px;
 }
 .pc_zizhi p{
 	font-size: 16px;
@@ -1020,7 +1223,7 @@ img{
 	background-image: url(../../images/jdb.png);
 	background-repeat: no-repeat;
 	background-size: 680px 360px;
-	background-position: center; 
+	background-position: center;
 	padding-right: 33%;
 	padding-top: 171px;
 }

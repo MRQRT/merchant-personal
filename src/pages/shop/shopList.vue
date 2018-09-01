@@ -2,7 +2,7 @@
     <div class="shopList">
         <!-- 头部标题部分 -->
         <head-top :headTitle=title class="head-top nomal-font" ref="topHead">
-            <img slot='head_goback' src='../../images/back.png' class="head_goback" @click="$router.go(-1)">
+            <img slot='head_goback' src='../../images/back.png' class="head_goback" @click="goBack()">
         </head-top>
         <!-- 主体部分 -->
         <div class="main-cont">
@@ -35,10 +35,11 @@
                                 </div>
                                 <div class="bottom">
                                     <div class="labels">
-                                        <span v-for="labelItem in item.label">{{labelItem}}</span>
+                                        <span v-for="labelItem in item.labels">{{labelItem}}</span>
                                     </div>
                                     <div class="distans">
-                                        <span>{{item.distance}}km</span>
+                                        <!-- <span>{{item.distance}}km</span> -->
+                                        <span>2.3km</span>
                                         <span class="left-line" v-if="index<=2"></span>
                                         <span class="instruction">{{instructionJson[index]}}</span>
                                     </div>
@@ -130,7 +131,9 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 
         },
         watch:{
-
+            cityShow(val){
+                this.title = val ? '选择城市' : '更多门店'
+            }
         },
         methods: {
             ...mapMutations([
@@ -139,10 +142,13 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             // 显示城市选择
             showCity(){
                 this.cityShow = !this.cityShow;
-                if(this.cityShow){
-                    this.title = '选择城市'
-                }else{
-                    this.title = '更多门店'
+            },
+            // 顶部返回按钮
+            goBack(){
+                if(this.title=='选择城市'){
+                    this.cityShow = false;
+                }else if(this.title=='更多门店'){
+                    this.$router.push('/')
                 }
             },
             // 判断星级
@@ -167,6 +173,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 this.localPosition = val.cityName;
                 this.lat = val.latitude;
                 this.lng = val.longitude;
+                this.searchCondition.pageNo = 0;
                 this.requestList();
             },
             // 点击跳转详情
@@ -357,6 +364,9 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 </script>
 
 <style media="screen">
+    #head_top{
+        z-index: 10002 !important;
+    }
     .mint-loadmore-bottom{
         color:#999;
         font-size: .24rem;
