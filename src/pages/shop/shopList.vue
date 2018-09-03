@@ -38,8 +38,8 @@
                                         <span v-for="labelItem in item.labels">{{labelItem}}</span>
                                     </div>
                                     <div class="distans">
-                                        <!-- <span>{{item.distance}}km</span> -->
-                                        <span>2.3km</span>
+                                        <span>{{item.distance}}km</span>
+                                        <!-- <span>2.3km</span> -->
                                         <span class="left-line" v-if="index<=2"></span>
                                         <span class="instruction">{{instructionJson[index]}}</span>
                                     </div>
