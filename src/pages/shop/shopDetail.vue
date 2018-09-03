@@ -50,7 +50,7 @@
                     <span>{{detailInfo.phone}}</span>
                 </div>
                 <div class="btn">
-                    <a href="tel:4001669999">立即预约</a>
+                    <a :href="'tel:'+ detailInfo.phone">立即预约</a>
                 </div>
             </div>
         </div>

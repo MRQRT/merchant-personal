@@ -8,14 +8,15 @@
         <div class="main-cont">
             <!-- 顶部地址部分 -->
             <div class="current-address">
-                <div class="left-text" @click="showCity">当前位置：{{localPosition}}</div>
+                <div class="left-text" @click="showCity">当前位置：{{localPosition | setShort}}</div>
                 <div class="right-text" @click="myPosition">
                     <!-- <span class="icon" :class="{'icon-rotate':rotateStatus}"></span>重新定位 -->
                     <span class="icon"></span>重新定位
                 </div>
             </div>
             <!-- 列表部分 -->
-            <div class="list-wrap" v-show="showStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
+            <!-- :style="{height: wrapperHeight + 'px' }" -->
+            <div class="list-wrap" v-show="showStatus" ref="wrapper">
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
@@ -51,11 +52,11 @@
             </div>
         </div>
         <!-- 城市选择弹框 -->
-        <div class="city-mask" v-show="cityShow">
+        <div class="city-mask" v-if="cityShow">
             <div class="top-address">
                 <div class="location">
                     <div>当前位置：</div>
-                    <div>{{this.localPosition}}</div>
+                    <div>{{this.localPosition | setShort}}</div>
                 </div>
                 <div class="positioning" @click="myPosition">
                     <span class="icon"></span>
@@ -128,7 +129,14 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             ])
         },
         filters:{
-
+            // 截取当前位置长度
+            setShort(val){
+              if(val.length>16){
+                return val.substring(0,16)+'...'
+              }else{
+                return val;
+              }
+            }
         },
         watch:{
             cityShow(val){
@@ -174,6 +182,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 this.lat = val.latitude;
                 this.lng = val.longitude;
                 this.searchCondition.pageNo = 0;
+                this.initTop();
                 this.requestList();
             },
             // 点击跳转详情
@@ -187,6 +196,11 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                         name:name
                     }
                 })
+            },
+            initTop(){
+                console.log(document.body.scrollTop,document.documentElement.scrollTop)
+            	document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0
             },
             // 首次进入请求数据
             async requestList(){
@@ -254,28 +268,30 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                             that.RECORD_POSITION(that.localPosition)
         				});
         			}else {
+                        this.localPosition = '获取位置失败...'
+                        this.requestList();  // 请求默认店铺列表
                         switch( this.getStatus() )
                         {
                             case 2:
-                                alert( '位置结果未知 获取位置失败.' );
+                                Toast( '位置结果未知 获取位置失败.' );
                             break;
                             case 3:
-                                alert( '导航结果未知 获取位置失败..' );
+                                Toast( '导航结果未知 获取位置失败..' );
                             break;
                             case 4:
-                                alert( '非法密钥 获取位置失败.' );
+                                Toast( '非法密钥 获取位置失败.' );
                             break;
                             case 5:
-                                alert( '对不起,非法请求位置  获取位置失败.' );
+                                Toast( '对不起,非法请求位置获取位置失败.' );
                             break;
                             case 6:
-                                alert( '对不起,当前 没有权限 获取位置失败.' );
+                                Toast( '对不起,当前没有权限 获取位置失败.' );
                             break;
                             case 7:
-                                alert( '对不起,服务不可用 获取位置失败.' );
+                                Toast( '对不起,服务不可用获取位置失败.' );
                             break;
                             case 8:
-                                alert( '对不起,请求超时 获取位置失败.' );
+                                Toast( '对不起,请求超时获取位置失败.' );
                             break;
 
                         }
@@ -399,9 +415,6 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
         padding:0;
         background-position:bottom left;
     }
-    .mint-indexlist-nav{
-        border-left:none;
-    }
     .mint-indexlist-navitem{
         flex-grow: 1;
         color: #666;
@@ -411,7 +424,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
         background-image: none;
     }
     .mint-indexlist-nav{
-        padding-top:1rem;
+        /* padding-top:1rem; */
+        border-left:none;
         justify-content: flex-start;
     }
 </style>
@@ -469,8 +483,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 }
 .main-cont{
     width: 100%;
-    /* min-height: 100vh;
-    padding-top:.88rem; */
+    min-height: 100vh;
+    /* padding-top:.88rem; */
     background-color: #F8F8F8;
 }
 .main-cont .current-address{
@@ -520,7 +534,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     width:100%;
     /* min-height: 100vh; */
     padding-top:1.48rem;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 .list-wrap .shop-item{
     width:100%;
