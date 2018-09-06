@@ -44,12 +44,12 @@ module.exports = {
                 "^/api": ""
             },
         },
-        "/gold": {
-            target: "https://openapitest.au32.cn",
-            pathRewrite: {"^/gold": ""},
-            secure: false,
-            changeOrigin: true
-        }
+        // "/gold": {
+        //     target: "https://openapitest.au32.cn",
+        //     pathRewrite: {"^/gold": ""},
+        //     secure: false,
+        //     changeOrigin: true
+        // }
     },
     //    proxyTable: {
     //     "/gold": {

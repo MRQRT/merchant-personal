@@ -208,8 +208,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 if(res.code=='000000'){
                     this.showStatus = true;
                     Indicator.close();
-                    this.shopList = res.data;
-                    this.pages=res.data.pages;
+                    this.shopList = res.data.content;
+                    this.pages=res.data.totalPages;
                     if(this.searchCondition.pageNo>=this.pages){
                        this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
                     }
@@ -222,8 +222,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 this.searchCondition.pageNo=this.searchCondition.pageNo+1;
                 var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize);
                 if(res.code=='000000'){
-                  this.shopList=this.shopList.concat(res.data);
-                  if(this.searchCondition.pageNo>=this.pages){
+                  this.shopList=this.shopList.concat(res.data.content);
+                  if(this.searchCondition.pageNo>=this.totalPages){
                        this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
                   }
                 }
@@ -547,13 +547,14 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     display: flex;
 }
 .list-wrap .shop-item .left-img{
-    width: 30%;
+    width: 1.8rem;
     height:1.8rem;
     margin-right:.3rem;
     background-color: #eee;
 }
 .shop-item .left-img img{
     width:100%;
+    height:100%;
 }
 .shop-item .right-text{
     width:70%;

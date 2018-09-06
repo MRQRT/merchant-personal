@@ -59,7 +59,7 @@ export let a = new Vue({
 //     xhr.send();
 //   });
 // };
-// 
+//
 
 var promise;
 function tradeTimeCheck(bizCode) {//交易时间判断
@@ -121,7 +121,7 @@ router.beforeEach((to, from, next) => {
                     }
 
                })
-                
+
         }else{
             next(true)
         }

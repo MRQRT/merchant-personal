@@ -385,6 +385,7 @@ export default {
 					that.lng = r.point.lng;
 					that.requestList(); // 调用请求数据函数
 				}else {
+					that.requestList(); // 调用请求数据函数
 					Toast('无法获取您的位置')
 				}
 			},{enableHighAccuracy: true})//指示浏览器获取高精度的位置，默认false
@@ -715,6 +716,7 @@ img{
 }
 .shoplist ul li .top-img img{
 	width: 100%;
+	height:100%;
 }
 .shoplist ul li p{
 	width:100%;
