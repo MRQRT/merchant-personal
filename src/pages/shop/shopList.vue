@@ -16,7 +16,7 @@
             </div>
             <!-- 列表部分 -->
             <!-- :style="{height: wrapperHeight + 'px' }" -->
-            <div class="list-wrap" v-show="showStatus" ref="wrapper">
+            <div class="list-wrap" v-show="showStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
@@ -535,7 +535,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     width:100%;
     /* min-height: 100vh; */
     padding-top:1.48rem;
-    /* overflow: scroll; */
+    overflow: scroll;
 }
 .list-wrap .shop-item{
     width:100%;
