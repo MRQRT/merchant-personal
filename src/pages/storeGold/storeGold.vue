@@ -281,8 +281,8 @@ export default {
 			yjt:false,//盈吉通域名下的文案显示开关
 			pc:false,//是否是pc页面
 			clientWidth:document.documentElement.clientWidth,//页面宽度
-			lat:'', //经度
-			lng:'', //纬度
+			lat:'39.915',  //纬度
+			lng:'116.404', //经度
 			instructionJson:{
 				'0':'离我最近',
 				'1':'回收最多',

@@ -38,7 +38,7 @@
                                     <div class="labels">
                                         <span v-for="labelItem in item.labels">{{labelItem}}</span>
                                     </div>
-                                    <div class="distans">
+                                    <div class="distans" v-show="localPosition!='正在获取位置...'">
                                         <span>{{item.distance}}km</span>
                                         <!-- <span>2.3km</span> -->
                                         <span class="left-line" v-if="index<=2"></span>
@@ -92,8 +92,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 rotateStatus:false,   // 定位图标旋转
                 cityShow:false,
                 allLoaded:false,
-                lat:'', //经度
-                lng:'', //纬度
+                lat:'39.915', //纬度
+                lng:'116.404', //经度
                 searchCondition: {   // 分页属性
                     pageNo: 0,
                     pageSize: 10
@@ -268,8 +268,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                             that.RECORD_POSITION(that.localPosition)
         				});
         			}else {
-                        this.localPosition = '获取位置失败...'
-                        this.requestList();  // 请求默认店铺列表
+                        that.localPosition = '北京'
+                        that.requestList();  // 请求默认店铺列表
                         switch( this.getStatus() )
                         {
                             case 2:
@@ -352,6 +352,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
               spinnerType: 'fading-circle'
             });
             this.myPosition();
+            // this.requestList();
             this.cityList();
             // 计算滚动内容的高度
     		this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;;
