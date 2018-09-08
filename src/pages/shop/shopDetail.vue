@@ -50,7 +50,8 @@
                     <span>{{detailInfo.phone}}</span>
                 </div>
                 <div class="btn">
-                    <a :href="'tel:'+ detailInfo.phone">立即预约</a>
+                    <div class="" v-if="detailInfo.phone=='未知'">立即预约</div>
+                    <a :href="'tel:'+ detailInfo.phone" v-else>立即预约</a>
                 </div>
             </div>
         </div>
@@ -318,6 +319,9 @@ import {shopDetail} from '@/service/getData.js';
     -moz-border-radius:3px;
     -o-border-radius:3px;
     border-radius:3px;
+}
+.appointment .btn{
+    color: #fff;
 }
 .appointment .btn a{
     display: inline-block;

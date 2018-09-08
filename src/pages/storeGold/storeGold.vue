@@ -1000,7 +1000,7 @@ img{
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	height: 1.28rem;
+	height: .98rem;
 	background-color: #fff;
 	align-items: center;
 	position: fixed;
@@ -1009,30 +1009,31 @@ img{
 }
 .zixun_left{
 	flex-grow: 3;
-	height: 1.28rem;
-	line-height: 1.8rem;
+	height: .98rem;
+	color: #333;
+	line-height: 1.5rem;
 	display: flex;
 	flex-direction: row;
-	font-size: .25rem;
+	font-size: .22rem;
 }
 .zhiCustomBtn{
 	flex-grow: 1;
 	background: url(../../images/ser.png);
 	background-repeat: no-repeat;
-	background-size: .5rem;
+	background-size: .36rem .36rem;
     background-position: center 8px;
 }
 .call{
 	flex-grow: 1;
 	background: url(../../images/tel.png);
 	background-repeat: no-repeat;
-	background-size: .5rem;
+	background-size: .36rem .36rem;
     background-position: center 8px;
 }
 .download{
 	flex-grow: 2.5;
 	height: 100%;
-	line-height: 1.28rem;
+	line-height: .98rem;
 	background-color: #DDC899;
 	color: #fff;
 }

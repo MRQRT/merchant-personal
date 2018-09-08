@@ -418,16 +418,16 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     }
     .mint-indexlist-navitem{
         flex-grow: 1;
-        color: #666;
-        font-size: .22rem;
+        color: #666 !important;
+        font-size: .22rem !important;
     }
     .mint-indexsection ul .mint-cell:last-child .mint-cell-wrapper{
         background-image: none;
     }
     .mint-indexlist-nav{
         /* padding-top:1rem; */
-        border-left:none;
-        justify-content: flex-start;
+        border-left:none !important;
+        justify-content: flex-start !important;
     }
 </style>
 
