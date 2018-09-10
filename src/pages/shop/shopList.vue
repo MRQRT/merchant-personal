@@ -575,6 +575,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     -ms-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
 }
 .shop-item .right-text .detail-address{
     width:100%;

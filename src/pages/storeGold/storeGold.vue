@@ -684,7 +684,9 @@ img{
 }
 .shoplist .top-title{
 	width:100%;
-	margin-bottom: .3rem;
+	height:1rem;
+	line-height: 1rem;
+	/* margin-bottom: .3rem; */
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
