@@ -8,9 +8,36 @@
 			</div>
 		</head-top>
 		<!--存金banner-->
-		<div class="storBanner">
+		<!-- <div class="storBanner">
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 			<img src="../../images/storeGoldaBanner.jpg">
+			<div class="price_container">
+				<div>
+					<p class="price_in">
+						<span>回收金价(元/克)</span>
+						<img src="../../images/goldGo.png">
+					</p>
+					<p class="price_amount">{{currentPrice | formatNum}}</p>
+					<button class="goStore" @click="$router.push('/stor')">我要卖金
+						<a class="click_bg"></a>
+					</button>
+				</div>
+			</div>
+		</div> -->
+		<!-- 轮播图 -->
+		<div class="storBanner swiper-container swiper-container-1">
+			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
+
+			<div class="swiper-wrapper">
+				<div class="swiper-slide swiper-slide-1">
+					<img src="../../images/storeGoldaBanner.jpg" alt="">
+				</div>
+				<div class="swiper-slide swiper-slide-2">
+					<a href="http://activity.au32.cn">
+						<img src="../../images/banner-new.png" alt="">
+					</a>
+				</div>
+			</div>
 			<div class="price_container">
 				<div>
 					<p class="price_in">
@@ -272,6 +299,7 @@ import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
 import {mapState} from 'vuex'
+import '@/style/swiper.min.css'
 export default {
 	data() {
 		return {
@@ -300,6 +328,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.banner_swiper();
 		this.myPosition();
 		var source = this.$route.query.source,
 			invitedBy = this.$route.query.invitedBy;
@@ -351,6 +380,15 @@ export default {
 		}
 	},
 	methods: {
+		banner_swiper(){
+    		var swiper = new Swiper('.swiper-container-1', {
+            	pagination: '.swiper-pagination',
+            	speed: 400,
+				loop:true,
+				autoplay: 2000,
+            	paginationElement : 'li',
+        	});
+    	},
 		//跳转实时金价
 		toCurrent(){
 			window.localStorage.setItem('page','storeGold'); //记录上一页是存金首页
@@ -514,7 +552,14 @@ export default {
     }
 }
 </script>
+
+<style media="screen">
+	.swiper-container{
+		overflow: visible;
+	}
+</style>
 <style type="text/css" scoped>
+
 #head-top>.head_goback>.mes_num{
 	display: inline-block;
     color: #fff;
@@ -551,6 +596,7 @@ img{
 }
 .storBanner{
 	width:100%;
+	height: 7.2rem;
 	position: relative;
 }
 .storBanner img{
@@ -583,6 +629,7 @@ img{
 	position: absolute;
 	display: flex;
 	justify-content: center;
+	z-index:9999;
 }
 .price_container>div{
 	height: 3.8rem;
@@ -842,6 +889,7 @@ img{
 	position:absolute;
 	right:.3rem;
 	top:.18rem;
+	z-index: 9999;
 }
 .my_store_order_2{
 	display: inline-block;
