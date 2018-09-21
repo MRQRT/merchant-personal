@@ -33,7 +33,7 @@
 					<img src="../../images/storeGoldaBanner.jpg" alt="">
 				</div>
 				<div class="swiper-slide swiper-slide-2">
-					<a href="http://activity.au32.cn">
+					<a href="http://activity.au32.cn?from=cjt">
 						<img src="../../images/banner-new.png" alt="">
 					</a>
 				</div>
