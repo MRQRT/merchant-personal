@@ -345,8 +345,13 @@ export default {
 		
 		var tg = this.$route.query.source;
 		var yw = this.$route.query.channel;
-		setStore('tg',tg,'local');
-		setStore('yw',yw,'local');
+		
+		if(tg){
+			setStore('tg',tg,'local');
+		}
+		if(yw){
+			setStore('yw',yw,'local');
+		}
 
 		const url = window.location.href;
 		const ag = /hjgjdd/.test(url);
