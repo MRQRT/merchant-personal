@@ -272,6 +272,7 @@ import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
 import {mapState} from 'vuex'
+import {setStore,getStore} from '@/config/mUtils.js'
 export default {
 	data() {
 		return {
@@ -300,6 +301,8 @@ export default {
 		}
 	},
 	mounted() {
+		var tg = this.$route.query.source;
+		setStore('tg',tg,'local');
 		this.myPosition();
 		var source = this.$route.query.source,
 			invitedBy = this.$route.query.invitedBy;

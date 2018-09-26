@@ -8,7 +8,7 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import App from './App.vue'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import { checkAgent } from '@/config/mUtils'
+import { checkAgent,check,setStore } from '@/config/mUtils'
 import { bizCloseCheck } from '@/service/getData'
 import vueScrollBehavior from '@/config/vue-scroll-behevior.js'
 import QRCode from 'qrcode'
@@ -140,6 +140,9 @@ window.goToWhere=function(val){
 window.Indicat=function(){
     Indicator.close()
 }
+
+var browser = check();
+setStore('browser',browser,'local')
 
 /*
  与原生交互API
