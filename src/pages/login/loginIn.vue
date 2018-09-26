@@ -284,26 +284,25 @@ import { getStore } from '../../config/mUtils';
                         this.codeWrong=true;
                         return;
                     }
-                    var sour = sessionStorage.getItem('source');
                     var invited = sessionStorage.getItem('invitedBy');
-                    if(!sour&&!invited){
-                        var reObj = await quickLogin(phone,code);
-                    }else if(sour&&!invited){
-                            var tg=getStore('tg','local')?getStore('tg','local'):'#';
-                            var browser=getStore('browser','local')?getStore('browser','local'):'#';
-                            var yw=getStore('yw','local')?getStore('yw','local'):"#";
-                        if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
-                            let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
+                    var tg=getStore('tg','local')?getStore('tg','local'):'#';
+                    var browser=getStore('browser','local')?getStore('browser','local'):'#';
+                    var yw=getStore('yw','local')?getStore('yw','local'):"#";
+                    if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
+                        let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
+                        if(invited){
+                            var reObj = await quickLogin3(phone,code,invited,source);
+                        }else{
                             var reObj = await quickLogin1(phone,code,source);
-                        }else{//业务类型为自营
-                            let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
-                            var reObj=await quickLogin1(phone,code,source);
                         }
-                    }else if(!sour&&invited){
-                        var reObj = await quickLogin2(phone,code,invited);
-                    }else{
-                        var reObj = await quickLogin3(phone,code,invited,sour);
-                    }                    
+                    }else{//业务类型为自营
+                        let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+                        if(invited){
+                            var reObj = await quickLogin3(phone,code,invited,source);
+                        }else{
+                            var reObj = await quickLogin1(phone,code,source);
+                        }
+                    }
                     //用户未设置登录密码
                     if(reObj.code=='-1005'){
                         this.RECORD_TOKEN(reObj.content)

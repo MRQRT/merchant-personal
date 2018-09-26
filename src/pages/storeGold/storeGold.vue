@@ -332,17 +332,8 @@ export default {
 	mounted() {
 		this.banner_swiper();
 		this.myPosition();
-		var source = this.$route.query.source,
-			invitedBy = this.$route.query.invitedBy;
-		if(source&&!invitedBy){
-			sessionStorage.setItem('source',source);
-		}else if(invitedBy&&!source){
-			sessionStorage.setItem('invitedBy',invitedBy);
-		}else if(invitedBy&&source){
-			sessionStorage.setItem('source',source);
-			sessionStorage.setItem('invitedBy',invitedBy);
-		}
-		
+		var invitedBy = this.$route.query.invitedBy;
+		(invitedBy)?sessionStorage.setItem('invitedBy',invitedBy):'';
 		var tg = this.$route.query.source;
 		var yw = this.$route.query.channel;
 		(tg)?setStore('tg',tg,'local'):'';
