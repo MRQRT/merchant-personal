@@ -12,7 +12,7 @@
 		</div>
 		<div class="swiper-container swiper-container-1">
 			<div class="swiper-wrapper">
-				<div class="swiper-slide swiper-slide-1" v-for="(item, val, index) in banner" :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }" @click="link(item.hrefUrl)"></div>
+				<div class="swiper-slide swiper-slide-1" v-for="(item, val, index) in banner" :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }" @click="link(item.hrefUrl)" :key="index"></div>
 			</div>
 			<div class="swiper-pagination swiper-pagination-white"></div>
 		</div>
@@ -40,7 +40,7 @@
 			<router-link to="/infoList" class="infor_Entr_right" tag="div" prevent="false" showIndicators="false">
 				<div class="swiper-container swiper-container-3">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide swiper-slide-3" v-for="item in news"><span></span>{{item.title}}</div>
+						<div class="swiper-slide swiper-slide-3" v-for="(item,index) in news" :key="index"><span></span>{{item.title}}</div>
 					</div>
 				</div>
 			</router-link>
@@ -52,7 +52,7 @@
 			</router-link>
 			<div class="swiper-container swiper-container-2">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide swiper-slide-2" v-for="item in goods" :style="{ backgroundImage: 'url(' + item.imageUrl + ')' }" :id='item.id'  @click="$router.push({path:'/productDetail',query:{id:item.id}})">
+					<div class="swiper-slide swiper-slide-2" v-for="(item,index) in goods" :key="index" :style="{ backgroundImage: 'url(' + item.imageUrl + ')' }" :id='item.id'  @click="$router.push({path:'/productDetail',query:{id:item.id}})">
 						<p></p>
 						<p style="padding-left:.2rem;padding-right:.2rem;overflow:hidden;line-height:.32rem;height:.28rem;">{{item.name}}</p>
 					</div>
@@ -65,7 +65,7 @@
 					<span>积存定投</span>
 				</p>
 			</router-link>
-			<div class="dingtou_list" v-for="item in productLists" @click="goTo_set(item.id)">
+			<div class="dingtou_list" v-for="(item,index) in productLists" :key="index" @click="goTo_set(item.id)">
 				<span class="already" v-if="item.isJoin==1">已加入</span>
 				<img :src="item.thumbPath">
 				<h4>{{item.name}}</h4>
@@ -86,13 +86,13 @@
 			<p>已累计为用户管理黄金</p>
 			<div class="manager_gold">
 				<div v-if="ton">
-					<span v-for="item in ton">{{item}}</span><strong>吨</strong>
+					<span v-for="(item,index) in ton" :key="index">{{item}}</span><strong>吨</strong>
 				</div>
 				<div v-if="kilogram">
-					<span v-for="item in kilogram">{{item}}</span><strong>千克</strong>
+					<span v-for="(item,index) in kilogram" :key="index">{{item}}</span><strong>千克</strong>
 				</div>
 				<div v-if="gram">
-					<span v-for="item in gram">{{item}}</span><strong style="margin-right:0;">克</strong>
+					<span v-for="(item,index) in gram" :key="index">{{item}}</span><strong style="margin-right:0;">克</strong>
 				</div>
 			</div>
 		</footer>
@@ -1069,10 +1069,9 @@ export default {
 			float: left;
 		}*/
 	}
-	@media(-webkit-min-device-pixel-ratio:2),(min-device-pixel-ratio:2)(-o-min-device-pixel-ratio:1.5){
+	@media(-webkit-min-device-pixel-ratio:2),(min-device-pixel-ratio:2),(-o-min-device-pixel-ratio:1.5){
 		.goods_list:before{
 			content: '';
-			display: inline-block;
 			width: 100%;
 			border-bottom: 1px solid #eeeeee;
 			-webkit-transform: scaleY(0.5);

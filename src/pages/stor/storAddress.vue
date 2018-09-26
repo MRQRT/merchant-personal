@@ -418,36 +418,52 @@
 	            	removeStore('obj','session')
 					removeStore('obj2','session')
 					this.set_initRulerData(Number(10))//将ruler的初始值设置为10
-    	        	const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url)
-					this.RECORD_RECYCLEPARAMS('')
-					this.RECORD_ADDRESS('')
-        	    	if(res.code==100){
-        	    		Indicator.close()
-        	    		const or = {
-        	    			contact: this.realName,
-        	    			telephone: this.telNum,
-        	    			address: this.addr,
-        	    			bankCardNo: this.bankCardNo,
-        	    			isWithDraw: this.direct?1:0,
-        	    			orderArray: res.content.vo,
-        	    		}
-        	    		this.RECORD_RETURNRECYCLEORDER(or)
-        	    		this.$router.push({
-        	    			path: '/storResult',
-        	    		})
-        	    		this.btn_lock=false
-        	    	}else if(res.code==2004){
-        	    		Indicator.close()
-        	    		Toast({
-        	    			message: '操作过于频繁',
-        	    			position: 'bottom'
-						})
-        	    	}else{
-						Indicator.close();
-						this.btn_lock=false
-        	    	}
+
+					var tg=getStore('tg','local')?getStore('tg','local'):'#';
+					var browser=getStore('browser','local')?getStore('browser','local'):'#';
+					var yw=getStore('yw','local')?getStore('yw','local'):"#";
+					if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
+						let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
+						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
+						this.fanhuidata(res);
+					}else{//业务类型为自营
+						let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
+						this.fanhuidata(res);
+					}
+    	        	// const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url)
             	}
-            },
+			},
+			//提交订单返回处理
+			fanhuidata(res){
+				this.RECORD_RECYCLEPARAMS('')
+				this.RECORD_ADDRESS('')
+				if(res.code==100){
+					Indicator.close()
+					const or = {
+						contact: this.realName,
+						telephone: this.telNum,
+						address: this.addr,
+						bankCardNo: this.bankCardNo,
+						isWithDraw: this.direct?1:0,
+						orderArray: res.content.vo,
+					}
+					this.RECORD_RETURNRECYCLEORDER(or)
+					this.$router.push({
+						path: '/storResult',
+					})
+					this.btn_lock=false
+				}else if(res.code==2004){
+					Indicator.close()
+					Toast({
+						message: '操作过于频繁',
+						position: 'bottom'
+					})
+				}else{
+					Indicator.close();
+					this.btn_lock=false
+				}
+			}
 		},
 		components:{
 			headTop: headTop,

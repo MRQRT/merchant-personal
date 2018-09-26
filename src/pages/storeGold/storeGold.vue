@@ -299,6 +299,7 @@ import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
 import {mapState} from 'vuex'
+import {setStore} from '@/config/mUtils.js'
 import '@/style/swiper.min.css'
 export default {
 	data() {
@@ -328,18 +329,25 @@ export default {
 		}
 	},
 	mounted() {
+
 		this.banner_swiper();
 		this.myPosition();
 		var source = this.$route.query.source,
 			invitedBy = this.$route.query.invitedBy;
-			if(source&&!invitedBy){
-				sessionStorage.setItem('source',source);
-			}else if(invitedBy&&!source){
-				sessionStorage.setItem('invitedBy',invitedBy);
-			}else if(invitedBy&&source){
-				sessionStorage.setItem('source',source);
-				sessionStorage.setItem('invitedBy',invitedBy);
-			}
+		if(source&&!invitedBy){
+			sessionStorage.setItem('source',source);
+		}else if(invitedBy&&!source){
+			sessionStorage.setItem('invitedBy',invitedBy);
+		}else if(invitedBy&&source){
+			sessionStorage.setItem('source',source);
+			sessionStorage.setItem('invitedBy',invitedBy);
+		}
+		
+		var tg = this.$route.query.source;
+		var yw = this.$route.query.channel;
+		setStore('tg',tg,'local');
+		setStore('yw',yw,'local');
+
 		const url = window.location.href;
 		const ag = /hjgjdd/.test(url);
 		if(ag){
