@@ -143,6 +143,9 @@ window.Indicat=function(){
 var browser = check();
 setStore('browser',browser,'local')
 
+var browser = check();
+setStore('browser',browser,'local')
+
 /*
  与原生交互API
  */
