@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8082,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -37,11 +37,12 @@ module.exports = {
     //     }
     // },
     proxyTable: {
-        "/api": {
-            target:"http://192.168.10.100:8088",
+        "/api/personal": {
+            // target:"http://192.168.10.100:8088",
+            target:"http://cjtsh.au32.cn/api/personal",
             changeOrigin: true,
             pathRewrite: {
-                "^/api": ""
+                "^/api/personal": ""
             },
         },
         // "/gold": {
