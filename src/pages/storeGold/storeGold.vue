@@ -188,6 +188,9 @@
 			</div>
 		</div>
 		</div>
+
+
+		<!-- pc页面
 		<div v-show="pc">
 			<header class="pc_header">
 				<div class="logo"></div>
@@ -289,7 +292,86 @@
 				</div>
 				<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
 			</section>
+		</div> -->
+		<div v-show="pc" style="width:100%;over-flow:hidden;">
+			<!-- 第一部分 -->
+			<section class="pc_first">
+				<img src="../../images/pcbg.png" alt="">
+				<div class="pc_banner_content">
+					<div class="pc_logo">
+						<img src="../../images/cjtlogo.png" alt="" class="cjtlogo">
+						<span></span>
+						<div class="pc_logo_text">央企背景</div>
+					</div>
+					<div class="pc_title">专业回收黄金20年</div>
+					<div class="pc_des">上海黄金交易所会员单位</div>
+					<div class="pc_goldprice_conter">
+						<p class="pc_goldprice_title">回收金价(元/克):</p>
+						<p class="pc_goldprice">{{currentPrice}}</p>
+					</div>
+					<div class="pc_button">我要估价</div>
+				</div>
+			</section>
+			<!-- 第二部分 -->
+			<section class="pc_second">
+				<img src="../../images/lou.png" alt="">
+				<div class="pc_report_content">
+					<div class="pc_report_img">
+						<img src="../../images/report.png" alt="">
+					</div>
+					<div class="pc_report_right">
+						<div class="pc_report_title">
+							<img src="../../images/safe.png" alt="">
+							<div class="pc_per_des">
+								<p>高效安全</p>
+								<p>出具检测中心报告</p>
+							</div>
+						</div>
+						<div class="pc_report_title" style="margin-top:60px;">
+							<img src="../../images/y.png" alt="">
+							<div class="pc_per_des">
+								<p>实力央企背景</p>
+								<p>央企雄厚资本助力</p>
+							</div>
+						</div>
+						<div class="pc_report_title" style="margin-top:60px;">
+							<img src="../../images/sf.png" alt="">
+							<div class="pc_per_des">
+								<p>顺丰速运</p>
+								<p>全程无条件赔付</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- 第三部分 -->
+			<section class="pc_third">
+				<p class="pc_third_title">黄金回收流程</p>
+				<p class="pc_third_title2">我们承诺，随时接受退换</p>
+				<img src="../../images/flow.png" alt="">
+			</section>
+			<!-- 第四部分 -->
+			<section class="pc_fourth">
+				<img src="../../images/fbg.png" alt="">
+				<div class="pc_fourth_content">
+					<p class="pc_fourth_title">为什么选择存金通</p>
+					<p class="pc_fourth_art">黄金管家旗下品牌&nbsp;&nbsp;&nbsp;&nbsp;央企背景&nbsp;&nbsp;&nbsp;&nbsp;回收黄金我们是专业的</p>
+					<div class="pc_module">
+						<section class="pc_per_module">
+							<img src="../../images/gj.png" alt="">
+							<p>实时金价卖出</p>
+							<p>透明安全有保障</p>
+						</section>
+					</div>
+				</div>
+			</section>
 		</div>
+
+
+
+
+
+
 	</div>
 </template>
 <script>
@@ -550,12 +632,6 @@ export default {
     }
 }
 </script>
-
-<style media="screen">
-	.swiper-container{
-		overflow: visible;
-	}
-</style>
 <style type="text/css" scoped>
 
 #head-top>.head_goback>.mes_num{
@@ -1088,7 +1164,7 @@ img{
 /*
 	pc的页面样式
 **/
-.pc_header{
+/* .pc_header{
 	width: 100%;
 	height: 45px;
 	padding-left: 201px;
@@ -1356,5 +1432,186 @@ img{
 	line-height: 73px;
 	text-align: left;
 	padding-left: 15%;
+} */
+.pc_first{
+	width:100%;
+	position:relative;
 }
+.pc_banner_content{
+	width:100%;
+	overflow: hidden;
+	position: absolute;
+	top:27%;
+	padding-left:23%;
+}
+.pc_logo{
+	height:37px;
+	width: 100%;
+	overflow: hidden;
+}
+.pc_logo span{
+	float: left;
+	height: 37px;
+	border-left: 1px solid #DDC899;
+	margin-left:15px;
+	margin-right:15px;
+}
+.cjtlogo{
+	width:134px;
+	height:37px;
+	float:left;
+}
+.pc_logo_text{
+	font-size:27px;
+	color:#DDC899;
+	float:left;
+}
+.pc_title{
+	width: 100%;
+    height: 70px;
+    color: #fff;
+    font-size: 40px;
+    text-align: left;
+    letter-spacing: 4px;
+	padding-top:10px;
+}
+.pc_des{
+	width:100%;
+	font-size:20px;
+	color:#fff;
+	text-align:left;
+}
+.pc_goldprice_conter{
+	width: 244px;
+	height: 164px;
+	background: #C09C60;
+	margin-top: 12px;
+	padding-top:40px;
+}
+.pc_goldprice_title{
+	font-size:16px;
+	color:#fff;
+	text-align:center;
+}
+.pc_goldprice{
+	font-size:30px;
+	color:#fff;
+	font-size: 55px;
+	text-align: center;
+}
+.pc_button{
+	width:244px;
+	height: 60px;
+	font-size:20px;
+	line-height: 60px;
+	text-align: center;
+	background:linear-gradient(90deg,rgba(221,200,153,1) 0%,rgba(192,156,96,1) 100%);
+	color:#fff;
+	margin-top:16px;
+}
+.pc_second{
+	width:100%;
+	padding-top:220px;
+	position: relative;
+}
+.pc_report_content{
+	width: 100%;
+	position: absolute;
+	padding-left: 12%;
+	top:16%;
+}
+.pc_report_img{
+	width: 500px;
+	float: left;
+	margin-right: 110px;
+}
+.pc_report_right{
+	float:left;
+}
+.pc_report_title{
+	overflow: hidden;
+}
+.pc_report_title img{
+	width:80px;
+	float:left;
+	margin-right:20px;
+}
+.pc_per_des{
+	float: left;
+	color:#333;
+}
+.pc_per_des p{
+	text-align: left;
+	line-height: 30px;
+}
+.pc_per_des p:nth-child(1){
+	margin-top:12px;
+	font-size:20px;
+	font-weight:bold;
+}
+.pc_per_des p:nth-child(2){
+	color:#666;
+	font-size:12px;
+}
+.pc_third_title{
+	font-size:32px;
+	color:#333;
+	font-weight: bold;
+	line-height: 160px;
+}
+.pc_third_title2{
+	font-size:15px;
+	color:#333;
+	margin-bottom:35px;
+}
+.pc_fourth{
+	margin-top:80px;
+	position: relative;
+}
+.pc_fourth_content{
+	width: 100%;
+	position: absolute;
+	top:30px;
+	border:1px solid red;
+}
+.pc_fourth_title{
+	font-size:32px;
+	color:#fff;
+	line-height: 130px;
+}
+.pc_fourth_art{
+	font-size:15px;
+	color:#fff;
+}
+.pc_module{
+	width: 100%;
+	margin-top:50px;
+}
+.pc_per_module{
+	width: 275px;
+	height: 300px;
+	border:1px solid green;
+	float: left;
+	background:#fff;
+}
+.pc_per_module img{
+	width: 170px;
+	margin-top:36px;
+}
+.pc_per_module>p:nth-child(2){
+	font-size:18px;
+	color:#333;
+	margin-top:10px;
+	line-height: 28px;
+}
+.pc_per_module>p:nth-child(3){
+	font-size:14px;
+	line-height: 25px;
+	color:#333;
+}
+</style>
+<style media="screen">
+	.swiper-container{
+		overflow: visible;
+	}
 </style>
