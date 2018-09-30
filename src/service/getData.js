@@ -2,8 +2,8 @@ import {fetch} from '../config/fetch.js'
 import {getStore,openAPI,checkAndroAgent,iosVersion} from '../config/mUtils.js'
 const andVerson = checkAndroAgent();
 const iosVerson = iosVersion();
-// const gold = process.env.API_ROOT
-const gold = 'https://openapi.au32.cn'
+const gold = process.env.API_ROOT
+// const gold = 'https://openapi.au32.cn'
 
 /**
  * 店铺首页
