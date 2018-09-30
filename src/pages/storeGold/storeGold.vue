@@ -222,21 +222,21 @@
 					</div>
 					<div class="pc_report_right">
 						<div class="pc_report_title">
-							<img :src="safe_png" alt="" @click="checked('safe')">
+							<img :src="safe_png" alt="" @mousemove="checked('safe')">
 							<div class="pc_per_des">
 								<p>高效安全</p>
 								<p>出具检测中心报告</p>
 							</div>
 						</div>
 						<div class="pc_report_title" style="margin-top:60px;">
-							<img :src="y_png" alt="" @click="checked('y')">
+							<img :src="y_png" alt="" @mousemove="checked('y')">
 							<div class="pc_per_des">
 								<p>实力央企背景</p>
 								<p>央企雄厚资本助力</p>
 							</div>
 						</div>
 						<div class="pc_report_title" style="margin-top:60px;">
-							<img :src="sf_png" alt="" @click="checked('sf')">
+							<img :src="sf_png" alt="" @mousemove="checked('sf')">
 							<div class="pc_per_des">
 								<p>顺丰速运</p>
 								<p>全程无条件赔付</p>
@@ -314,40 +314,35 @@
 				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 			</section>
-		</div>
-		<!-- 底部 -->
-		<section class="pc_footer">
-			<div class="pc_footer_content">
-				<div class="pc_footer_content_left">
-					<div class="pc_footer_content_left_qc"> 
-						<section>
-							<img src="../../images/cjt-link.png" alt="">
-							<p>扫码开启黄金回收之旅</p>
-						</section>
-						<section>
-							<img src="../../images/dl.png" alt="">
-							<p>扫码下载黄金管家APP</p>
-						</section>
-						<section>
-							<img src="../../images/gjg.png" alt="">
-							<p>扫码关注黄金管家公众号</p>
-						</section>
+			<!-- 底部 -->
+			<section class="pc_footer">
+				<div class="pc_footer_content">
+					<div class="pc_footer_content_left">
+						<div class="pc_footer_content_left_qc"> 
+							<section>
+								<img src="../../images/cjt-link.png" alt="">
+								<p>扫码开启黄金回收之旅</p>
+							</section>
+							<section>
+								<img src="../../images/dl.png" alt="">
+								<p>扫码下载黄金管家APP</p>
+							</section>
+							<section>
+								<img src="../../images/gjg.png" alt="">
+								<p>扫码关注黄金管家公众号</p>
+							</section>
+						</div>
+						<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
 					</div>
-					<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
+					<div class="pc_footer_content_right">
+						<p>4008-196-199</p>
+						<p style="margin-top:0;">微信公众号：hjgjdyh</p>
+						<p>黄金管家官方群2018：673646474</p>
+						<p>黄金管家分析群2018：556533099</p>
+					</div>
 				</div>
-				<div class="pc_footer_content_right">
-					<p>4008-196-199</p>
-					<p style="margin-top:0;">微信公众号：hjgjdyh</p>
-					<p>黄金管家官方群2018：673646474</p>
-					<p>黄金管家分析群2018：556533099</p>
-				</div>
-			</div>
-		</section>
-
-
-
-
-
+			</section>
+		</div>
 	</div>
 </template>
 <script>
@@ -680,7 +675,6 @@ img{
 	width: 100%;
 	position: relative;
 	top: 0;
-	padding-bottom:1.22rem;
 	background-color: #fff;
 	text-align: center;
 }
