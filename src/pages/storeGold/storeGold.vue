@@ -188,111 +188,7 @@
 			</div>
 		</div>
 		</div>
-
-
-		<!-- pc页面
-		<div v-show="pc">
-			<header class="pc_header">
-				<div class="logo"></div>
-				<span class="curp">回收金价(元/克):</span>
-				<span class="curp" style="font-size:18px;margin-left:3px;line-height:50px;">{{currentPrice}}</span>
-				<div class="pc_nav"><span>首页</span><span @click="goToMyOrder">我的订单</span><span @click="$router.push('/stor')">我要卖金</span></div>
-			</header>
-			<section><img src="../../images/PCbanner.jpg" alt=""></section>
-			<section class="pc_subtitle">存金流程</section>
-			<section class="liuchengtu">
-				<div class="dashed">
-					<img src="../../images/pcflow1.png" alt="">
-					<p>在线预约</p>
-				</div>
-				<div class="dashed">
-					<img src="../../images/pcflow2.png" alt="">
-					<p>顺丰上门</p>
-				</div>
-				<div class="dashed">
-					<img src="../../images/pcflow3.png" alt="">
-					<p>专业检测</p>
-				</div>
-				<div>
-					<img src="../../images/pcflow4.png" alt="" style="margin-right:0;">
-					<p>快捷变现</p>
-				</div>
-			</section>
-			<section class="pc_zizhi" v-show="yjt">
-				<p>上交所综合会员资质认证</p>
-				<p>上海黄金交易所综合类会员“众恒隆”直达上金所，无中间商赚取差价</p>
-			</section>
-			<section class="pc_subtitle">保您黄金卖出高价</section>
-			<section class="pc_hi">
-				<div>
-					<img src="../../images/bj.png" alt="">
-					<p>直连上金所报价</p>
-				</div>
-				<div>
-					<img src="../../images/bd.png" alt="">
-					<p>不挑品牌品类</p>
-				</div>
-				<div>
-					<img src="../../images/se.png" alt="">
-					<p>服务费行业最低</p>
-				</div>
-			</section>
-			<section class="pc_subtitle">保您高效安全流程</section>
-			<section class="pc_sec">
-				<div>
-					<img src="../../images/bao1.png" alt="">
-					<p>5000万保费支持</p>
-				</div>
-				<div>
-					<img src="../../images/bao2.png" alt="">
-					<p>知名快递物流</p>
-				</div>
-				<div>
-					<img src="../../images/bao3.png" alt="">
-					<p>国家权威机构</p>
-				</div>
-				<div>
-					<img src="../../images/bao4.png" alt="">
-					<p>随时接受退换</p>
-				</div>
-			</section>
-			<section class="pc_subtitle">保您极简使用体验</section>
-			<section class="jdb">
-				<p>一键即可完成回购</p>
-			</section>
-			<section class="pc_zhanlue">
-				<section class="pc_subtitle">战略合作</section>
-				<section class="pc_part">
-					<img src="../../images/shang.png" alt="">
-					<img src="../../images/zhong.png" alt="">
-					<img src="../../images/jd.png" alt="">
-					<img src="../../images/jdh.png" alt="">
-				</section>
-				<section class="pc_subtitle">股东背景</section>
-				<section class="pc_gudong">
-					<img src="../../images/zhongx.png" alt="">
-					<img src="../../images/lan.png" alt="">
-					<img src="../../images/yi.png" alt="">
-					<img src="../../images/zhong2.png" alt="">
-					<img src="../../images/bai.png" alt="">
-				</section>
-			</section>
-			<section class="pc_footer">
-				<div class="pc_footer_content">
-					<div class="pc_footer_content_left">
-						<div v-show="hjgj">"存金通"隶属于北京黄金管家科技发展有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保驾护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
-						<div v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保驾护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
-					</div>
-					<div class="pc_footer_content_right">
-						<p>4008-196-199</p>
-						<p style="margin-top:0;">微信公众号：hjgjdyh</p>
-						<p>黄金管家官方群2018：673646474</p>
-						<p>黄金管家分析群2018：556533099</p>
-					</div>
-				</div>
-				<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
-			</section>
-		</div> -->
+		<!-- pc页面 -->
 		<div v-show="pc" style="width:100%;over-flow:hidden;">
 			<!-- 第一部分 -->
 			<section class="pc_first">
@@ -309,7 +205,12 @@
 						<p class="pc_goldprice_title">回收金价(元/克):</p>
 						<p class="pc_goldprice">{{currentPrice}}</p>
 					</div>
-					<div class="pc_button">我要估价</div>
+					<div class="pc_button" @mouseover="fade_in" @mouseout="fade_out">我要估价</div>
+					<div class="visiable_box" v-show="visible_qc">
+						<p>终于等到你～</p>
+						<p>扫描下方二维码立即体验</p>
+						<img src="../../images/cjt-link.png" alt="">
+					</div>
 				</div>
 			</section>
 			<!-- 第二部分 -->
@@ -317,25 +218,25 @@
 				<img src="../../images/lou.png" alt="">
 				<div class="pc_report_content">
 					<div class="pc_report_img">
-						<img src="../../images/report.png" alt="">
+						<img :src="report_png" alt="">
 					</div>
 					<div class="pc_report_right">
 						<div class="pc_report_title">
-							<img src="../../images/safe.png" alt="">
+							<img :src="safe_png" alt="" @click="checked('safe')">
 							<div class="pc_per_des">
 								<p>高效安全</p>
 								<p>出具检测中心报告</p>
 							</div>
 						</div>
 						<div class="pc_report_title" style="margin-top:60px;">
-							<img src="../../images/y.png" alt="">
+							<img :src="y_png" alt="" @click="checked('y')">
 							<div class="pc_per_des">
 								<p>实力央企背景</p>
 								<p>央企雄厚资本助力</p>
 							</div>
 						</div>
 						<div class="pc_report_title" style="margin-top:60px;">
-							<img src="../../images/sf.png" alt="">
+							<img :src="sf_png" alt="" @click="checked('sf')">
 							<div class="pc_per_des">
 								<p>顺丰速运</p>
 								<p>全程无条件赔付</p>
@@ -352,21 +253,96 @@
 			</section>
 			<!-- 第四部分 -->
 			<section class="pc_fourth">
-				<img src="../../images/fbg.png" alt="">
+				<img src="../../images/fbg.png" alt="" style="width:100%;height:600px;">
 				<div class="pc_fourth_content">
 					<p class="pc_fourth_title">为什么选择存金通</p>
 					<p class="pc_fourth_art">黄金管家旗下品牌&nbsp;&nbsp;&nbsp;&nbsp;央企背景&nbsp;&nbsp;&nbsp;&nbsp;回收黄金我们是专业的</p>
 					<div class="pc_module">
-						<section class="pc_per_module">
-							<img src="../../images/gj.png" alt="">
-							<p>实时金价卖出</p>
-							<p>透明安全有保障</p>
-						</section>
+						<div class="pc_per_module">
+							<section class="pc_per_module_bg">
+							</section>
+							<section class="pc_per_module_box">
+								<img src="../../images/gj.png" alt="">
+								<p>实时金价卖出</p>
+								<p>透明安全有保障</p>
+							</section>
+						</div>
+						<div class="pc_per_module">
+							<section class="pc_per_module_bg">
+							</section>
+							<section class="pc_per_module_box">
+								<img src="../../images/jlc.png" alt="">
+								<p>直达精炼厂</p>
+								<p>没有中间商赚取差价</p>
+							</section>
+						</div>
+						<div class="pc_per_module">
+							<section class="pc_per_module_bg">
+							</section>
+							<section class="pc_per_module_box">
+								<img src="../../images/lc.png" alt="">
+								<p>免费上门取货</p>
+								<p>5000万高额保费</p>
+							</section>
+						</div>
+						<div class="pc_per_module">
+							<section class="pc_per_module_bg">
+							</section>
+							<section class="pc_per_module_box">
+								<img src="../../images/cz.png" alt="">
+								<p>先称重估价</p>
+								<p>客户满意再成交</p>
+							</section>
+						</div>
 					</div>
 				</div>
 			</section>
+			<!-- 第五部分 -->
+			<section class="pc_fifth">
+				<p class="pc_fifth_title">股东背景</p>
+				<div class="pc_fifth_imgs_box">
+					<img src="../../images/zxxt.png" alt="" class="pc_fifth_img">
+					<img src="../../images/lan.png" alt="" class="pc_fifth_img pc_fifth_img2">
+					<img src="../../images/yi.png" alt="" class="pc_fifth_img pc_fifth_img2">
+					<img src="../../images/zhong.png" alt="" class="pc_fifth_img" style="border:none;">
+					<img src="../../images/bai.png" alt="" class="pc_fifth_img pc_fifth_img2">
+				</div>
+			</section>
+			<!-- 第六部分 -->
+			<section class="pc_sixth">
+				<img src="../../images/cjtlogo.png" alt="" style="width:160px;height:44px;">
+				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+			</section>
 		</div>
-
+		<!-- 底部 -->
+		<section class="pc_footer">
+			<div class="pc_footer_content">
+				<div class="pc_footer_content_left">
+					<div class="pc_footer_content_left_qc"> 
+						<section>
+							<img src="../../images/cjt-link.png" alt="">
+							<p>扫码开启黄金回收之旅</p>
+						</section>
+						<section>
+							<img src="../../images/dl.png" alt="">
+							<p>扫码下载黄金管家APP</p>
+						</section>
+						<section>
+							<img src="../../images/gjg.png" alt="">
+							<p>扫码关注黄金管家公众号</p>
+						</section>
+					</div>
+					<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
+				</div>
+				<div class="pc_footer_content_right">
+					<p>4008-196-199</p>
+					<p style="margin-top:0;">微信公众号：hjgjdyh</p>
+					<p>黄金管家官方群2018：673646474</p>
+					<p>黄金管家分析群2018：556533099</p>
+				</div>
+			</div>
+		</section>
 
 
 
@@ -382,6 +358,15 @@ import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
 import {mapState} from 'vuex'
 import {setStore,getStore} from '@/config/mUtils.js'
+import report1 from '@/images/report1.png'
+import report2 from '@/images/report2.png'
+import report3 from '@/images/report3.png'
+import y from '@/images/y.png'
+import nocheck_y from '@/images/nocheck_y.png'
+import safe from '@/images/safe.png'
+import  nocheck_safe from '@/images/nocheck_safe.png'
+import sf from '@/images/sf.png'
+import nocheck_sf from '@/images/nocheck_sf.png'
 
 import '@/style/swiper.min.css'
 export default {
@@ -409,6 +394,12 @@ export default {
 				'5':{className:'fullStar'},
 			},
 			shopList:'',
+			// pc页数据
+			report_png:report1,
+			safe_png:safe,
+			y_png:nocheck_y,
+			sf_png:nocheck_sf,
+			visible_qc:false,//隐藏二维码
 		}
 	},
 	mounted() {
@@ -573,6 +564,31 @@ export default {
 			} else if (/android/.test(ua)) {
 				window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'
 			}
+		},
+		//pc页面点击
+		checked(val){
+			if(val=='safe'){
+				this.report_png=report1;
+				this.y_png=nocheck_y;
+				this.sf_png=nocheck_sf;
+				this.safe_png=safe;
+			}else if(val=='y'){
+				this.report_png=report2;
+				this.safe_png=nocheck_safe;
+				this.sf_png=nocheck_sf;
+				this.y_png=y;
+			}else if(val=='sf'){
+				this.report_png=report3;
+				this.y_png=nocheck_y;
+				this.safe_png=nocheck_safe;
+				this.sf_png=sf;
+			}
+		},
+		fade_in(){
+			this.visible_qc=true
+		},
+		fade_out(){
+			this.visible_qc=false
 		}
 	},
 	components:{
@@ -1161,278 +1177,7 @@ img{
 	background-color: #DDC899;
 	color: #fff;
 }
-/*
-	pc的页面样式
-**/
-/* .pc_header{
-	width: 100%;
-	height: 45px;
-	padding-left: 201px;
-	padding-right: 201px;
-}
-.logo{
-	width: 80px;
-	height: 45px;
-	background-image: url(../../images/cjtlogo.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: center;
-	float: left;
-}
-.curp{
-	height: 45px;
-	line-height: 52px;
-	font-size: 8px;
-	color: #C09C60;
-	float: left;
-	margin-left: 20px;
-}
-.pc_nav{
-	font-size: 8px;
-	color: #C09C60;
-	height: 45px;
-	float: right;
-}
-.pc_nav span{
-	display: inline-block;
-	width: 120px;
-	height: 45px;
-	line-height: 45px;
-	text-align: center;
-	font-size: 8px;
-}
-.pc_nav span:nth-child(3){
-	display: inline-block;
-	width: 80px;
-	height: 26px;
-	line-height: 26px;
-	background: -webkit-linear-gradient(left, #C09C60, #DDC899);
-	border-radius: 3px;
-	color: #fff;
-	font-size: 8px;
-	margin-left: 46px;
-}
-.pc_nav span:nth-child(1){
-	color: #C09C60;
-}
-.pc_nav span:nth-child(2){
-	color: #333;
-}
-.pc_subtitle{
-	width: 100%;
-	font-size: 16px;
-	color: #333;
-	height: 120px;
-	line-height: 140px;
-	text-align: center;
-}
-.pc_subtitle:after{
-	display: inline-block;
-	content:'';
-	width: 60px;
-	height: 10px;
-	background: url(../../images/l.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: center;
-	margin-left: 12px;
-}
-.pc_subtitle:before{
-	display: inline-block;
-	content:'';
-	width: 60px;
-	height: 10px;
-	background: url(../../images/r.png);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	background-position: center;
-	margin-right: 12px;
-}
-.liuchengtu{
-	width: 100%;
-	text-align: center;
-	margin-bottom: 60px;
-}
-.liuchengtu div{
-	display: inline-block;
-}
-.liuchengtu div>p{
-	text-align: left;
-	font-size: 9px;
-	color: #333;
-	margin-top: 18px;
-	position: relative;
-}
-.dashed p:after{
-	display: inline-block;
-	content: '';
-	width: 160px;
-	height: 56px;
-	border-top: 1px dashed #C09C60;
-	position: absolute;
-	top: -50px;
-	left: 50px;
-}
-.liuchengtu img{
-	width: 50px;
-	height: 56px;
-	margin-right: 160px;
-	position: relative;
-}
-.liuchengtu img:nth-child(4){
-	margin-right: 0;
-}
-.pc_zizhi{
-	width: 100%;
-	height: 200px;
-	background-image: url(../../images/pczizhi.jpg);
-	background-repeat: no-repeat;
-	background-size: 100%;
-	padding-top: 60px;
-}
-.pc_zizhi p{
-	font-size: 16px;
-	line-height: 50px;
-	color: #333;
-	text-align:center;
-}
-.pc_zizhi p:nth-child(2){
-	font-size: 10px;
-	line-height: 50px;
-}
-.pc_hi{
-	width: 100%;
-	text-align: center;
-}
-.pc_hi div{
-	display: inline-block;
-	width: 180px;
-	height: 180px;
-	background-color: rgba(248, 248, 248, 1);
-	padding-top: 50px;
-	margin-right: 20px;
-}
-.pc_hi div:nth-child(3){
-	margin-right: 0;
-}
-.pc_hi div img{
-	width: 60px;
-	height: 60px;
-}
-.pc_hi div p{
-	font-size: 9px;
-	color: #333;
-	margin-top: 15px;
-}
-.pc_sec{
-	width: 100%;
-	text-align: center;
-	font-size: 9px;
-	color: #333;
-}
-.pc_sec div{
-	display: inline-block;
-	height: 100px;
-	width: 100px;
-	margin-right:60px;
-}
-.pc_sec div:nth-child(4){
-	margin-right: 0;
-}
-.pc_sec div img{
-	width: 60px;
-	height: 60px;
-	margin-bottom: 15px;
-}
-.jdb{
-	width: 100%;
-	height: 360px;
-	background-image: url(../../images/jdb.png);
-	background-repeat: no-repeat;
-	background-size: 680px 360px;
-	background-position: center;
-	padding-right: 33%;
-	padding-top: 171px;
-}
-.jdb p{
-	font-size: 9px;
-	text-align: right;
-}
-.pc_zhanlue{
-	margin-top: 80px;
-	width: 100%;
-	height: 410px;
-	background-color: rgba(248, 248, 248, 1);
-	text-align: center;
-}
-.pc_part img{
-	width: 125px;
-	height: 60px;
-	margin-left: 7px;
-}
-.pc_part img:first-child{
-	margin-left: 0px;
-}
-.pc_gudong{
-	width: 100%;
-	text-align: center;
-	padding-bottom: 20px;
-}
-.pc_gudong img{
-	width: 110px;
-	height: 45px;
-	margin-right: 5px;
-}
-.pc_gudong img:nth-child(1){
-	margin-right:0;
-}
-.pc_footer{
-	width: 100%;
-	height: 255px;
-	background-color: rgb(51, 51, 51);
-	text-align: center;
-	font-size: 8px;
-	color: #fff;
-}
-.pc_footer_content{
-	display: inline-block;
-	width: 1002px;
-	border-bottom: 1px solid #999;
-	height: 180px;
-}
-.pc_footer_content_left{
-	width: 500px;
-	height: 180px;
-	float: left;
-	background-image: url(../../images/cjtlogo.png);
-	background-repeat: no-repeat;
-	background-size: 90px 27px;
-	background-position: 0px 40px;
-	padding-top: 80px;
-	text-align: left;
-}
-.pc_footer_content_left div{
-	line-height: 30px;
-}
-.pc_footer_content_right{
-	width: 500px;
-    height: 180px;
-    float: right;
-    text-align: left;
-    line-height: 25px;
-    padding-left: 310px;
-}
-.pc_footer_content_right p:nth-child(1){
-	font-size: 20px;
-	line-height: 80px;
-	font-weight: bold;
-}
-.loca{
-	color: #999999;
-	line-height: 73px;
-	text-align: left;
-	padding-left: 15%;
-} */
+/*pc页面部分*/ 
 .pc_first{
 	width:100%;
 	position:relative;
@@ -1572,7 +1317,6 @@ img{
 	width: 100%;
 	position: absolute;
 	top:30px;
-	border:1px solid red;
 }
 .pc_fourth_title{
 	font-size:32px;
@@ -1586,28 +1330,171 @@ img{
 .pc_module{
 	width: 100%;
 	margin-top:50px;
+	display: flex;
+	justify-content: center;
 }
 .pc_per_module{
-	width: 275px;
-	height: 300px;
-	border:1px solid green;
+	width: 255px;
+	height: 280px;
+	position: relative;
+	margin-left:15px;
+	margin-right:15px;
+}
+.pc_per_module_bg{
+	width: 255px;
+	height: 280px;
 	float: left;
 	background:#fff;
+	opacity:0.15;
+}
+.pc_per_module_box{
+	width:255px;
+	height: 280px;
+	position: absolute;
+	top:0;
+	left:0;
 }
 .pc_per_module img{
 	width: 170px;
 	margin-top:36px;
 }
-.pc_per_module>p:nth-child(2){
+.pc_per_module p:nth-child(2){
 	font-size:18px;
-	color:#333;
-	margin-top:10px;
+	color:#fff;
+	margin-top:25px;
 	line-height: 28px;
 }
-.pc_per_module>p:nth-child(3){
+.pc_per_module p:nth-child(3){
 	font-size:14px;
 	line-height: 25px;
-	color:#333;
+	color:#fff;
+	margin-top:5px;
+}
+.pc_fifth{
+	width: 100%;
+	height: 300px;
+}
+.pc_fifth_title{
+	font-size:32px;
+	line-height: 150px;
+}
+.pc_fifth_imgs_box{
+	display: flex;
+	justify-content: center;
+}
+.pc_fifth_img{
+	margin-left: 15px;
+	margin-right:15px;
+	width:160px;
+	height:68px;
+	border:1px solid #E1E1E1;
+}
+.pc_fifth_img2{
+	padding:10px;
+}
+.pc_sixth{
+	width:100%;
+	height:400px;
+	background:rgba(249,249,249,1);
+	padding-top:90px;
+}
+.pc_sixth_desc{
+	margin-top:40px;
+	width: 100%;
+	text-align:left;
+	text-indent: 2%;
+	font-size:18px;
+	line-height: 35px;
+	color:#666;
+	padding:0 20% 0 20%;
+}
+.pc_footer{
+	width: 100%;
+	height: 255px;
+	background-color: rgb(51, 51, 51);
+	text-align: center;
+	font-size: 8px;
+	color: #fff;
+}
+.pc_footer_content{
+	display: inline-block;
+	width: 1002px;
+	height: 180px;
+	position: relative;
+}
+.pc_footer_content_left{
+	position: absolute;
+	width: 580px;
+	height: 270px;
+	background-image: url(../../images/footer_left_bg.png);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	text-align: left;
+	top:-50px;
+	padding:0 28px 0 28px;
+}
+.pc_footer_content_left_qc{
+	display: flex;
+	justify-content: center;
+	font-size:14px;
+	color: #fff;
+	padding-top:40px;
+}
+.pc_footer_content_left_qc section{
+	width: 135px;
+	margin: 0 20px 0 20px;
+}
+.pc_footer_content_left_qc p{
+	line-height: 30px;
+	font-size:12px;
+}
+.pc_footer_content_right{
+	width: 500px;
+    height: 180px;
+    float: right;
+    text-align: left;
+    line-height: 25px;
+    padding-left: 310px;
+}
+.pc_footer_content_right p:nth-child(1){
+	font-size: 20px;
+	line-height: 80px;
+	font-weight: bold;
+}
+.loca{
+	width:88%;
+	color: #fff;
+	line-height: 43px;
+	text-align: left;
+	border-top:1px solid #fff;
+	position: absolute;
+	bottom:0;
+}
+.visiable_box{
+	width: 230px;
+	height: 290px;
+	background-color:#fff;
+	position:absolute;
+	bottom:70px;
+	left:30%;
+	padding-top:20px;
+}
+.visiable_box:after{
+	content:'';
+	width: 10px;
+	height: 10px;
+	background-color:#fff;
+	position: absolute;
+	left:48%;
+	bottom:-5px;
+	transform:rotate(135deg);
+}
+.visiable_box p{
+	font-size: 14px;
+	color:#666;
+}
+.visiable_box img{
+	width: 94%;
 }
 </style>
 <style media="screen">
