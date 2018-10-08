@@ -37,12 +37,20 @@ module.exports = {
     //     }
     // },
     proxyTable: {
-        "/api/personal": {
+        "/api/": {
             // target:"http://192.168.10.100:8088",
-            target:"http://cjtsh.au32.cn/api/personal",
+            target:"http://api.test.au32.cn/",
             changeOrigin: true,
             pathRewrite: {
-                "^/api/personal": ""
+                "^/api/": "/"
+            },
+        },
+        "/api/personal/": {
+            // target:"http://192.168.10.100:8088",
+            target:"http://cjtsh.au32.cn/api/personal/",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/api/personal/": "/"
             },
         },
         // "/gold": {

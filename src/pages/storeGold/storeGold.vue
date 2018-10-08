@@ -199,7 +199,7 @@
 						<span></span>
 						<div class="pc_logo_text">央企背景</div>
 					</div>
-					<div class="pc_title">专业回收黄金20年</div>
+					<div class="pc_title">专业回收黄金二十年</div>
 					<div class="pc_des">上海黄金交易所会员单位</div>
 					<div class="pc_goldprice_conter">
 						<p class="pc_goldprice_title">回收金价(元/克):</p>
@@ -209,7 +209,7 @@
 					<div class="visiable_box" v-show="visible_qc">
 						<p>终于等到你～</p>
 						<p>扫描下方二维码立即体验</p>
-						<img src="../../images/cjt-link.png" alt="">
+						<img src="../../images/xuanfu-qr.png" alt="">
 					</div>
 				</div>
 			</section>
@@ -303,30 +303,31 @@
 				<div class="pc_fifth_imgs_box">
 					<img src="../../images/zxxt.png" alt="" class="pc_fifth_img">
 					<img src="../../images/lan.png" alt="" class="pc_fifth_img pc_fifth_img2">
+					<img src="../../images/360.png" alt="" class="pc_fifth_img pc_fifth_img2">
 					<img src="../../images/yi.png" alt="" class="pc_fifth_img pc_fifth_img2">
 					<img src="../../images/zhong.png" alt="" class="pc_fifth_img" style="border:none;">
-					<img src="../../images/bai.png" alt="" class="pc_fifth_img pc_fifth_img2">
+					<img src="../../images/pc-company6.png" alt="" class="pc_fifth_img pc_fifth_img2">
 				</div>
 			</section>
 			<!-- 第六部分 -->
 			<section class="pc_sixth">
 				<img src="../../images/cjtlogo.png" alt="" style="width:160px;height:44px;">
-				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
-				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保架护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 			</section>
 			<!-- 底部 -->
 			<section class="pc_footer">
 				<div class="pc_footer_content">
 					<div class="pc_footer_content_left">
-						<div class="pc_footer_content_left_qc"> 
+						<div class="pc_footer_content_left_qc">
 							<section>
 								<img src="../../images/cjt-link.png" alt="">
 								<p>扫码开启黄金回收之旅</p>
 							</section>
-							<section>
+							<!-- <section>
 								<img src="../../images/dl.png" alt="">
 								<p>扫码下载黄金管家APP</p>
-							</section>
+							</section> -->
 							<section>
 								<img src="../../images/gjg.png" alt="">
 								<p>扫码关注黄金管家公众号</p>
@@ -1171,7 +1172,7 @@ img{
 	background-color: #DDC899;
 	color: #fff;
 }
-/*pc页面部分*/ 
+/*pc页面部分*/
 .pc_first{
 	width:100%;
 	position:relative;
@@ -1187,38 +1188,44 @@ img{
 	height:37px;
 	width: 100%;
 	overflow: hidden;
+	display: flex;
+	align-items: center;
 }
 .pc_logo span{
 	float: left;
-	height: 37px;
-	border-left: 1px solid #DDC899;
-	margin-left:15px;
+	height: 25px;
+	border-left: 1px solid rgba(221,200,153,0.6);
+	margin-left:16px;
 	margin-right:15px;
 }
 .cjtlogo{
-	width:134px;
-	height:37px;
+	width:100px;
+	height:27px;
 	float:left;
 }
 .pc_logo_text{
-	font-size:27px;
+	font-size:22px;
 	color:#DDC899;
 	float:left;
+	margin-bottom: 5px;
+	font-family:PingFangSC-Regular;
 }
 .pc_title{
 	width: 100%;
     height: 70px;
     color: #fff;
-    font-size: 40px;
+    font-size: 37px;
     text-align: left;
     letter-spacing: 4px;
 	padding-top:10px;
 }
 .pc_des{
 	width:100%;
-	font-size:20px;
-	color:#fff;
+	font-size:15px;
+	color:rgba(255,255,255,0.9);
 	text-align:left;
+	margin-bottom: 50px;
+	font-family:PingFangSC-Light;
 }
 .pc_goldprice_conter{
 	width: 244px;
@@ -1228,25 +1235,27 @@ img{
 	padding-top:40px;
 }
 .pc_goldprice_title{
-	font-size:16px;
+	font-size:14px;
 	color:#fff;
 	text-align:center;
 }
 .pc_goldprice{
-	font-size:30px;
 	color:#fff;
-	font-size: 55px;
+	font-size: 48px;
 	text-align: center;
+	margin-top:10px;
+	font-family:DINAlternate-Bold;
 }
 .pc_button{
 	width:244px;
 	height: 60px;
-	font-size:20px;
+	font-size:18px;
 	line-height: 60px;
 	text-align: center;
 	background:linear-gradient(90deg,rgba(221,200,153,1) 0%,rgba(192,156,96,1) 100%);
 	color:#fff;
 	margin-top:16px;
+	border-radius:3px;
 }
 .pc_second{
 	width:100%;
@@ -1256,16 +1265,22 @@ img{
 .pc_report_content{
 	width: 100%;
 	position: absolute;
-	padding-left: 12%;
+	/* padding-left: 12%; */
 	top:16%;
+	display: flex;
+	justify-content: center;
 }
 .pc_report_img{
-	width: 500px;
+	width: 518px;
 	float: left;
-	margin-right: 110px;
+	text-align: left
+	/* margin-right: 76px; */
 }
+
 .pc_report_right{
+	width: 350px;
 	float:left;
+	padding-left: 60px;
 }
 .pc_report_title{
 	overflow: hidden;
@@ -1285,7 +1300,7 @@ img{
 }
 .pc_per_des p:nth-child(1){
 	margin-top:12px;
-	font-size:20px;
+	font-size:18px;
 	font-weight:bold;
 }
 .pc_per_des p:nth-child(2){
@@ -1293,15 +1308,20 @@ img{
 	font-size:12px;
 }
 .pc_third_title{
-	font-size:32px;
+	font-size:24px;
 	color:#333;
 	font-weight: bold;
 	line-height: 160px;
+	font-family:PingFangSC-Medium;
 }
 .pc_third_title2{
 	font-size:15px;
 	color:#333;
 	margin-bottom:35px;
+	letter-spacing: 2px;
+}
+.pc_third img{
+
 }
 .pc_fourth{
 	margin-top:80px;
@@ -1313,13 +1333,17 @@ img{
 	top:30px;
 }
 .pc_fourth_title{
-	font-size:32px;
+	font-size:24px;
 	color:#fff;
 	line-height: 130px;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
 }
 .pc_fourth_art{
-	font-size:15px;
-	color:#fff;
+	font-size:12px;
+	color:rgba(248,248,248,1);
+	font-family:PingFangSC-Regular;
+	font-weight:400;
 }
 .pc_module{
 	width: 100%;
@@ -1369,8 +1393,11 @@ img{
 	height: 300px;
 }
 .pc_fifth_title{
-	font-size:32px;
+	color: #333;
+	font-size:24px;
 	line-height: 150px;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
 }
 .pc_fifth_imgs_box{
 	display: flex;
@@ -1383,6 +1410,10 @@ img{
 	height:68px;
 	border:1px solid #E1E1E1;
 }
+.pc_fifth_img:nth-of-type(6){
+	padding:0;
+	border:none;
+}
 .pc_fifth_img2{
 	padding:10px;
 }
@@ -1394,13 +1425,15 @@ img{
 }
 .pc_sixth_desc{
 	margin-top:40px;
-	width: 100%;
+	width: 700px;
+	margin:0 auto;
 	text-align:left;
 	text-indent: 2%;
-	font-size:18px;
+	font-size:16px;
 	line-height: 35px;
 	color:#666;
-	padding:0 20% 0 20%;
+	margin-top:40px;
+	/* padding:0 20% 0 20%; */
 }
 .pc_footer{
 	width: 100%;
@@ -1432,11 +1465,17 @@ img{
 	justify-content: center;
 	font-size:14px;
 	color: #fff;
-	padding-top:40px;
+	padding-top:60px;
 }
 .pc_footer_content_left_qc section{
-	width: 135px;
+	width: 155px;
+	text-align: center;
 	margin: 0 20px 0 20px;
+}
+.pc_footer_content_left_qc section img{
+	width: 105px;
+	display: inline-block;
+	margin:0 auto;
 }
 .pc_footer_content_left_qc p{
 	line-height: 30px;
@@ -1451,9 +1490,10 @@ img{
     padding-left: 310px;
 }
 .pc_footer_content_right p:nth-child(1){
-	font-size: 20px;
+	font-size: 25px;
 	line-height: 80px;
-	font-weight: bold;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
 }
 .loca{
 	width:88%;
@@ -1488,7 +1528,8 @@ img{
 	color:#666;
 }
 .visiable_box img{
-	width: 94%;
+	width: 88%;
+	margin-top:10px;
 }
 </style>
 <style media="screen">
