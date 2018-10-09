@@ -313,16 +313,18 @@
 			<!-- 第六部分 -->
 			<section class="pc_sixth">
 				<img src="../../images/cjtlogo.png" alt="" style="width:215px;height:60px;">
-				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
-				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于黄金管家，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
+				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于黄金管家，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 			</section>
 			<!-- 底部 -->
 			<section class="pc_footer">
 				<div class="pc_footer_content">
 					<div class="pc_footer_content_left">
 						<div class="pc_footer_content_left_qc">
-							<section>
-								<img src="../../images/cjt-link.png" alt="">
+							<section class="frist-img">
+								<div class="img-wrap">
+									<img src="../../images/xuanfu-qr.png" alt="">
+								</div>
 								<p>扫码开启&nbsp;&nbsp;黄金回收之旅</p>
 							</section>
 							<!-- <section>
@@ -1542,6 +1544,17 @@ img{
 	width: 140px;
 	display: inline-block;
 	margin:0 auto;
+}
+.pc_footer_content_left_qc .frist-img .img-wrap{
+	width:140px;
+	height:140px;
+	margin:0 auto 5px;
+	background-color: #fff;
+}
+.pc_footer_content_left_qc .frist-img img{
+	width:120px;
+	height:120px;
+	margin-top:10px;
 }
 .pc_footer_content_left_qc p{
 	line-height: 30px;
