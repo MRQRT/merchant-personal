@@ -203,7 +203,7 @@
 					<div class="pc_des">上海黄金交易所会员单位</div>
 					<div class="pc_goldprice_conter">
 						<p class="pc_goldprice_title">回收金价(元/克):</p>
-						<p class="pc_goldprice">{{currentPrice}}</p>
+						<p class="pc_goldprice">{{currentPrice | formatNum}}</p>
 					</div>
 					<div class="pc_button" @mouseover="fade_in" @mouseout="fade_out">我要估价</div>
 					<div class="visiable_box" v-show="visible_qc">
@@ -215,7 +215,7 @@
 			</section>
 			<!-- 第二部分 -->
 			<section class="pc_second">
-				<img src="../../images/lou.png" alt="">
+				<!-- <img src="../../images/lou.png" alt=""> -->
 				<div class="pc_report_content">
 					<div class="pc_report_img">
 						<img :src="report_png" alt="">
@@ -253,7 +253,7 @@
 			</section>
 			<!-- 第四部分 -->
 			<section class="pc_fourth">
-				<img src="../../images/fbg.png" alt="" style="width:100%;height:600px;">
+				<!-- <img src="../../images/fbg.png" alt="" style="width:100%;height:600px;" class="fourth-img"> -->
 				<div class="pc_fourth_content">
 					<p class="pc_fourth_title">为什么选择存金通</p>
 					<p class="pc_fourth_art">黄金管家旗下品牌&nbsp;&nbsp;&nbsp;&nbsp;央企背景&nbsp;&nbsp;&nbsp;&nbsp;回收黄金我们是专业的</p>
@@ -416,16 +416,20 @@ export default {
 		}
 		if(this.clientWidth>1000){
 			this.pc=true
+			document.getElementsByTagName("body")[0].style.minWidth=1200+'px'
 		}else{
 			this.pc=false
+			document.getElementsByTagName("body")[0].style.minWidth=''
 		}
 		let tha = this;
 		window.onresize = function(){
 			let windowsize = document.documentElement.clientWidth;
 			if(windowsize>768 || windowsize==768){
 				tha.pc=true
+				document.getElementsByTagName("body")[0].style.minWidth=1200+'px'
 			}else{
 				tha.pc=false
+				document.getElementsByTagName("body")[0].style.minWidth=''
 			}
 		}
 	},
@@ -669,6 +673,7 @@ export default {
 	box-sizing: border-box;
 	font-family:PingFang-SC-Regular;
 }
+
 img{
 	width: 100%;
 }
@@ -1175,14 +1180,32 @@ img{
 /*pc页面部分*/
 .pc_first{
 	width:100%;
+	/* height: 1080px; */
 	position:relative;
+	overflow: hidden;
+	/* display: flex;
+	justify-content: center; */
+	/* background: url('../../images/pcbg.png') no-repeat top center; */
+	/* background-size: 100% 100%; */
+}
+.pc_first>img{
+	width: 100%;
+	z-index: 99;
+	/* height: 1080px; */
+	/* position: absolute;
+	left:50%;
+	margin-left:-960px; */
 }
 .pc_banner_content{
-	width:100%;
+	width:1200px;
+	padding-left:50px;
+	margin:0 auto;
 	overflow: hidden;
 	position: absolute;
-	top:27%;
-	padding-left:23%;
+	top:24%;
+	left:50%;
+	margin-left:-600px;
+
 }
 .pc_logo{
 	height:37px;
@@ -1193,18 +1216,18 @@ img{
 }
 .pc_logo span{
 	float: left;
-	height: 25px;
+	height: 35px;
 	border-left: 1px solid rgba(221,200,153,0.6);
 	margin-left:16px;
 	margin-right:15px;
 }
 .cjtlogo{
-	width:100px;
-	height:27px;
+	width:134px;
+	height:37px;
 	float:left;
 }
 .pc_logo_text{
-	font-size:22px;
+	font-size:28px;
 	color:#DDC899;
 	float:left;
 	margin-bottom: 5px;
@@ -1214,14 +1237,16 @@ img{
 	width: 100%;
     height: 70px;
     color: #fff;
-    font-size: 37px;
+    font-size: 50px;
+	font-weight: 500;
     text-align: left;
     letter-spacing: 4px;
 	padding-top:10px;
+	margin-bottom: 20px;
 }
 .pc_des{
 	width:100%;
-	font-size:15px;
+	font-size:20px;
 	color:rgba(255,255,255,0.9);
 	text-align:left;
 	margin-bottom: 50px;
@@ -1235,13 +1260,13 @@ img{
 	padding-top:40px;
 }
 .pc_goldprice_title{
-	font-size:14px;
+	font-size:16px;
 	color:#fff;
 	text-align:center;
 }
 .pc_goldprice{
 	color:#fff;
-	font-size: 48px;
+	font-size: 60px;
 	text-align: center;
 	margin-top:10px;
 	font-family:DINAlternate-Bold;
@@ -1249,7 +1274,7 @@ img{
 .pc_button{
 	width:244px;
 	height: 60px;
-	font-size:18px;
+	font-size:22px;
 	line-height: 60px;
 	text-align: center;
 	background:linear-gradient(90deg,rgba(221,200,153,1) 0%,rgba(192,156,96,1) 100%);
@@ -1259,16 +1284,18 @@ img{
 }
 .pc_second{
 	width:100%;
-	padding-top:220px;
+	height: 460px;
+	margin-top:150px;
 	position: relative;
+	overflow-x: hidden;
+	background: url('../../images/lou.png') no-repeat center;
+	background-size: 100%;
 }
 .pc_report_content{
-	width: 100%;
-	position: absolute;
-	/* padding-left: 12%; */
-	top:16%;
+	width: 1200px;
+	margin:0 auto;
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 }
 .pc_report_img{
 	width: 518px;
@@ -1278,7 +1305,7 @@ img{
 }
 
 .pc_report_right{
-	width: 350px;
+	width: 430px;
 	float:left;
 	padding-left: 60px;
 }
@@ -1300,7 +1327,7 @@ img{
 }
 .pc_per_des p:nth-child(1){
 	margin-top:12px;
-	font-size:18px;
+	font-size:20px;
 	font-weight:bold;
 }
 .pc_per_des p:nth-child(2){
@@ -1308,39 +1335,51 @@ img{
 	font-size:12px;
 }
 .pc_third_title{
-	font-size:24px;
+	min-width: 1200px;
+	font-size:32px;
 	color:#333;
 	font-weight: bold;
 	line-height: 160px;
 	font-family:PingFangSC-Medium;
 }
 .pc_third_title2{
+	min-width: 1200px;
 	font-size:15px;
 	color:#333;
 	margin-bottom:35px;
 	letter-spacing: 2px;
 }
 .pc_third img{
-
+	min-width: 1200px;
 }
 .pc_fourth{
+	width: 100%;
+	height: 710px;
 	margin-top:80px;
 	position: relative;
+	display: flex;
+	justify-content: center;
+	background:url('../../images/fbg.png') no-repeat center fixed;
+	background-size: 100% 100%;
+}
+.fourth-img{
+	min-width: 1200px;
 }
 .pc_fourth_content{
-	width: 100%;
+	width: 1200px;
+	margin:0 auto;
 	position: absolute;
-	top:30px;
+	top:80px;
 }
 .pc_fourth_title{
-	font-size:24px;
+	font-size:32px;
 	color:#fff;
 	line-height: 130px;
 	font-family:PingFangSC-Medium;
 	font-weight:500;
 }
 .pc_fourth_art{
-	font-size:12px;
+	font-size:16px;
 	color:rgba(248,248,248,1);
 	font-family:PingFangSC-Regular;
 	font-weight:400;
@@ -1349,18 +1388,18 @@ img{
 	width: 100%;
 	margin-top:50px;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 }
 .pc_per_module{
-	width: 255px;
-	height: 280px;
+	width: 275px;
+	height: 300px;
 	position: relative;
-	margin-left:15px;
-	margin-right:15px;
+	/* margin-left:15px;
+	margin-right:15px; */
 }
 .pc_per_module_bg{
-	width: 255px;
-	height: 280px;
+	width: 275px;
+	height: 300px;
 	float: left;
 	background:#fff;
 	opacity:0.15;
@@ -1377,13 +1416,13 @@ img{
 	margin-top:36px;
 }
 .pc_per_module p:nth-child(2){
-	font-size:18px;
+	font-size:20px;
 	color:#fff;
 	margin-top:25px;
 	line-height: 28px;
 }
 .pc_per_module p:nth-child(3){
-	font-size:14px;
+	font-size:16px;
 	line-height: 25px;
 	color:#fff;
 	margin-top:5px;
@@ -1394,19 +1433,21 @@ img{
 }
 .pc_fifth_title{
 	color: #333;
-	font-size:24px;
+	font-size:32px;
 	line-height: 150px;
 	font-family:PingFangSC-Medium;
 	font-weight:500;
 }
 .pc_fifth_imgs_box{
+	width: 1200px;
+	margin:0 auto;
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 }
 .pc_fifth_img{
-	margin-left: 15px;
-	margin-right:15px;
-	width:160px;
+	/* margin-left: 15px;
+	margin-right:15px; */
+	width:184px;
 	height:68px;
 	border:1px solid #E1E1E1;
 }
@@ -1425,11 +1466,11 @@ img{
 }
 .pc_sixth_desc{
 	margin-top:40px;
-	width: 700px;
+	width: 880px;
 	margin:0 auto;
 	text-align:left;
 	text-indent: 2%;
-	font-size:16px;
+	font-size:18px;
 	line-height: 35px;
 	color:#666;
 	margin-top:40px;
@@ -1445,8 +1486,10 @@ img{
 }
 .pc_footer_content{
 	display: inline-block;
-	width: 1002px;
+	/* width: 1002px; */
+	width: 1200px;
 	height: 180px;
+	margin:0 auto;
 	position: relative;
 }
 .pc_footer_content_left{
@@ -1487,10 +1530,10 @@ img{
     float: right;
     text-align: left;
     line-height: 25px;
-    padding-left: 310px;
+    padding-left: 300px;
 }
 .pc_footer_content_right p:nth-child(1){
-	font-size: 25px;
+	font-size: 28px;
 	line-height: 80px;
 	font-family:PingFangSC-Medium;
 	font-weight:500;
@@ -1510,7 +1553,7 @@ img{
 	background-color:#fff;
 	position:absolute;
 	bottom:70px;
-	left:30%;
+	left:100px;
 	padding-top:20px;
 }
 .visiable_box:after{
