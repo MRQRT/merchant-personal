@@ -195,14 +195,14 @@
 				<img src="../../images/pcbg.png" alt="">
 				<div class="pc_banner_content">
 					<div class="pc_logo">
-						<img src="../../images/cjtlogo.png" alt="" class="cjtlogo">
-						<span></span>
-						<div class="pc_logo_text">央企背景</div>
+						<img src="../../images/banner-logo.png" alt="" class="cjtlogo">
+						<!-- <span></span>
+						<div class="pc_logo_text">央企背景</div> -->
 					</div>
 					<div class="pc_title">专业回收黄金二十年</div>
 					<div class="pc_des">上海黄金交易所会员单位</div>
 					<div class="pc_goldprice_conter">
-						<p class="pc_goldprice_title">回收金价(元/克):</p>
+						<p class="pc_goldprice_title">回收金价(元/克)</p>
 						<p class="pc_goldprice">{{currentPrice | formatNum}}</p>
 					</div>
 					<div class="pc_button" @mouseover="fade_in" @mouseout="fade_out">我要估价</div>
@@ -215,7 +215,7 @@
 			</section>
 			<!-- 第二部分 -->
 			<section class="pc_second">
-				<!-- <img src="../../images/lou.png" alt=""> -->
+				<img src="../../images/lou.png" alt="">
 				<div class="pc_report_content">
 					<div class="pc_report_img">
 						<img :src="report_png" alt="">
@@ -306,13 +306,13 @@
 					<img src="../../images/lan.png" alt="" class="pc_fifth_img pc_fifth_img2">
 					<img src="../../images/360.png" alt="" class="pc_fifth_img pc_fifth_img2">
 					<img src="../../images/yi.png" alt="" class="pc_fifth_img pc_fifth_img2">
-					<img src="../../images/zhong.png" alt="" class="pc_fifth_img" style="border:none;">
+					<img src="../../images/pc-company5.png" alt="" class="pc_fifth_img" style="border:none;">
 					<img src="../../images/pc-company6.png" alt="" class="pc_fifth_img pc_fifth_img2">
 				</div>
 			</section>
 			<!-- 第六部分 -->
 			<section class="pc_sixth">
-				<img src="../../images/cjtlogo.png" alt="" style="width:160px;height:44px;">
+				<img src="../../images/cjtlogo.png" alt="" style="width:215px;height:60px;">
 				<div class="pc_sixth_desc" v-show="yjt">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 				<div class="pc_sixth_desc" v-show="hjgj">“存金通”隶属于北京盈吉通电子商务有限公司，总部位于北京，是拥有央企背景的黄金回购平台。上海黄金交易所综合类会员“众恒隆”作为股东为“存金通”保价护航。经由“存金通”回收来的所有黄金将直达精炼厂，为上海黄金交易所指定的黄金回收机构。</div>
 			</section>
@@ -323,7 +323,7 @@
 						<div class="pc_footer_content_left_qc">
 							<section>
 								<img src="../../images/cjt-link.png" alt="">
-								<p>扫码开启黄金回收之旅</p>
+								<p>扫码开启&nbsp;&nbsp;黄金回收之旅</p>
 							</section>
 							<!-- <section>
 								<img src="../../images/dl.png" alt="">
@@ -331,7 +331,7 @@
 							</section> -->
 							<section>
 								<img src="../../images/gjg.png" alt="">
-								<p>扫码关注黄金管家公众号</p>
+								<p>扫码关注&nbsp;&nbsp;黄金管家公众号</p>
 							</section>
 						</div>
 						<p class="loca">公司地址：北京市海淀区中关村SOHO B座 1209室</p>
@@ -1223,9 +1223,11 @@ img{
 	margin-right:15px;
 }
 .cjtlogo{
-	width:134px;
+	/* width:134px;
 	height:37px;
-	float:left;
+	float:left; */
+	width:286px;
+	height:37px;
 }
 .pc_logo_text{
 	font-size:28px;
@@ -1236,13 +1238,13 @@ img{
 }
 .pc_title{
 	width: 100%;
-    height: 70px;
+    height: 80px;
     color: #fff;
     font-size: 50px;
 	font-weight: bold;
     text-align: left;
     letter-spacing: 4px;
-	padding-top:10px;
+	padding-top:20px;
 	margin-bottom: 20px;
 }
 .pc_des{
@@ -1285,21 +1287,28 @@ img{
 }
 .pc_second{
 	width:100%;
-	height: 460px;
-	margin-top:150px;
+	height: 800px;
+	/* padding-top:340px; */
+	background-color: #FBFBFB;
 	position: relative;
-	overflow-x: hidden;
-	background: url('../../images/lou.png') no-repeat center;
-	background-size: 100%;
+	/* background: url('../../images/lou.png') no-repeat center;
+	background-size: 100%; */
+}
+.pc_second>img{
+	width:100%;
+	height: 459px;
+	margin-top:341px;
 }
 .pc_report_content{
 	width: 1200px;
 	margin:0 auto;
-	display: flex;
-	justify-content: space-around;
+	position: absolute;
+	top:150px;
+	left:50%;
+	margin-left:-600px;
 }
 .pc_report_img{
-	width: 518px;
+	min-width: 569px;
 	float: left;
 	text-align: left
 	/* margin-right: 76px; */
@@ -1312,9 +1321,12 @@ img{
 }
 .pc_report_title{
 	overflow: hidden;
+	display: flex;
+	align-items: center;
 }
 .pc_report_title img{
-	width:80px;
+	width:118px;
+	height:118px;
 	float:left;
 	margin-right:20px;
 }
@@ -1335,7 +1347,9 @@ img{
 	color:#666;
 	font-size:12px;
 }
-
+.pc_third{
+	margin-top:30px;
+}
 .pc_third_title{
 	min-width: 1200px;
 	font-size:32px;
@@ -1353,7 +1367,7 @@ img{
 }
 .pc_third_img{
 	width: 100%;
-	height: 450px;
+	height: 454px;
 	background:url('../../images/flow.png') no-repeat center;
 }
 .pc_third img{
@@ -1437,6 +1451,7 @@ img{
 .pc_fifth{
 	width: 100%;
 	height: 300px;
+	margin:60px 0 30px;
 }
 .pc_fifth_title{
 	color: #333;
@@ -1467,9 +1482,10 @@ img{
 }
 .pc_sixth{
 	width:100%;
-	height:400px;
+	height:480px;
 	background:rgba(249,249,249,1);
 	padding-top:90px;
+	/* margin-bottom:60px; */
 }
 .pc_sixth_desc{
 	margin-top:40px;
@@ -1480,7 +1496,7 @@ img{
 	font-size:18px;
 	line-height: 35px;
 	color:#666;
-	margin-top:40px;
+	margin-top:60px;
 	/* padding:0 20% 0 20%; */
 }
 .pc_footer{
@@ -1515,21 +1531,21 @@ img{
 	justify-content: center;
 	font-size:14px;
 	color: #fff;
-	padding-top:60px;
+	padding-top:40px;
 }
 .pc_footer_content_left_qc section{
-	width: 155px;
+	width: 175px;
 	text-align: center;
 	margin: 0 20px 0 20px;
 }
 .pc_footer_content_left_qc section img{
-	width: 105px;
+	width: 140px;
 	display: inline-block;
 	margin:0 auto;
 }
 .pc_footer_content_left_qc p{
 	line-height: 30px;
-	font-size:12px;
+	font-size:14px;
 }
 .pc_footer_content_right{
 	width: 550px;
@@ -1551,7 +1567,7 @@ img{
 	color: #fff;
 	line-height: 43px;
 	text-align: left;
-	/* font-size: 14px; */
+	font-size: 14px;
 	border-top:1px solid #fff;
 	position: absolute;
 	bottom:0;
