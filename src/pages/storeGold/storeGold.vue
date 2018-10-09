@@ -249,7 +249,8 @@
 			<section class="pc_third">
 				<p class="pc_third_title">黄金回收流程</p>
 				<p class="pc_third_title2">我们承诺，随时接受退换</p>
-				<img src="../../images/flow.png" alt="">
+				<div class="pc_third_img"></div>
+				<!-- <img src="../../images/flow.png" alt=""> -->
 			</section>
 			<!-- 第四部分 -->
 			<section class="pc_fourth">
@@ -1238,7 +1239,7 @@ img{
     height: 70px;
     color: #fff;
     font-size: 50px;
-	font-weight: 500;
+	font-weight: bold;
     text-align: left;
     letter-spacing: 4px;
 	padding-top:10px;
@@ -1334,6 +1335,7 @@ img{
 	color:#666;
 	font-size:12px;
 }
+
 .pc_third_title{
 	min-width: 1200px;
 	font-size:32px;
@@ -1346,8 +1348,13 @@ img{
 	min-width: 1200px;
 	font-size:15px;
 	color:#333;
-	margin-bottom:35px;
+	/* margin-bottom:35px; */
 	letter-spacing: 2px;
+}
+.pc_third_img{
+	width: 100%;
+	height: 450px;
+	background:url('../../images/flow.png') no-repeat center;
 }
 .pc_third img{
 	min-width: 1200px;
@@ -1355,7 +1362,7 @@ img{
 .pc_fourth{
 	width: 100%;
 	height: 710px;
-	margin-top:80px;
+	margin-top:100px;
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -1448,7 +1455,7 @@ img{
 	/* margin-left: 15px;
 	margin-right:15px; */
 	width:184px;
-	height:68px;
+	height:80px;
 	border:1px solid #E1E1E1;
 }
 .pc_fifth_img:nth-of-type(6){
@@ -1525,8 +1532,9 @@ img{
 	font-size:12px;
 }
 .pc_footer_content_right{
-	width: 500px;
+	width: 550px;
     height: 180px;
+	font-size: 14px;
     float: right;
     text-align: left;
     line-height: 25px;
@@ -1543,6 +1551,7 @@ img{
 	color: #fff;
 	line-height: 43px;
 	text-align: left;
+	/* font-size: 14px; */
 	border-top:1px solid #fff;
 	position: absolute;
 	bottom:0;
