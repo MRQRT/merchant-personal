@@ -193,7 +193,7 @@ export const xmlUploadImg=(current,src,method,Indicator,Toast,myrate,fa_index,fi
     img.src = src;
     function xhr_send(){
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", openAPI()+"gold/v3/member/uploadFile");
+        xhr.open("POST", "/api/v3/member/uploadFile");
         xhr.send(form);
         var that=current;
         xhr.onreadystatechange=function(){
@@ -311,7 +311,7 @@ export const queryChildDictionary = () => fetch('/api/v3/recycleOrder/queryChild
  * 添加存金订单
  */
 
-export const addRecycleOrder = (rOrder,contact,telephone,address,isCash,idPic,source) => fetch(gold+'/v3/recycleOrder/addRecycleOrder',{'rOrder':rOrder,'contact':contact,'telephone':telephone,'address':address,'isCash':isCash,'idPic':idPic,'source':source},'post')
+export const addRecycleOrder = (rOrder,contact,telephone,address,isCash,idPic,source) => fetch('/api/v3/recycleOrder/addRecycleOrder',{'rOrder':rOrder,'contact':contact,'telephone':telephone,'address':address,'isCash':isCash,'idPic':idPic,'source':source},'post')
 
 /**
  * 修改存金订单
