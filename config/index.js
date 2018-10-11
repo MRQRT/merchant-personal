@@ -37,12 +37,12 @@ module.exports = {
     //     }
     // },
     proxyTable: {
-        "/api/": {
+        "/api": {
             // target:"http://192.168.10.100:8088",
-            target:"http://api-test.au32.cn/",
+            target:"https://api-test.au32.cn/",
             changeOrigin: true,
             pathRewrite: {
-                "^/api/": "/"
+                "^/api": ""
             },
         },
         "/api/personal/": {
