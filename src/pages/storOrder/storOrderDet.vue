@@ -231,7 +231,7 @@
         checkImg:null,//检测报告图片
         comfirmLimit:true,//确认按钮避免重复提交
         cashAmount:null,//提现金额
-        hasWuliu:false,//是否有物流信息
+        hasWuliu:true,//是否有物流信息
       }
     },
     mounted(){
@@ -568,26 +568,27 @@
             }
         })
       },
-      //查看取货物流/退货物流
-      async viewDelivery(val){
-        Indicator.open({
-          text: '请求中...',
-          spinnerType: 'fading-circle'
-        });
-        //调用物流接口绘制物流窗口
-        var result=await queryExpress(val)
-        if(result.code==100){
-            if(result.content.status==205||result.content.status==201){
-              this.hasWuliu=0
+        //查看取货物流/退货物流
+        async viewDelivery(val){
+            Indicator.open({
+                text: '请求中...',
+                spinnerType: 'fading-circle'
+            });
+            //调用物流接口绘制物流窗口
+            var result=await queryExpress(val)
+            if(result.code==100){
+                if(result.content.status==205||result.content.status==201){
+                    this.hasWuliu=0
+                }else{
+                    Indicator.close();
+                    this.logistics=result.content.result.list
+                    this.popupVisible=true
+                    this.logisticsShow=true
+                }
+            }else{
+                Indicator.close(); 
             }
-            Indicator.close();
-            this.logistics=result.content.result.list
-            this.popupVisible=true
-            this.logisticsShow=true
-        }else{
-           Indicator.close(); 
-        }
-      },
+        },
       //查看检测报告
       viewReport(){
         this.popupVisibleReport=true
