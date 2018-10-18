@@ -143,7 +143,7 @@
 					brandArray: null,//1、周大福，2、老凤祥，3、菜百，4、周生生，5、周大生，6老庙，7、中国黄金，8、山东黄金，9、中金
 				        brand1: [],//饰品品牌数组
 				        brand2: [],//投资金品牌数组
-				   weight_show: true,//克重不足提示开关
+				   weight_show: false,//克重不足提示开关
 			   	 zidingyiBrand: '',//自定义品牌
 				        direct: true,//是否提现
 					 bank_show: false,
@@ -1078,14 +1078,15 @@ width: 100%;
 	border-radius: 0;
 }
 .gram_tip{
-    width: 100%;
+	width: 100%;
     height: .5rem;
     line-height: .5rem;
     font-size: .22rem;
     color: #FF6D39;
     text-align: left;
     padding-left: .84rem;
-    margin-top: 2.68rem;
+    margin-top: 2.4rem;
+    text-align: left;
     /* background-image: url(../../images/gantanhao.png);
 	background-position: 2.1rem .1rem;
     background-repeat: no-repeat;

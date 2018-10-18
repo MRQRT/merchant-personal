@@ -152,8 +152,7 @@
 		    	  brandArray: null,//1、周大福，2、老凤祥，3、菜百，4、周生生，5、周大生，6老庙，7、中国黄金，8、山东黄金，9、中金
 					  brand1: [],//饰品品牌数组
 					  brand2: [],//投资金品牌数组
-				//  weight_show: false,//克重不足提示开关
-				 weight_show: true,//克重不足提示开关
+				 weight_show: false,//克重不足提示开关
 			   zidingyiBrand: '',//自定义品牌
 		               order: {//订单对象
 				               checkType: '',//投资金的选择类型
