@@ -187,6 +187,7 @@
 			}
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
+				this.estimatePrice=this.order.applyWeight*this.currentPrice
 			}
 		},
 		mounted(){
