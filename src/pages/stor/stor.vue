@@ -185,6 +185,10 @@
 			    this.canPhoto=true; //苹果手机不需要验证权限
 			    this.noPhoto=false;
 			}
+			if(this.$route.query.weight){
+				this.order.applyWeight = this.$route.query.weight;
+				console.log('applyWeight',this.order.applyWeight)
+			}
 		},
 		mounted(){
 			this.queryRecycleProduct();//查询存金产品列表
@@ -275,7 +279,7 @@
 				const res = await queryRecycleProduct()
 				this.productType=res.content
 				if(this.recycleParams && this.recycleParams!='' || this.$route.query.id){
-					
+
 				}else{
 					this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
 					this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
@@ -393,7 +397,7 @@
 						return;
 					}
 					this.selectImgs(e.target.files)
-				} 
+				}
 			},
 			/*删除图片*/
 			delImage: function(index){
@@ -509,7 +513,7 @@
                     	u8arr[n]=bstr.charCodeAt(n);
                 	}
                 	return new Blob([u8arr],{type:mime});
-				}  
+				}
 				//base64转换成二进制文件
 				let formData = new FormData()
         		this.files.forEach((item, index) => {
@@ -572,11 +576,11 @@
     		},
 		},
 		activated: function () {
-			
+
 		},
 		components:{
 			headTop: headTop,
-			  ruler: ruler 
+			  ruler: ruler
 		}
 
 	}
@@ -842,7 +846,7 @@ width: 100%;
 	width: 2.1rem;
 	height: 2.1rem;
 	border: 1px solid #eaeaea;
-}	         
+}
 .upload_image_preview>section>.del_image{
 	width: .35rem;
 	height: .35rem;
