@@ -187,7 +187,6 @@
 			}
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
-				console.log('applyWeight',this.order.applyWeight)
 			}
 		},
 		mounted(){
@@ -281,8 +280,13 @@
 				if(this.recycleParams && this.recycleParams!='' || this.$route.query.id){
 
 				}else{
-					this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
-					this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
+					if(this.$route.query.type&&this.$route.query.type==1){ //从报价小程序跳转过来
+						this.order.checkType = res.content[res.content.length].name//加载选中第一个的name值
+						this.order.productId = res.content[res.content.length].id//加载选中第一个的id值
+					}else{
+						this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
+						this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
+					}
 				}
 			},
 			//查询存金产品品牌
