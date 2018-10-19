@@ -281,8 +281,8 @@
 
 				}else{
 					if(this.$route.query.type&&this.$route.query.type==1){ //从报价小程序跳转过来
-						this.order.checkType = res.content[res.content.length].name//加载选中第一个的name值
-						this.order.productId = res.content[res.content.length].id//加载选中第一个的id值
+						this.order.checkType = '金条'//加载选中第一个的name值
+						this.order.productId = res.content[res.content.length-2].id//加载选中第一个的id值
 					}else{
 						this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
 						this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
