@@ -155,9 +155,9 @@ export default{
 			}
 		},
 		//点击订单详情
-		order_det(val){
+		order_det(item){
 			//如果状态是未确认，直接进入检测报告页
-			if(val.status==6){
+			if(item.status==6){
 				this.$router.push({path:'/report',query:{id:item.id}})
 			}else{
 				this.$router.push({path:'/storOrderDet',query:{id:item.id}})

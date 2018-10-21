@@ -13,7 +13,7 @@
             <p>福利金额：{{orderDetail.verifyTime}} / 福利克重：{{orderDetail.verifyTime}}</p>
             <p>检测说明：{{orderDetail.verifyRemark || '--'}}</p>
             <p>检测结果：{{orderDetail.verifyResult==0?'通过':'不通过'}}</p>
-            <img :src="checkImg" alt="检测报告">
+            <img :src="checkImg" alt="检测报告" preview="1">
             <div class="report_btns">
                 <p @click="confirmStor" :class="{'hasConfirm':orderDetail.status==8}" v-if="orderDetail.status==6 || orderDetail.status==8">{{orderDetail.status==8?'已确认':'确认订单'}}</p>
                 <p @click="tele" :class="{'contact':orderDetail.status!=6 && orderDetail.status!=8}">联系客服</p>
