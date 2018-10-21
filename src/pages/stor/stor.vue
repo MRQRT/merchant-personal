@@ -188,6 +188,8 @@
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
 				this.estimatePrice = this.order.applyWeight * this.currentPrice;
+				console.log('applyWeight',this.order.applyWeight)
+				console.log('currentPrice',this.currentPrice)
 				console.log('estimatePrice',this.estimatePrice)
 			}
 		},
@@ -272,8 +274,12 @@
 			goBack(){
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
-				this.$router.push('/storeGold')
 				Indicator.close()
+				if(this.$route.query.weight){
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
+				}else{
+					this.$router.push('/storeGold')
+				}
 			},
 			//查询存金产品列表
 			async queryRecycleProduct(){
