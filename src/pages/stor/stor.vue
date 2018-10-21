@@ -185,13 +185,6 @@
 			    this.canPhoto=true; //苹果手机不需要验证权限
 			    this.noPhoto=false;
 			}
-			if(this.$route.query.weight){
-				this.order.applyWeight = this.$route.query.weight;
-				this.estimatePrice = this.order.applyWeight * this.currentPrice;
-				console.log('applyWeight',this.order.applyWeight)
-				console.log('currentPrice',this.currentPrice)
-				console.log('estimatePrice',this.estimatePrice)
-			}
 		},
 		mounted(){
 			this.queryRecycleProduct();//查询存金产品列表
@@ -209,6 +202,14 @@
 				this.order = this.recycleParams
 				this.estimatePrice=this.order.applyWeight*this.currentPrice
 				this.set_initRulerData(this.recycleParams.applyWeight)
+			}
+			/*如果是从报价小程序进来*/
+			if(this.$route.query.weight){
+				this.order.applyWeight = this.$route.query.weight;
+				this.estimatePrice = this.order.applyWeight * this.currentPrice;
+				console.log('applyWeight',this.order.applyWeight)
+				console.log('currentPrice',this.currentPrice)
+				console.log('estimatePrice',this.estimatePrice)
 			}
 		},
 		computed:{
