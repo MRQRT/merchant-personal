@@ -187,6 +187,7 @@
 			}
 		},
 		mounted(){
+			console.log(this.currentPrice)
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -206,10 +207,8 @@
 			/*如果是从报价小程序进来*/
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
-				this.estimatePrice = this.order.applyWeight * this.currentPrice;
-				console.log('applyWeight',this.order.applyWeight)
-				console.log('currentPrice',this.currentPrice)
-				console.log('estimatePrice',this.estimatePrice)
+				this.estimatePrice = this.$route.query.estimate;
+				// this.estimatePrice = this.order.applyWeight * this.currentPrice;
 			}
 		},
 		computed:{
