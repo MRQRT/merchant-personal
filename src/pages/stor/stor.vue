@@ -129,7 +129,7 @@
 <script type="text/javascript">
 	import headTop from '@/components/header/head.vue'
 	import ruler from '@/components/ruler/ruler.vue'
-	import { clearNoNum, formatDate } from '../../config/mUtils.js'
+	import { clearNoNum, formatDate,isMiniProgram,check } from '../../config/mUtils.js'
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
@@ -173,6 +173,7 @@
 					  canAdd: true, //添加图片加号是否显示
 				 AndroVerson: checkAndroAgent(),
 				   iosVerson: iosVersion(),
+				   isMiniProgram:'',
 
  			}
 		},
@@ -203,6 +204,12 @@
 				this.estimatePrice=this.order.applyWeight*this.currentPrice
 				this.set_initRulerData(this.recycleParams.applyWeight)
 			}
+			/*如果是从报价小程序进来*/
+			if(this.$route.query.weight){
+				this.order.applyWeight = this.$route.query.weight;
+				this.estimatePrice = this.$route.query.estimate;
+				// this.estimatePrice = this.order.applyWeight * this.currentPrice;
+			}
 		},
 		computed:{
 			...mapState({
@@ -210,7 +217,7 @@
 			currentPrice: state => state.currentPrice,
 		   recycleParams: state => state.recycleParams,
 		   	   rulerData: state => state.rulerData
-    		})
+		   }),
 		},
 		watch:{
 			//监听品牌选择
@@ -265,20 +272,32 @@
 			]),
 			//返回上一页
 			goBack(){
+				var that = this;
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
-				this.$router.push('/storeGold')
 				Indicator.close()
+				console.log('是否小程序环境',isMiniProgram())
+				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
+					this.$router.push('/storeGold')
+				}else{
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
+				}
+
 			},
 			//查询存金产品列表
 			async queryRecycleProduct(){
 				const res = await queryRecycleProduct()
 				this.productType=res.content
 				if(this.recycleParams && this.recycleParams!='' || this.$route.query.id){
-					
+
 				}else{
-					this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
-					this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
+					if(this.$route.query.type&&this.$route.query.type==1){ //从报价小程序跳转过来
+						this.order.checkType = '金条'//加载选中第一个的name值
+						this.order.productId = res.content[res.content.length-2].id//加载选中第一个的id值
+					}else{
+						this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
+						this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
+					}
 				}
 			},
 			//查询存金产品品牌
@@ -393,7 +412,7 @@
 						return;
 					}
 					this.selectImgs(e.target.files)
-				} 
+				}
 			},
 			/*删除图片*/
 			delImage: function(index){
@@ -509,7 +528,7 @@
                     	u8arr[n]=bstr.charCodeAt(n);
                 	}
                 	return new Blob([u8arr],{type:mime});
-				}  
+				}
 				//base64转换成二进制文件
 				let formData = new FormData()
         		this.files.forEach((item, index) => {
@@ -572,11 +591,11 @@
     		},
 		},
 		activated: function () {
-			
+
 		},
 		components:{
 			headTop: headTop,
-			  ruler: ruler 
+			  ruler: ruler
 		}
 
 	}
@@ -842,7 +861,7 @@ width: 100%;
 	width: 2.1rem;
 	height: 2.1rem;
 	border: 1px solid #eaeaea;
-}	         
+}
 .upload_image_preview>section>.del_image{
 	width: .35rem;
 	height: .35rem;
