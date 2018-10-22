@@ -381,14 +381,18 @@ export function check(){
 export function isMiniProgram(){
     const ua = window.navigator.userAgent.toLowerCase();
     if(ua.match(/MicroMessenger/i) == 'micromessenger'){ //微信环境
+        console.log('1.是微信环境')
         wx.miniProgram.getEnv(function(res) {
             if (res.miniprogram) { // 小程序环境下逻辑
+                console.log('2.小程序环境')
                 return true
             }else { //非小程序环境下逻辑
+                console.log('3.是微信环境，但非小程序环境')
                 return false
             }
         })
     }else{ //非微信环境逻辑
+        console.log('4.非微信环境')
         return false
     }
 }
