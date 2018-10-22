@@ -3,16 +3,16 @@
         <img slot='head_goback' src='../../images/back.png' class="head_goback" @click="toBack">
         <section class="view_report">
             <h3 class="report_title">检测报告</h3>
-            <p>订单号：{{orderDetail.code || '--'}}</p>
-            <p>实测总毛重：{{orderDetail.realGrossWeight || '--'}}克</p>
-            <p>实测总净重：{{orderDetail.realNetWeight || '--'}}克</p>
+            <p><span> 订单号：</span><span> {{orderDetail.code || '--'}}</span></p>
+            <p><span>实测总毛重：</span><span>{{orderDetail.realGrossWeight || '--'}}克</span></p>
+            <p><span>实测总净重：</span><span>{{orderDetail.realNetWeight || '--'}}克</span></p>
             <!-- <p>克重损耗：{{orderDetail.realLoss || ''}}克</p> -->
-            <p>产品成色：{{orderDetail.productCondition | com }}‰</p>
-            <p>检测人：{{orderDetail.verifyBy || '--'}}</p>
-            <p>检测时间：{{orderDetail.verifyTime || '--'}}</p>
-            <p>福利金额：{{orderDetail.verifyTime}} / 福利克重：{{orderDetail.verifyTime}}</p>
-            <p>检测说明：{{orderDetail.verifyRemark || '--'}}</p>
-            <p>检测结果：{{orderDetail.verifyResult==0?'通过':'不通过'}}</p>
+            <p><span>产品成色：</span><span>{{orderDetail.productCondition | com }}‰</span></p>
+            <p><span>检测人：</span><span>{{orderDetail.verifyBy || '--'}}</span></p>
+            <p><span>检测时间：</span><span>{{orderDetail.verifyTime || '--'}}</span></p>
+            <p v-if="orderDetail.welfare"><span>{{orderDetail.isCash==2?'福利克重：':'福利金额：'}}</span><span>{{orderDetail.welfare}}</span></p>
+            <p><span>检测说明：</span><span>{{orderDetail.verifyRemark || '--'}}</span></p>
+            <p><span>检测结果：</span><span>{{orderDetail.verifyResult==0?'通过':'不通过'}}</span></p>
             <img :src="checkImg" alt="检测报告" preview="1">
             <div class="report_btns">
                 <p @click="confirmStor" :class="{'hasConfirm':orderDetail.status==8}" v-if="orderDetail.status==6 || orderDetail.status==8">{{orderDetail.status==8?'已确认':'确认订单'}}</p>
@@ -22,7 +22,7 @@
         <!-- 订单确认等待动画 -->
         <mt-popup v-model="popupVisible" popup-transition="popup-fade" :closeOnClickModal="false">
             <div class="confirmbox" v-show="awa">
-               <p class="sign"><img src="../../images/sign.png" alt=""></p>
+               <p class="sign cir"><img class="infi_cir" src="../../images/cir.png" alt=""></p>
                <p class="wait">订单确认中，请稍后...</p> 
                <p class="con_explain">确认成功后将自动跳转至订单详情页</p>
             </div>
@@ -155,6 +155,14 @@ export default{
     color:#666666;
     padding-bottom:.08rem;
     padding-left:.4rem;
+    padding-right:.4rem;
+    overflow: hidden;
+}
+.view_report>p span:nth-child(1){
+    float: left;
+}
+.view_report>p span:nth-child(2){
+    float: right;
 }
 .view_report img{
     width: 100%;
@@ -212,6 +220,12 @@ export default{
     height:1rem;
     margin-top:.41rem;
 }
+.cir{
+    background:url(../../images/wat.png);
+    background-position: center .42rem;
+    background-size: 1.1rem;
+    background-repeat: no-repeat;
+}
 .con_explain{
     font-size:.24rem;
     text-align:center;
@@ -236,6 +250,13 @@ export default{
 }
 .fail_button span:nth-child(1){
     border-right:1px solid #dad7d7;
+}
+.infi_cir{
+    animation: mymove 1.3s infinite;
+}
+@keyframes mymove{
+    from {transform:rotate(0deg)}
+    to {transform:rotate(360deg)}
 }
 </style>
 

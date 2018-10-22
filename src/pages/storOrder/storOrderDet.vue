@@ -589,7 +589,8 @@
         },
       //查看检测报告
       viewReport(){
-        this.popupVisibleReport=true
+        // this.popupVisibleReport=true
+        this.$router.push({path:'/report',query:{id:this.orderId}})
       },
       //查看状态描述
       viewStateInfo(e){
