@@ -173,6 +173,7 @@
 					  canAdd: true, //添加图片加号是否显示
 				 AndroVerson: checkAndroAgent(),
 				   iosVerson: iosVersion(),
+				   isMiniProgram:'',
 
  			}
 		},
@@ -187,6 +188,7 @@
 			}
 		},
 		mounted(){
+			this.isMiniProgram = isMiniProgram();
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -274,8 +276,8 @@
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
-				console.log('是否小程序环境',isMiniProgram())
-				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
+				console.log('是否小程序环境',this.isMiniProgram)
+				if(this.isMiniProgram=='NO'){ //判断是否是小程序环境下
 					this.$router.push('/storeGold')
 				}else{
 					wx.miniProgram.navigateTo({url: '/pages/index/main'})
