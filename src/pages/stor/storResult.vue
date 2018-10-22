@@ -79,10 +79,10 @@
 		},
 		methods:{
 			goBack(){
-				if(isMiniProgram()){
-					wx.miniProgram.navigateTo({url: '/pages/index/main'})
-				}else{
+				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
 					this.$router.push('/storeGold')
+				}else{
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
 				}
 			}
 		},

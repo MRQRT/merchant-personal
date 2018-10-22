@@ -275,10 +275,10 @@
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
 				console.log('是否小程序环境',isMiniProgram())
-				if(isMiniProgram()){ //判断是否是小程序环境下
-					wx.miniProgram.navigateTo({url: '/pages/index/main'})
-				}else{
+				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
 					this.$router.push('/storeGold')
+				}else{
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
 				}
 
 			},

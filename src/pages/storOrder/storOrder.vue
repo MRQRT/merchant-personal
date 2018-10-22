@@ -125,11 +125,11 @@ export default{
 		},
 		//返回上一页
 		goback(){
-			if(isMiniProgram()){
-				wx.miniProgram.navigateTo({url: '/pages/index/main'})
-			}else{
-				this.$router.push('/storeGold');
+			if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
+				this.$router.push('/storeGold')
 				Indicator.close();
+			}else{
+				wx.miniProgram.navigateTo({url: '/pages/index/main'})
 			}	
 		},
 		//点击‘我的黄金’需要判断3种情况（app、微信、其他情况）

@@ -385,14 +385,14 @@ export function isMiniProgram(){
         wx.miniProgram.getEnv(function(res) {
             if (res.miniprogram) { // 小程序环境下逻辑
                 console.log('2.小程序环境')
-                return true
+                return 'YES'
             }else { //非小程序环境下逻辑
                 console.log('3.是微信环境，但非小程序环境')
-                return false
+                return 'NO'
             }
         })
     }else{ //非微信环境逻辑
         console.log('4.非微信环境')
-        return false
+        return 'NO'
     }
 }
