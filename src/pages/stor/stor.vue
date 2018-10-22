@@ -129,7 +129,7 @@
 <script type="text/javascript">
 	import headTop from '@/components/header/head.vue'
 	import ruler from '@/components/ruler/ruler.vue'
-	import { clearNoNum, formatDate } from '../../config/mUtils.js'
+	import { clearNoNum, formatDate,isMiniProgram } from '../../config/mUtils.js'
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
@@ -187,7 +187,6 @@
 			}
 		},
 		mounted(){
-			console.log(this.currentPrice)
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -217,7 +216,7 @@
 			currentPrice: state => state.currentPrice,
 		   recycleParams: state => state.recycleParams,
 		   	   rulerData: state => state.rulerData
-    		})
+		   }),
 		},
 		watch:{
 			//监听品牌选择
@@ -272,23 +271,15 @@
 			]),
 			//返回上一页
 			goBack(){
-				var that = this;
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
-				wx.miniProgram.getEnv(function(res){
-					console.log(res)
-					if(res.miniprogram){
-						wx.miniProgram.navigateTo({url: '/pages/index/main'})
-					}else{
-						that.$router.push('/storeGold')
-					}
-				})
-				// if(this.$route.query.weight){
-				//
-				// }else{
-				//
-				// }
+				if(isMiniProgram()){ //判断是否是小程序环境下
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
+				}else{
+					this.$router.push('/storeGold')
+				}
+
 			},
 			//查询存金产品列表
 			async queryRecycleProduct(){

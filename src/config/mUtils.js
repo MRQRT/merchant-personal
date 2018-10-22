@@ -1,6 +1,6 @@
 /**
  * API切换
- * 
+ *
  */
 
 export function openAPI(){
@@ -10,7 +10,7 @@ export function openAPI(){
 
 /**
  * 测试网址和生产网址切换
- * 
+ *
  */
 
 export function IP(){
@@ -180,7 +180,7 @@ export function setCookie(name, value, iDay){
 export function getCookie(name){
     var arr=document.cookie.split('; '); //多个cookie值是以; 分隔的，用split把cookie分割开并赋值给数组
     for(var i=0;i<arr.length;i++){ //历遍数组
-        var arr2=arr[i].split('='); //原来割好的数组是：user=simon，再用split('=')分割成：user simon 这样可以通过arr2[0] arr2[1]来分别获取user和simon 
+        var arr2=arr[i].split('='); //原来割好的数组是：user=simon，再用split('=')分割成：user simon 这样可以通过arr2[0] arr2[1]来分别获取user和simon
         if(arr2[0]==name&&arr2[1]!=-1){ //如果数组的属性名等于传进来的name
             return arr2[1]; //就返回属性名对应的值
         }
@@ -191,7 +191,7 @@ export function getCookie(name){
  * 删除cookie
  */
 export function removeCookie(name){
-    setCookie(name, -1, -1); 
+    setCookie(name, -1, -1);
 };
 
 /**
@@ -276,8 +276,8 @@ export function animate(tag, obj, fn1, fn2, that) {
         //我们需要保证obj中每一个obj都运动到位置
         if (flag) {
             clearInterval(tag.timer);
-            
-            fn2 && fn2();            
+
+            fn2 && fn2();
         }
     }, 50);
 }
@@ -322,7 +322,7 @@ export function checkAndroAgent(){
 
 //检测IOS版本号
 export function iosVersion(){
-    var str= navigator.userAgent.toLowerCase(); 
+    var str= navigator.userAgent.toLowerCase();
     var ver=str.match(/cpu iphone os (.*?) like mac os/);
     if(!ver){
         return null
@@ -377,3 +377,18 @@ export function check(){
     return browserType
 }
 
+//检测是否是微信小程序环境
+export function isMiniProgram(){
+    const ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){ //微信环境
+        wx.miniProgram.getEnv(function(res) {
+            if (res.miniprogram) { // 小程序环境下逻辑
+                return true
+            }else { //非小程序环境下逻辑
+                return false
+            }
+        })
+    }else{ //非微信环境逻辑
+        return false
+    }
+}

@@ -38,6 +38,7 @@
 <script type="text/javascript">
 import headTop from '@/components/header/head.vue'
 import {queryRecycleOrder} from '@/service/getData.js'
+import { isMiniProgram } from '../../config/mUtils.js'
 import { Indicator,Toast } from 'mint-ui';
 import {mapState} from 'vuex'
 import myButton from '@/components/myButton/myButton.vue'
@@ -56,7 +57,7 @@ export default{
 		}
 	},
 	mounted(){
-		this.token ? window.sendUserId(this.token.split('_')[0]) : window.sendUserId('') 
+		this.token ? window.sendUserId(this.token.split('_')[0]) : window.sendUserId('')
 		this.token ? this.queryRecycleOrder() : ''
 	},
 	components:{
@@ -124,8 +125,12 @@ export default{
 		},
 		//返回上一页
 		goback(){
-			this.$router.push('/storeGold');
-			Indicator.close();
+			if(isMiniProgram()){
+				wx.miniProgram.navigateTo({url: '/pages/index/main'})
+			}else{
+				this.$router.push('/storeGold');
+				Indicator.close();
+			}	
 		},
 		//点击‘我的黄金’需要判断3种情况（app、微信、其他情况）
 		goToMyGold(){
@@ -143,14 +148,14 @@ export default{
 					if (/iphone|ipad|ipod/.test(ua)) {
 						window.location.href='http://itunes.apple.com/cn/app/jie-zou-da-shi/id1028299545?mt=8'
 					} else if (/android/.test(ua)) {
-						window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'	
+						window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'
 					}
 				}
 			}else{ //在普通浏览器里
 	    		if (/iphone|ipad|ipod/.test(ua)) {
 		    		window.location.href='http://itunes.apple.com/cn/app/jie-zou-da-shi/id1028299545?mt=8'
 				} else if (/android/.test(ua)) {
-					window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'	
+					window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'
 				}
 			}
 		}

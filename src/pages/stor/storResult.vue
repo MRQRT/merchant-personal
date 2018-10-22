@@ -1,7 +1,7 @@
 <template>
 	<div class="store_infomation_result">
 		<head-top class="head-top">
-			<img slot='head_goback' src='../../images/back.png' class="head_goback" @click="$router.push('/storeGold')">
+			<img slot='head_goback' src='../../images/back.png' class="head_goback" @click="goBack">
             <!-- <div slot="close_page" class="close_page" @click="$router.push('/storeGold')">
                  <img src="../../images/blackClose.png">
             </div> -->
@@ -40,13 +40,14 @@
             <!--操作按钮-->
             <div class="result_btns">
                 <p class="view_order" @click="$router.push({path:'/storOrder',query:{from:'storResult'}})">查看订单</p>
-                <mt-button type="primary" class="back_home" @click="$router.push('/storeGold')">返回首页</mt-button>
+                <mt-button type="primary" class="back_home" @click="goBack">返回首页</mt-button>
             </div>
         </section>
 	</div>
 </template>
 <script>
 	import headTop from '@/components/header/head.vue';
+	import { isMiniProgram } from '../../config/mUtils.js';
     import { Button } from 'mint-ui';
     import { mapState } from 'vuex';
 	export default {
@@ -56,10 +57,10 @@
 			}
 		},
         created(){
-            
+
         },
 		mounted() {
-            
+
 		},
         filters:{
             formatBankNo(val){
@@ -77,7 +78,13 @@
             ])
 		},
 		methods:{
-			
+			goBack(){
+				if(isMiniProgram()){
+					wx.miniProgram.navigateTo({url: '/pages/index/main'})
+				}else{
+					this.$router.push('/storeGold')
+				}
+			}
 		},
 		components:{
 			headTop,
@@ -193,7 +200,7 @@
     .result_btns .view_order,.result_btns .back_home{
         width:2.5rem;
         height:.7rem;
-        border-radius:2px; 
+        border-radius:2px;
         line-height:.7rem;
         text-align: center;
         font-size:.28rem;
