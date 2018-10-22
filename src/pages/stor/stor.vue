@@ -272,15 +272,16 @@
 			]),
 			//返回上一页
 			goBack(){
+				var that = this;
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
 				wx.miniProgram.getEnv(function(res){
 					console.log(res)
-					if(res.miniProgram){
+					if(res.miniprogram){
 						wx.miniProgram.navigateTo({url: '/pages/index/main'})
 					}else{
-						this.$router.push('/storeGold')
+						that.$router.push('/storeGold')
 					}
 				})
 				// if(this.$route.query.weight){
