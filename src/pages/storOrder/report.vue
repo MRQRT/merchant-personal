@@ -45,8 +45,7 @@ export default{
         return{
             orderId:'',//存金订单
             orderDetail:{},//存金订单
-            // checkImg:null,//检测报告图片
-            checkImg:banner,//检测报告图片
+            checkImg:null,//检测报告图片
             popupVisible:false,
             awa:true,
             fail:false,
