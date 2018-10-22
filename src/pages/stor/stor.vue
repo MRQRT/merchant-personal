@@ -129,7 +129,7 @@
 <script type="text/javascript">
 	import headTop from '@/components/header/head.vue'
 	import ruler from '@/components/ruler/ruler.vue'
-	import { clearNoNum, formatDate,isMiniProgram } from '../../config/mUtils.js'
+	import { clearNoNum, formatDate,isMiniProgram,check } from '../../config/mUtils.js'
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
@@ -188,7 +188,6 @@
 			}
 		},
 		mounted(){
-			this.isMiniProgram = isMiniProgram();
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -273,11 +272,12 @@
 			]),
 			//返回上一页
 			goBack(){
+				var that = this;
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
-				console.log('是否小程序环境',this.isMiniProgram)
-				if(this.isMiniProgram=='NO'){ //判断是否是小程序环境下
+				console.log('是否小程序环境',isMiniProgram())
+				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
 					this.$router.push('/storeGold')
 				}else{
 					wx.miniProgram.navigateTo({url: '/pages/index/main'})
