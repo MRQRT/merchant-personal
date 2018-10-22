@@ -275,11 +275,19 @@
 				this.RECORD_RECYCLEPARAMS('')
 				this.set_initRulerData(Number(10));//修改ruler的初始值
 				Indicator.close()
-				if(this.$route.query.weight){
-					wx.miniProgram.navigateTo({url: '/pages/index/main'})
-				}else{
-					this.$router.push('/storeGold')
-				}
+				wx.miniProgram.getEnv(function(res){
+					console.log(res)
+					if(res.miniProgram){
+						wx.miniProgram.navigateTo({url: '/pages/index/main'})
+					}else{
+						this.$router.push('/storeGold')
+					}
+				})
+				// if(this.$route.query.weight){
+				//
+				// }else{
+				//
+				// }
 			},
 			//查询存金产品列表
 			async queryRecycleProduct(){
