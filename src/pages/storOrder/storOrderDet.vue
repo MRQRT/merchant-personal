@@ -111,22 +111,20 @@
       </div>
     </div>
     <!--查看物流-->
-    <mt-popup
-     v-model="popupVisible"
-     position="bottom" id="logistics" v-if="logisticsShow">
+    <mt-popup v-model="popupVisible" position="bottom" id="logistics" v-if="logisticsShow">
         <section class='logistics_container'>
-           <h3 class="logistics_title">物流信息</h3>
-           <div v-show="!hasWuliu" class="noWuliu">暂时无法获取物流信息，请根据单号<button class="tag-read" :data-clipboard-text="orderDetail.expressNo" @click="copy">{{orderDetail.expressNo}}<span class="toa">复制成功</span></button>到顺丰快递官网查询</div>
-           <div v-for="(item,index) in logistics" class="each_logistics" :class="{'gray':index!=0}" :key="index" v-show="hasWuliu">
-              <div class="logistics_time">
-                <p style="font-size:.2rem;">{{item.time | formatExpressTime(1)}}</p>
-                <p style="font-size:.18rem;">{{item.time | formatExpressTime(2)}}</p>
-              </div>
-              <div class="logistics_info"  v-points :id="index">
-                <p v-fit>{{item.status}}</p>
-              </div>
-           </div>
-           <div class="logistics_line" v-show="hasWuliu"></div>
+            <h3 class="logistics_title">物流信息</h3>
+            <div v-show="!hasWuliu" class="noWuliu">暂时无法获取物流信息，请根据单号<button class="tag-read" :data-clipboard-text="orderDetail.expressNo" @click="copy">{{orderDetail.expressNo}}<span class="toa">复制成功</span></button>到顺丰快递官网查询</div>
+            <div v-for="(item,index) in logistics" class="each_logistics" :class="{'gray':index!=0}" :key="index" v-show="hasWuliu">
+                <div class="logistics_time">
+                    <p style="font-size:.2rem;">{{item.time | formatExpressTime(1)}}</p>
+                    <p style="font-size:.18rem;">{{item.time | formatExpressTime(2)}}</p>
+                </div>
+                <div class="logistics_info"  v-points :id="index">
+                    <p v-fit>{{item.status}}</p>
+                </div>
+            </div>
+            <div class="logistics_line" v-show="hasWuliu"></div>
         </section>
         <div class="close_logistics" @click="close">
             <img src="../../images/closeWl.png">
@@ -591,7 +589,8 @@
         },
       //查看检测报告
       viewReport(){
-        this.popupVisibleReport=true
+        // this.popupVisibleReport=true
+        this.$router.push({path:'/report',query:{id:this.orderId}})
       },
       //查看状态描述
       viewStateInfo(e){

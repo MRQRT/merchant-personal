@@ -6,7 +6,7 @@
 		</head-top>
 		<mt-loadmore  :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"  ref="loadmore" class="loadmore orderInfo" v-if="hasStor">
 			<div class="all_order" v-if="storList.length">
-				<section v-for="(item,index) in storList" class="order_container" @click="$router.push({path:'/storOrderDet',query:{id:item.id}})" :key="index">
+				<section v-for="(item,index) in storList" class="order_container" @click="order_det(item)" :key="index">
 					<img v-show="item.imageUrl.length>31?true:false" :src="item.imageUrl">
 					<img v-show="item.imageUrl.length==31?true:false" src="../../images/cjticon.png">
 					<div class="order_desc">
@@ -157,6 +157,15 @@ export default{
 				} else if (/android/.test(ua)) {
 					window.location.href='http://android.myapp.com/myapp/detail.htm?apkName=com.mz.chamberlain'
 				}
+			}
+		},
+		//点击订单详情
+		order_det(item){
+			//如果状态是未确认，直接进入检测报告页
+			if(item.status==6){
+				this.$router.push({path:'/report',query:{id:item.id}})
+			}else{
+				this.$router.push({path:'/storOrderDet',query:{id:item.id}})
 			}
 		}
 	}

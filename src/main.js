@@ -11,11 +11,18 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import { checkAgent,check,setStore } from '@/config/mUtils'
 import { bizCloseCheck } from '@/service/getData'
 import vueScrollBehavior from '@/config/vue-scroll-behevior.js'
-import QRCode from 'qrcode'
 import './style/common.css'
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
 // import './config/vconsole.min.js'
-import Vuex from 'vuex'
 
+var options={
+    fullscreenEl:true, //关闭全屏按钮
+    showHideOpacity:true,
+    escKey:true,
+    timeToIdle:5000,
+}
+Vue.use(preview,options)
 Vue.use(MintUI)
 Vue.use(vueRouter)
 Vue.use(VueAwesomeSwiper)
