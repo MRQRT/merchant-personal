@@ -10,6 +10,15 @@
             <p><span>产品成色：</span><span>{{orderDetail.productCondition | com }}‰</span></p>
             <p><span>检测人：</span><span>{{orderDetail.verifyBy || '--'}}</span></p>
             <p><span>检测时间：</span><span>{{orderDetail.verifyTime || '--'}}</span></p>
+
+            <p v-if="orderDetail.isCash==1"><span>回收金价：</span><span>{{orderDetail.realPrice || '--'}}元/克</span></p> 
+            <p v-if="orderDetail.isCash==2"><span>回收总重：</span><span style="color:#EDA835;">{{orderDetail.receiveAmount || '--'}}克</span></p>
+            <p v-if="orderDetail.isCash==1"><span>回收总额：</span><span style="color:#EDA835;">{{orderDetail.receiveAmount || '--'}}元</span></p>
+            <p v-if="orderDetail.isCash==2"><span>减免克重：</span><span>{{orderDetail.welfare || '--'}}克</span></p>
+            <p v-if="orderDetail.isCash==1"><span>减免金额：</span><span>{{orderDetail.welfare || '--'}}元</span></p>
+            <p v-if="orderDetail.isCash==2"><span>卖金总重：</span><span>{{orderDetail.sellAmount || '--'}}克</span></p>
+            <p v-if="orderDetail.isCash==1"><span>卖金总额：</span><span>{{orderDetail.sellAmount || '--'}}元</span></p>
+
             <p v-if="orderDetail.welfare"><span>{{orderDetail.isCash==2?'福利克重：':'福利金额：'}}</span><span>{{orderDetail.welfare}}</span></p>
             <p><span>检测说明：</span><span>{{orderDetail.verifyRemark || '--'}}</span></p>
             <p><span>检测结果：</span><span>{{orderDetail.verifyResult==0?'通过':'不通过'}}</span></p>
