@@ -218,7 +218,7 @@
       							this.addr=res.content[i].address
 							  }
 						  }
-						  
+
       				}
 				}
 				//如果是从地址页过来的，将用户上传的身份证照片地址和是否变现重新绑定
@@ -332,7 +332,7 @@
             		   addr: this.addr,
             		 direct: this.direct,
 						 bg: this.bg,
-					  photo: this.url, 
+					  photo: this.url,
             	}
             	setStore('obj',ob,'session')
                	if(this.userInfo.realnamed!=1){
@@ -461,6 +461,10 @@
 					})
 				}else{
 					Indicator.close();
+					Toast({
+						message: res.message,
+						position: 'bottom'
+					})
 					this.btn_lock=false
 				}
 			}
