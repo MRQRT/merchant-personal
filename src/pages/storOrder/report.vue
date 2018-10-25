@@ -86,7 +86,7 @@ export default{
                 var arrDocument=res.content.recycleDocumentVos;
                 for(var i=0,length=arrDocument.length;i<length;i++){
                     if(arrDocument[i].type==2){  //检测报告
-                        // this.checkImg=arrDocument[i].url
+                        this.checkImg=arrDocument[i].url
                     }
                 }
             }
