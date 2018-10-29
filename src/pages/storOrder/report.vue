@@ -287,5 +287,4 @@ export default{
 .mint-pop{
     width:4.9rem;
 }
-
 </style>
