@@ -30,18 +30,18 @@
             </div>
         </section>
         <!-- 订单确认等待动画 -->
-        <mt-popup v-model="popupVisible" popup-transition="popup-fade" :closeOnClickModal="false">
-            <div class="confirmbox" v-show="awa">
-               <p class="sign cir"><img class="infi_cir" src="../../images/cir.png" alt=""></p>
-               <p class="wait">订单确认中，请稍后...</p> 
-               <p class="con_explain">确认成功后将自动跳转至订单详情页</p>
-            </div>
-            <div class="confirmbox" v-show="fail">
-               <p class="sign"><img src="../../images/sign.png" alt=""></p>
-               <p class="wait">订单确认失败</p> 
-               <p class="fail_button"><span @click="cancel">取消</span><span @click="re_confirm">重试</span></p>
-            </div>
-        </mt-popup>
+        <div class="confirmbox" v-show="awa&&popupVisible">
+            <p class="sign cir"><img class="infi_cir" src="../../images/cir.png" alt=""></p>
+            <p class="wait">订单确认中，请稍后...</p> 
+            <p class="con_explain">确认成功后将自动跳转至订单详情页</p>
+        </div>
+        <div class="confirmbox" v-show="fail&&popupVisible">
+            <p class="sign"><img src="../../images/sign.png" alt=""></p>
+            <p class="wait">订单确认失败</p> 
+            <p class="fail_button"><span @click="cancel">取消</span><span @click="re_confirm">重试</span></p>
+        </div>
+        <div class="popup" v-show="popupVisible">
+        </div>
         <a href="tel:4008196199" id="tel"></a>
     </div>
 </template>
@@ -174,6 +174,10 @@ export default{
     font-weight:700;
     padding-bottom:.2rem;
 }
+.view_report{
+    width: 100%;
+    position: absolute;
+}
 .view_report>p{
     font-size:.28rem;
     color:#666666;
@@ -227,6 +231,12 @@ export default{
     width:4.9rem;
     height: 3.1rem;
     position: relative;
+    background-color:#fff;
+    z-index: 1001;
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top:50%;
+    border-radius: 5px;
 }
 .wait{
     font-size:.3rem;
@@ -282,9 +292,13 @@ export default{
     from {transform:rotate(0deg)}
     to {transform:rotate(360deg)}
 }
-</style>
-<style type="text/css">
-.mint-pop{
-    width:4.9rem;
+.popup{
+    width: 100%;
+    background:rgba(0,0,0,1);
+    opacity:0.5;
+    z-index: 1000;
+    position: absolute;
+    top:0;
+    min-height: 100vh;
 }
 </style>
