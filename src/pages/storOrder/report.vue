@@ -56,7 +56,7 @@ export default{
             orderId:'',//存金订单
             orderDetail:{},//存金订单
             checkImg:null,//检测报告图片
-            popupVisible:false,
+            popupVisible:true,
             awa:true,
             fail:false,
             comfirmLimit:true,//确认按钮避免重复提交
@@ -93,18 +93,33 @@ export default{
             }
         },
         //用户确认订单
-        async confirmStor(){
+        confirmStor(){
             if(this.orderDetail.status==8) return;
             if(!this.comfirmLimit) return;  //限制重复提交
             this.comfirmLimit=false;
-            var res=await confirmationResult(this.orderDetail.id, 0)
+
             this.popupVisible=true
             this.awa=true
             this.fail=false
+
+            var v_this = this
+            setTimeout(function(){
+                v_this.con();
+            },2000);
+        },
+        //
+        async con(){
+            var res=await confirmationResult(this.orderDetail.id, 0)
             if(res.code==100){
                 this.popupVisible=false
                 this.comfirmLimit=true;
                 this.orderDet()
+                this.$router.push({
+                    path:'/storOrderDet',
+                    query:{
+                        id:this.orderId
+                    }
+                })
             }else{
                 this.comfirmLimit=true;
                 this.awa=false
