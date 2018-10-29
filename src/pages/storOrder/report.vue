@@ -268,4 +268,9 @@ export default{
     to {transform:rotate(360deg)}
 }
 </style>
+<style type="text/css">
+.mint-pop{
+    width:4.9rem;
+}
 
+</style>
