@@ -56,7 +56,7 @@ export default{
             orderId:'',//存金订单
             orderDetail:{},//存金订单
             checkImg:null,//检测报告图片
-            popupVisible:true,
+            popupVisible:false,
             awa:true,
             fail:false,
             comfirmLimit:true,//确认按钮避免重复提交
@@ -283,4 +283,11 @@ export default{
     to {transform:rotate(360deg)}
 }
 </style>
+<style type="text/css">
+.mint-popup{
+    width: 4.9rem;
+    height: 3.1rem;
+}
+</style>
+
 
