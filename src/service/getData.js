@@ -22,7 +22,7 @@ export const shopList = (lat,lng,page,size) => fetch('/api/personal/store_detail
  * 城市选择
  */
 
-export const cityList = (spell) => fetch('/api/area/city_list?spell='+spell,{},'get');
+export const cityList = (spell) => fetch('/api/personal/area/city_list?spell='+spell,{},'get');
 
 /**
  * 店铺详情
