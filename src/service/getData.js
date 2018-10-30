@@ -9,26 +9,26 @@ const iosVerson = iosVersion();
  * 店铺首页
  */
 
-export const shopIndex = (lat,lng) => fetch('/api/personal/store_list?lat='+lat+'&lng='+lng,{},'get');
+export const shopIndex = (lat,lng) => fetch('/api/merchant/personal/store_list?lat='+lat+'&lng='+lng,{},'get');
 
 
 /**
  * 店铺列表
  */
 
-export const shopList = (lat,lng,page,size) => fetch('/api/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size,{},'get');
+export const shopList = (lat,lng,page,size) => fetch('/api/merchant/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size,{},'get');
 
 /**
  * 城市选择
  */
 
-export const cityList = (spell) => fetch('/api/personal/area/city_list?spell='+spell,{},'get');
+export const cityList = (spell) => fetch('/api/merchant/area/city_list?spell='+spell,{},'get');
 
 /**
  * 店铺详情
  */
 
-export const shopDetail = (id) => fetch('/api/personal/store_detail?id='+id,{},'get');
+export const shopDetail = (id) => fetch('/api/merchant/personal/store_detail?id='+id,{},'get');
 
 
 
