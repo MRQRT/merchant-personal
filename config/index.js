@@ -45,12 +45,12 @@ module.exports = {
                 "^/api": ""
             },
         },
-        "/api/personal/": {
+        "/api/merchant/": {
             // target:"http://192.168.10.100:8088",
-            target:"http://cjtsh.au32.cn/api/personal/",
+            target:"http://cjtsh.au32.cn/api/",
             changeOrigin: true,
             pathRewrite: {
-                "^/api/personal/": "/"
+                "^/api/merchant/": "/"
             },
         },
         // "/gold": {
