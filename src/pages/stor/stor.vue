@@ -133,7 +133,7 @@
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
-	import { getRem,openAPI,checkAndroAgent,iosVersion } from "@/config/mUtils"
+	import { getRem,openAPI,checkAndroAgent,iosVersion,setStore } from "@/config/mUtils"
 	import '../../config/ruler.js'
 
 	export default{
@@ -188,6 +188,11 @@
 			}
 		},
 		mounted(){
+			var tg = this.$route.query.source; //记录渠道标示
+			if(tg){
+				setStore('tg',tg,'local');
+			}
+
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
