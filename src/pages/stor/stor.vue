@@ -278,7 +278,11 @@
 				Indicator.close()
 				console.log('是否小程序环境',isMiniProgram())
 				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
-					this.$router.push('/storeGold')
+					if(this.$route.query.redirect){ //从春光里跳转过来
+						window.location.href = this.$route.query.redirect;
+					}else{
+						this.$router.push('/storeGold')
+					}
 				}else{
 					wx.miniProgram.navigateTo({url: '/pages/index/main'})
 				}
