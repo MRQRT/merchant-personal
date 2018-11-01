@@ -188,10 +188,10 @@
 			}
 		},
 		mounted(){
-			var yw = this.$route.query.channel; //记录渠道标示
-			if(yw){
-				setStore('yw',yw,'local');
-			}
+			// var yw = this.$route.query.channel; //记录渠道标示
+			// if(yw){
+			// 	setStore('yw',yw,'local');
+			// }
 
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
