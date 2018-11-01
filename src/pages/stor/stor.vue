@@ -188,9 +188,9 @@
 			}
 		},
 		mounted(){
-			var tg = this.$route.query.source; //记录渠道标示
-			if(tg){
-				setStore('tg',tg,'local');
+			var yw = this.$route.query.channel; //记录渠道标示
+			if(yw){
+				setStore('yw',yw,'local');
 			}
 
 			this.queryRecycleProduct();//查询存金产品列表
