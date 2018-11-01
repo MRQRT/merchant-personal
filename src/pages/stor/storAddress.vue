@@ -422,7 +422,7 @@
 					var tg=getStore('tg','local')?getStore('tg','local'):'#';
 					var browser=getStore('browser','local')?getStore('browser','local'):'#';
 					var yw=getStore('yw','local')?getStore('yw','local'):"#";
-					if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
+					if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null&&getStore('yw','local')!=''){//业务类型为非自营
 						let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);

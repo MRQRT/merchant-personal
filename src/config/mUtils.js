@@ -350,7 +350,14 @@ export function check(){
     }else if (ua.match(/sogoumse/) != null) {
         browserType = "SOUGOU";
     }else if (ua.match(/micromessenger/) != null) {
-        browserType = 'WEIXIN'
+        wx.miniProgram.getEnv(function(res) {
+            // browserType = res.miniprogram ? 'MINIPROGRAM' : 'WEIXIN'
+            if (res.miniprogram) { // 小程序环境
+                browserType = 'MINIPROGRAM'
+            }else { //非小程序环境
+                browserType = 'WEIXIN'
+            }
+        })
     }else if (ua.match(/mqqbrowser/) != null) {
         browserType = "QQ";
     }else if (ua.match(/maxthon/) != null) {
