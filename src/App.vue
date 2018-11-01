@@ -45,8 +45,8 @@ import foot from '@/components/footer/footGuid'
         mounted(){
 			var tg = this.$route.query.source;
 			var yw = this.$route.query.channel;
-			(tg)?setStore('tg',tg,'local'):setStore('tg','','local');
-			(yw)?setStore('yw',yw,'local'):setStore('yw','','local');
+			(tg)?setStore('tg',tg,'session'):'';
+			(yw)?setStore('yw',yw,'session'):'';
 
             this.token ? window.sendUserId(this.token.split('_')[0]) : window.sendUserId('') //判断当前环境是不是黄金管家app
             //初次进来页面时 判断是否需要底部导航

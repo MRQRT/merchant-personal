@@ -41,7 +41,7 @@
                <div class="account">
                    <input type="number" id="inputAcc" placeholder="请输入手机号" v-model="account" @focus="inputAcc" style="width:90%;" pattern="[0-9]*" maxlength="11">
                    <span class="wrongAcc" ref="wrongAccount" v-show="accWrong">手机号码格式错误</span>
-                  
+
                    <img src="../../images/clearinput.png" class="clear accIpt" v-show="hasShow" @click="clearAccIpt">
                </div>
                <div class="password">
@@ -88,7 +88,7 @@
     import {mapMutations,mapState} from 'vuex'
     import {sendSms,quickLogin,quickLogin1,quickLogin2,quickLogin3,login,picCheck,queryMyProfil} from '@/service/getData.js'
     import { Toast,Button } from 'mint-ui'
-import { getStore } from '../../config/mUtils';
+    import { getStore,isMiniProgram } from '../../config/mUtils';
     export default {
         data(){
             return {
@@ -285,10 +285,10 @@ import { getStore } from '../../config/mUtils';
                         return;
                     }
                     var invited = sessionStorage.getItem('invitedBy');
-                    var tg=getStore('tg','local')?getStore('tg','local'):'#';
+                    var tg=getStore('tg','session')?getStore('tg','session'):'#';
                     var browser=getStore('browser','local')?getStore('browser','local'):'#';
-                    var yw=getStore('yw','local')?getStore('yw','local'):"#";
-                    if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
+                    var yw=getStore('yw','session')?getStore('yw','session'):"#";
+                    if(getStore('yw','session')!='undefined'&&getStore('yw','session')!=null&&getStore('yw','session')!=''){//业务类型为非自营
                         let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
                         if(invited){
                             var reObj = await quickLogin3(phone,code,invited,source);
@@ -296,7 +296,11 @@ import { getStore } from '../../config/mUtils';
                             var reObj = await quickLogin1(phone,code,source);
                         }
                     }else{//业务类型为自营
-                        let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+                        if(isMiniProgram()=='YES'){ //如果是小程序
+							var source='ZYPT'+'_'+tg+'_'+'MINIPROGRAM'+'_'+browser;
+						}else{
+							var source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						}
                         if(invited){
                             var reObj = await quickLogin3(phone,code,invited,source);
                         }else{
@@ -486,7 +490,7 @@ import { getStore } from '../../config/mUtils';
                 this.close=true;
             }
         },
-        
+
     }
 </script>
 
