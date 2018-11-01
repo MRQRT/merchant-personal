@@ -350,17 +350,7 @@ export function check(){
     }else if (ua.match(/sogoumse/) != null) {
         browserType = "SOUGOU";
     }else if (ua.match(/micromessenger/) != null) {
-        wx.miniProgram.getEnv(function(res) {
-            // browserType = res.miniprogram ? 'MINIPROGRAM' : 'WEIXIN'
-            console.log('1.微信环境')
-            if (res.miniprogram) { // 小程序环境
-                console.log('2.小程序环境');
-                browserType = 'MINIPROGRAM'
-            }else { //非小程序环境
-                console.log('3.微信环境');
-                browserType = 'WEIXIN'
-            }
-        })
+        browserType = 'WEIXIN'
     }else if (ua.match(/mqqbrowser/) != null) {
         browserType = "QQ";
     }else if (ua.match(/maxthon/) != null) {

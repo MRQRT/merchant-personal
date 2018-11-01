@@ -85,7 +85,7 @@
 	import { queryBankCard, withDrawMax, queryMyProfil, xmlUploadImg, addRecycleOrder, queryAddress } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { addHandId } from '@/images/addHandId.png'
-	import { getRem, setStore, getStore, removeStore } from '@/config/mUtils.js'
+	import { getRem, setStore, getStore, removeStore,isMiniProgram } from '@/config/mUtils.js'
 	export default{
 		data(){
 			return {
@@ -427,7 +427,11 @@
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);
 					}else{//业务类型为自营
-						let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						if(isMiniProgram()=='YES'){ //如果是小程序
+							let source='ZYPT'+'_'+tg+'_'+'MINIPROGRAM'+'_'+browser;
+						}else{
+							let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						}
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);
 					}

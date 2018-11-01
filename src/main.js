@@ -150,10 +150,8 @@ window.Indicat=function(){
 // var browser = check();
 // setStore('browser',browser,'local')
 
-setTimeout(function(){
-    var browser = check();
-    setStore('browser',browser,'local')
-},1000)
+var browser = check();
+setStore('browser',browser,'local')
 
 
 /*
