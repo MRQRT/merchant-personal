@@ -213,6 +213,8 @@
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
 				this.estimatePrice = this.$route.query.estimate;
+				this.set_initRulerData(this.order.applyWeight)
+
 				// this.estimatePrice = this.order.applyWeight * this.currentPrice;
 			}
 		},
