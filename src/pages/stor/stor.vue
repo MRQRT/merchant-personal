@@ -902,7 +902,7 @@ width: 100%;
     color: #FF6D39;
     text-align: left;
     padding-left: .84rem;
-    margin-top: 1.7rem;
+    margin-top: 2rem;
     /* margin-top: 2.7rem; */
     /* background-image: url(../../images/gantanhao.png);
 	background-position: 2.1rem .1rem;
