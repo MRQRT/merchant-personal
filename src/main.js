@@ -147,11 +147,12 @@ window.goToWhere=function(val){
 window.Indicat=function(){
     Indicator.close()
 }
-var browser = check();
-setStore('browser',browser,'local')
+// var browser = check();
+// setStore('browser',browser,'local')
 
 var browser = check();
 setStore('browser',browser,'local')
+
 
 /*
  与原生交互API

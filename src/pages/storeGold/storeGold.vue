@@ -406,10 +406,10 @@ export default {
 		this.myPosition();
 		var invitedBy = this.$route.query.invitedBy;
 		(invitedBy)?sessionStorage.setItem('invitedBy',invitedBy):'';
-		var tg = this.$route.query.source;
-		var yw = this.$route.query.channel;
-		(tg)?setStore('tg',tg,'local'):'';
-		(yw)?setStore('yw',yw,'local'):'';
+		// var tg = this.$route.query.source;
+		// var yw = this.$route.query.channel;
+		// (tg)?setStore('tg',tg,'local'):setStore('tg','','local');
+		// (yw)?setStore('yw',yw,'local'):setStore('yw','','local');
 		const url = window.location.href;
 		const ag = /hjgjdd/.test(url);
 		if(ag){

@@ -14,6 +14,7 @@
 </template>
 <script>
 import {queryGoldPrice,interestByUser,queryAwardOrder} from './service/getData.js'
+import {setStore,getStore} from '@/config/mUtils.js'
 import {mapState,mapMutations} from 'vuex';
 import foot from '@/components/footer/footGuid'
   	export default {
@@ -42,6 +43,11 @@ import foot from '@/components/footer/footGuid'
             ])
         },
         mounted(){
+			var tg = this.$route.query.source;
+			var yw = this.$route.query.channel;
+			(tg)?setStore('tg',tg,'session'):'';
+			(yw)?setStore('yw',yw,'session'):'';
+
             this.token ? window.sendUserId(this.token.split('_')[0]) : window.sendUserId('') //判断当前环境是不是黄金管家app
             //初次进来页面时 判断是否需要底部导航
             if(this.$route.path=="/buyGold" || this.$route.path=="/benefit" || this.$route.path=="/storeGold" || this.$route.path=="/mine"){

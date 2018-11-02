@@ -116,7 +116,7 @@
 			</div>
 			<!-- 黄金克重选择 -->
 			<div class="gram_box" v-if="popInputType=='gram_frame'">
-				<section class="gramItem">
+				<section class="gramItem" :class="{'other-height':weight_show}">
 					<p class="gram_title"><span>黄金克重</span><span class="gram_confirm" @click="close_pop">确定</span></p>
 					<ruler class="ruler"></ruler>
 					<!-- <p style="width:100%;color:#E1E1E1;font-size:.24rem;text-align:center;position:absolute;bottom: 20%;">左右滑动选择克重</p> -->
@@ -133,7 +133,7 @@
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
-	import { getRem,openAPI,checkAndroAgent,iosVersion } from "@/config/mUtils"
+	import { getRem,openAPI,checkAndroAgent,iosVersion,setStore } from "@/config/mUtils"
 	import '../../config/ruler.js'
 
 	export default{
@@ -188,6 +188,11 @@
 			}
 		},
 		mounted(){
+			// var yw = this.$route.query.channel; //记录渠道标示
+			// if(yw){
+			// 	setStore('yw',yw,'local');
+			// }
+
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -208,6 +213,8 @@
 			if(this.$route.query.weight){
 				this.order.applyWeight = this.$route.query.weight;
 				this.estimatePrice = this.$route.query.estimate;
+				this.set_initRulerData(this.order.applyWeight)
+
 				// this.estimatePrice = this.order.applyWeight * this.currentPrice;
 			}
 		},
@@ -278,7 +285,11 @@
 				Indicator.close()
 				console.log('是否小程序环境',isMiniProgram())
 				if(isMiniProgram()=='NO'){ //判断是否是小程序环境下
-					this.$router.push('/storeGold')
+					if(this.$route.query.redirect){ //从春光里跳转过来
+						window.location.href = this.$route.query.redirect;
+					}else{
+						this.$router.push('/storeGold')
+					}
 				}else{
 					wx.miniProgram.navigateTo({url: '/pages/index/main'})
 				}
@@ -891,7 +902,8 @@ width: 100%;
     color: #FF6D39;
     text-align: left;
     padding-left: .84rem;
-    margin-top: 2.7rem;
+    margin-top: 2rem;
+    /* margin-top: 2.7rem; */
     /* background-image: url(../../images/gantanhao.png);
 	background-position: 2.1rem .1rem;
     background-repeat: no-repeat;
@@ -972,9 +984,12 @@ width: 100%;
 }
 .gramItem{
 	width: 100%;
-	height: 4.3rem;
+	min-height:3.8rem;
 	background-color: #ffffff;
 	position: relative;
+}
+.other-height{
+	height: 3.5rem;
 }
 .confirm{
 	float: right;

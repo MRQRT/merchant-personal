@@ -1,12 +1,12 @@
 <template>
 <div>
 	<!-- <div style="width:100%;height:180px;margin-bottom:20px;background:#fff">
-		<div id="pressure-contain" style="width:100%; height:200px;float:right"></div>			
+		<div id="pressure-contain" style="width:100%; height:200px;float:right"></div>
 	</div> -->
 	<p class="gram_title">点击直接输入卖金克重</p>
 	<input type='text' v-model="gram" class="input_gram">
 	<div class="line"><span class="line_span"></span></div>
-	<div class="tips">
+	<div class="tips" v-show="gram>=10000">
 		<p>最大输入克重为10000克</p>
 		<p>若您有更大需求请联系客服：400-8196-199</p>
 	</div>
@@ -32,7 +32,7 @@ export default{
 
 	},
 	props:{
-		
+
 	},
 	computed:{
 		...mapState({
@@ -42,8 +42,11 @@ export default{
 	watch:{
 		gram:function(value){
 			var str = clearNoNum(value,1);
+			var that = this;
 			if(Number(str)>10000){
-				this.gram=10000
+				setTimeout(function(){
+					that.gram=10000
+				},500)
 				this.$store.commit('set_rulerData', 5000)
 			}else if(str==''){
 				this.$store.commit('set_rulerData', '')
@@ -54,7 +57,7 @@ export default{
 		}
 	},
 	filters:{
-		
+
 	},
 	methods:{
         // init(){
@@ -74,6 +77,9 @@ export default{
 }
 </script>
 <style type="text/css" scoped>
+.gramItem{
+	max-height: 4.3rem;
+}
 .gram_title{
 	width: 100%;
 	font-size:.24rem;
@@ -100,7 +106,8 @@ export default{
 	border-bottom:1px solid #E1E1E1;
 }
 .tips{
-	margin-top:.35rem;
+	margin-top:.15rem;
+	/* margin-top:.35rem; */
 	color:#FF6D39;
 	font-size:.22rem;
 	padding:0 .4rem 0 .84rem;
@@ -110,4 +117,3 @@ export default{
 	background-position: .45rem .04rem;
 }
 </style>
-

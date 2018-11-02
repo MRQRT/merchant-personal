@@ -85,7 +85,7 @@
 	import { queryBankCard, withDrawMax, queryMyProfil, xmlUploadImg, addRecycleOrder, queryAddress } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { addHandId } from '@/images/addHandId.png'
-	import { getRem, setStore, getStore, removeStore } from '@/config/mUtils.js'
+	import { getRem, setStore, getStore, removeStore,isMiniProgram } from '@/config/mUtils.js'
 	export default{
 		data(){
 			return {
@@ -419,15 +419,19 @@
 					removeStore('obj2','session')
 					this.set_initRulerData(Number(10))//将ruler的初始值设置为10
 
-					var tg=getStore('tg','local')?getStore('tg','local'):'#';
+					var tg=getStore('tg','session')?getStore('tg','session'):'#';
 					var browser=getStore('browser','local')?getStore('browser','local'):'#';
-					var yw=getStore('yw','local')?getStore('yw','local'):"#";
-					if(getStore('yw','local')!='undefined'&&getStore('yw','local')!=null){//业务类型为非自营
+					var yw=getStore('yw','session')?getStore('yw','session'):"#";
+					if(getStore('yw','session')!='undefined'&&getStore('yw','session')!=null&&getStore('yw','session')!=''){//业务类型为非自营
 						let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);
 					}else{//业务类型为自营
-						let source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						if(isMiniProgram()=='YES'){ //如果是小程序
+							var source='ZYPT'+'_'+tg+'_'+'MINIPROGRAM'+'_'+browser;
+						}else{
+							var source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+						}
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);
 					}
