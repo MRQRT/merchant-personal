@@ -116,7 +116,7 @@
 			</div>
 			<!-- 黄金克重选择 -->
 			<div class="gram_box" v-if="popInputType=='gram_frame'">
-				<section class="gramItem">
+				<section class="gramItem" :class="{'other-height':weight_show}">
 					<p class="gram_title"><span>黄金克重</span><span class="gram_confirm" @click="close_pop">确定</span></p>
 					<ruler class="ruler"></ruler>
 					<!-- <p style="width:100%;color:#E1E1E1;font-size:.24rem;text-align:center;position:absolute;bottom: 20%;">左右滑动选择克重</p> -->
@@ -902,7 +902,8 @@ width: 100%;
     color: #FF6D39;
     text-align: left;
     padding-left: .84rem;
-    margin-top: 2.7rem;
+    margin-top: 1.7rem;
+    /* margin-top: 2.7rem; */
     /* background-image: url(../../images/gantanhao.png);
 	background-position: 2.1rem .1rem;
     background-repeat: no-repeat;
@@ -983,9 +984,12 @@ width: 100%;
 }
 .gramItem{
 	width: 100%;
-	height: 4.3rem;
+	min-height:3.8rem;
 	background-color: #ffffff;
 	position: relative;
+}
+.other-height{
+	height: 3.5rem;
 }
 .confirm{
 	float: right;
