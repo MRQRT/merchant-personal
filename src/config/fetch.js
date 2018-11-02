@@ -39,6 +39,7 @@ axios.interceptors.response.use(
         const res = response
         //401:Token 过期了,未登录授权
         if (res.data.code === 401) {
+            console.log(a.$route.path);
             //页面有登录和未登录两种状态的不做重新登录弹框
             if(a.$route.path!='/currentAndHistory' && a.$route.path!='/buyGold' && a.$route.path!='/storeGold' && a.$route.path!='/mine' && a.$route.path!='/benefit' && a.$route.path!='/stor' && a.$route.path!='/productDetail' && a.$route.path!='/storOrder'){
                 MessageBox.alert('用户身份信息已失效，请重新登录', {
@@ -47,7 +48,17 @@ axios.interceptors.response.use(
                 }).then(() => {
                     store.commit('CLEAR_TOKEN')
                     store.commit('CLEAR_USERINFO')
-                    router.replace({path:'/loginIn'})
+                    
+                    if(a.$route.path=='/storAddress'){
+                        router.replace({
+                            path:'/loginIn',
+                            query:{
+                                redirect:'/storAddress'
+                            }
+                        })
+                    }else{
+                        router.replace({path:'/loginIn'})
+                    }
                 })
             }
         }
