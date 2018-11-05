@@ -85,11 +85,7 @@
 	import { queryBankCard, withDrawMax, queryMyProfil, addRecycleOrder, queryAddress,uploadimg,getpolicy } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { addHandId } from '@/images/addHandId.png'
-<<<<<<< HEAD
-	import { getRem, setStore, getStore, removeStore,isMiniProgram } from '@/config/mUtils.js'
-=======
-	import { getRem, setStore, getStore, removeStore,bucketName } from '@/config/mUtils.js'
->>>>>>> upload
+	import { getRem, setStore, getStore, removeStore,isMiniProgram,bucketName } from '@/config/mUtils.js'
 	export default{
 		data(){
 			return {
@@ -526,13 +522,11 @@
 	background-color: #ffffff;
 }
 .addr_left{
-	display: inline-block;
 	width: 94%;
 	height: 1.4rem;
 	float: left;
 }
 .addr_right{
-	display: inline-block;
 	width: 6%;
 	height: 1.4rem;
 	float: left;

@@ -133,11 +133,7 @@
 	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary,upload,getpolicy,uploadimg } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
-<<<<<<< HEAD
-	import { getRem,openAPI,checkAndroAgent,iosVersion,setStore } from "@/config/mUtils"
-=======
-	import { getRem,checkAndroAgent,iosVersion,compress,bucketName } from "@/config/mUtils"
->>>>>>> upload
+	import { getRem,setStore,bucketName,compress } from "@/config/mUtils"
 	import '../../config/ruler.js'
 	export default{
 		data () {
@@ -170,22 +166,12 @@
 				       files: [], // 文件缓存（上传图片）
       			       index: 0, // 序列号 可记录一共上传了多少张
 					  canAdd: true, //添加图片加号是否显示
-				 AndroVerson: checkAndroAgent(),
-				   iosVerson: iosVersion(),
 				   isMiniProgram:'',
 				   param_policy:{},//上传图片凭证参数
 
  			}
 		},
 		created(){
-			//查看手机拍照读写权限(安卓手机需要验证)
-			// if(window.stub){
-			// 	window.openPhoto();
-			// 	window.close('cancel');
-			// }else{
-			//     this.canPhoto=true; //苹果手机不需要验证权限
-			//     this.noPhoto=false; 
-			// }
 		},
 		mounted(){
 			// var yw = this.$route.query.channel; //记录渠道标示
