@@ -62,8 +62,8 @@
 		<div class="id_photo_out" v-show="hasUploadPhoto">
 
 			<p style="font-size: .24rem;color: #F2B643;line-height:.7rem;">*上传手持身份证照片，开启物流全额保价</p>
-			<label class="id_photo_in" for="idCardInput" @click="selectImage">
-				<input id="idCardInput" type="file" accept="image/*" name="file" class="ipt" @change="selectImage($event)" v-if="canPhoto">
+			<label class="id_photo_in" for="idCardInput">
+			<input id="idCardInput" type="file" accept="image/*" name="file" class="ipt" @change="selectImage($event)">
 				<img :src="photo" v-show="photo">
 			</label>
 		</div>
@@ -82,10 +82,14 @@
 <script type="text/javascript">
 	import headTop from '@/components/header/head.vue'
 	import { MessageBox,Toast,Indicator,Popup } from 'mint-ui'
-	import { queryBankCard, withDrawMax, queryMyProfil, xmlUploadImg, addRecycleOrder, queryAddress } from '@/service/getData.js'
+	import { queryBankCard, withDrawMax, queryMyProfil, addRecycleOrder, queryAddress,uploadimg,getpolicy } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { addHandId } from '@/images/addHandId.png'
+<<<<<<< HEAD
 	import { getRem, setStore, getStore, removeStore,isMiniProgram } from '@/config/mUtils.js'
+=======
+	import { getRem, setStore, getStore, removeStore,bucketName } from '@/config/mUtils.js'
+>>>>>>> upload
 	export default{
 		data(){
 			return {
@@ -95,8 +99,6 @@
 					addr: '',
 			      direct: false,
 			       photo: '',
-			    canPhoto: false,//可以拍照
-				 noPhoto: true, //不可以拍照
 				      bg: true,//是否阅读了协议
 			   isHasBank: true,//是否绑定银行卡 true表示没有绑定   false表示绑定银行啦
 			  bankImgUrl: '',
@@ -107,18 +109,12 @@
 	           bank_show: false,
 	                 rem: '',
 	         rightTelNum: '',//电话号正确的标记
-	            btn_lock: false,//防止表单重复提交的锁
+				btn_lock: false,//防止表单重复提交的锁
+			param_policy: {},////上传图片凭证参数
 			}
 		},
 		created(){
 			this.rem = getRem();
-			if(window.stub){  //查看手机拍照读写权限(安卓手机需要验证)
-				window.openPhoto();
-				window.close('cancel');
-			}else{
-			    this.canPhoto=true; //苹果手机不需要验证权限
-			    this.noPhoto=false;
-		    }
 		},
 		mounted(){
 			this.queryMyProfil();//获取用户的信息
@@ -254,43 +250,57 @@
       		},
 			/*选择身份证照片*/
 			selectImage(e) {
-			    if(this.noPhoto){  //查看手机拍照读写权限
-				    if(window.backPerInfo){  //查看手机拍照读写权限
-					    var res=window.backPerInfo();
-					    if(res=='OK'){
-						   this.canPhoto=true;
-						   this.noPhoto=false;
-					    }else{
-						   this.canPhoto=false;
-						   this.noPhoto=true;
-						   Toast({
-							  	message:'请在应用权限管理中打开“电话或读写手机存储”访问权限!',
-							  	position: 'bottom',
-							  	duration: 3000
-						    })
-						    return;
-					    }
-				    }
-			    }
 				if (!e.target.files || !e.target.files[0]){
 					return;
 				}
-				Indicator.open();
-				var _this=this;
-				var targetFile = e.target.files[0];
-				var reader = new FileReader();
-				reader.readAsDataURL(e.target.files[0]);
-				reader.onload = function(evt) {
-					Indicator.close();
-					_this.photo=evt.target.result;
-					_this.uploadRecyclePic(evt.target.result,targetFile);
-                }
+				Indicator.open('上传中...');
+				let item = {
+					key: this.index++,
+					name: e.target.files[0].name,
+					size: e.target.files[0].size,
+					file: e.target.files[0],
+				}
+				let reader = new FileReader()
+				reader.onload = (e) => {
+					this.$set(item, 'src', e.target.result)
+					this.photo=e.target.result
+					this.getpolicy(reader,item)
+				}
+				reader.readAsDataURL(e.target.files[0])
             },
-            //图片上传
-			uploadRecyclePic(value,value2) {
-				//参数一表示vue实例，参数二表示base64格式的图片，参数三表示方法，参数四表示mint-ui的加载的动画，参数五是Toast提示，参数六是缩小的比例,参数七表示订单数组的索引值,参数八表示当前选中的图片文件
- 				xmlUploadImg(this,value,'',Indicator,Toast,'','',value2)
-            },
+            //获取上传图片凭证
+			async getpolicy(reader,item){
+				const res = await getpolicy();
+				if(res.code=='000000'){
+					this.param_policy=res.data
+					this.format(reader,item)//图片处理（压缩或者不压缩）
+				}else{
+					Toast('获取参数失败');
+				}
+			},
+			//图片处理
+			format(reader,item){
+				const uuidv1 = require('uuid/v1');
+				var that = this,
+				    uuid = uuidv1();
+				let fd = new FormData();
+				fd.append('name',item.name)
+				fd.append('key',this.param_policy.dir+'/'+uuid+item.name)
+				fd.append('policy',this.param_policy.policy)
+				fd.append('OSSAccessKeyId',this.param_policy.accessKeyId)
+				fd.append('signature',this.param_policy.signature)
+				fd.append('success_action_status','200')
+				fd.append('file',item.file)
+				that.uploadImage(fd,item,uuid);
+			},
+			//上传图片接口(新-oss)
+			async uploadImage(val,item,uuid){
+				const res = await uploadimg(val);
+				var netimgurl = bucketName()+'.'+'oss-cn-beijing.aliyuncs.com/'+this.param_policy.dir+'/'+uuid+item.name;
+				console.log(netimgurl)
+				this.url=netimgurl;
+				Indicator.close()
+			},
             //获取用户银行卡
             async queryBankCard(){
                 const res = await queryBankCard()

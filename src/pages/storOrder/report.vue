@@ -302,3 +302,12 @@ export default{
     min-height: 100vh;
 }
 </style>
+<<<<<<< HEAD
+=======
+<style type="text/css">
+.mint-popup{
+    width: 4.9rem;
+    height: 3.1rem;
+}
+</style>
+>>>>>>> 77e5091f15c6a148be979e1521c982bbd3fcfb9c
