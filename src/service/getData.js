@@ -1,7 +1,8 @@
 import {fetch} from '../config/fetch.js'
-import {getStore,openAPI,checkAndroAgent,iosVersion} from '../config/mUtils.js'
+import {checkAndroAgent,iosVersion,bucketName} from '../config/mUtils.js'
 const andVerson = checkAndroAgent();
 const iosVerson = iosVersion();
+var endPoint  = 'oss-cn-beijing.aliyuncs.com';
 // const gold = process.env.API_ROOT
 // const gold = 'https://openapi.au32.cn'
 
@@ -824,7 +825,7 @@ export const getpolicy = () => fetch('/oss_api/oss/policy?endPoint='+endPoint,{}
  * 图片上传
  * */
 
-export const uploadimg = (name,key,OSSAccessKeyId,signature,success_action_status,file) => fetch('/oss_upload/',{'name':name,'key':key,'OSSAccessKeyId':OSSAccessKeyId,'signature':signature,'success_action_status':success_action_status,'file':file},'post')
+export const uploadimg = (formdata) => fetch(bucketName()+'.oss-cn-beijing.aliyuncs.com',formdata,'post')
 
 
 

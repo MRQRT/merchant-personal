@@ -55,12 +55,20 @@ module.exports = {
                 "^/api/merchant/": "/"
             },
         },
-        // "/gold": {
-        //     target: "https://openapitest.au32.cn",
-        //     pathRewrite: {"^/gold": ""},
-        //     secure: false,
-        //     changeOrigin: true
-        // }
+        "/oss_api/": {
+            target:"https://oss-test.au32.cn/",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/oss_api/": "/"
+            },
+        },
+        "/oss_upload/": {
+            target:"http://au32-cjt-test.oss-cn-beijing.aliyuncs.com",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/oss_upload/": "/"
+            },
+        }
     },
     //    proxyTable: {
     //     "/gold": {

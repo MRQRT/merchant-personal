@@ -8,10 +8,18 @@ export function openAPI(){
     return API
 }
 
+//hjgj-oss-api-bucketName
+export function bucketName(){
+    let bucketName='http://au32-cjt-p-test';//测试
+    // let bucketName='http://au32-cjt-p';//正式
+    return bucketName
+}
+
+
 /**
  * 图片压缩
  */
-export function compress(file,size,that){
+export function compress(file,size,item,that,uuid){
     //将base64文件转成二进制文件
     var dataURLToBlob=function(url){
         var arr=url.split(','),mime=arr[0].match(/:(.*?);/)[1],
@@ -38,8 +46,8 @@ export function compress(file,size,that){
         var blob=dataURLToBlob(src1)
         //base64转换成二进制文件
         let formData = new FormData()
-        formData.append('files', blob,'image.jpg')
-        that.upload(formData);
+        formData.append('file', blob,'image.jpg')
+        that.uploadImage(formData,item,uuid);
     }
 }
 
