@@ -1,9 +1,20 @@
 <template>
     <div class="shopList">
         <!-- 头部标题部分 -->
-        <head-top :headTitle=title class="head-top nomal-font" ref="topHead">
+        <head-top :headTitle=title class="head-top nomal-font" ref="topHead" v-if="title=='选择城市'">
             <img slot='head_goback' src='../../images/back.png' class="head_goback" @click="goBack()">
         </head-top>
+        <!-- 搜索框 -->
+        <div class="search-wrap">
+            <div class="go-back"></div>
+            <div class="input-wrap">
+                <span class="icon">
+                    <img src="../../images/search-icon.png" alt="">
+                </span>
+                <input type="text" name="" value="" placeholder="输入金店名称开始搜索">
+            </div>
+            <div class="cancel">取消</div>
+        </div>
         <!-- 主体部分 -->
         <div class="main-cont">
             <!-- 顶部地址部分 -->
@@ -482,6 +493,46 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     background-color: #F8F8F8;
     font-family:PingFangSC-Regular;
 }
+.search-wrap{
+    width: 100%;
+    padding:.12rem 0;
+    background-color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+.input-wrap{
+    position: relative;
+}
+.input-wrap .icon{
+    display: inline-block;
+    width: .36rem;
+    height: .34rem;
+    position: absolute;
+    left:.2rem;
+    top:20%;
+}
+.search-wrap input{
+    width: 5.6rem;
+    height: .65rem;
+    font-size: .28rem;
+    padding-left:.7rem;
+    background-color: rgba(245,245,245,1);
+    border-radius:33px;
+}
+input::-webkit-input-placeholder{
+    color:#BCBCBC;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+    color:#BCBCBC;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+    color:#BCBCBC;
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+    color:#BCBCBC;
+}
+
 .main-cont{
     width: 100%;
     min-height: 100vh;
