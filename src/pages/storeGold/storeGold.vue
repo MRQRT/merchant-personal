@@ -8,7 +8,7 @@
 			</div>
 		</head-top>
 		<!--存金banner-->
-		<div class="storBanner">
+		<!-- <div class="storBanner">
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 			<img src="../../images/storeGoldaBanner.jpg">
 			<div class="price_container">
@@ -23,9 +23,9 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 轮播图 -->
-		<!-- <div class="storBanner swiper-container swiper-container-1">
+		<div class="storBanner swiper-container swiper-container-1">
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 
 			<div class="swiper-wrapper">
@@ -33,9 +33,7 @@
 					<img src="../../images/storeGoldaBanner.jpg" alt="">
 				</div>
 				<div class="swiper-slide swiper-slide-2">
-					<a href="http://activity.au32.cn/lottery?source=cjt">
-						<img src="../../images/banner-new.png" alt="">
-					</a>
+					<img src="../../images/banner-1.jpeg" alt="">
 				</div>
 			</div>
 			<div class="price_container">
@@ -50,7 +48,7 @@
 					</button>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<!-- 特点 -->
 		<section class="character">
 			<div class="character_el character_el1">
@@ -350,6 +348,8 @@
 	</div>
 </template>
 <script>
+import '@/style/swiper.min.css'
+
 import foot from '@/components/footer/footGuid.vue'
 import headTop from '@/components/header/head.vue'
 import { MessageBox,Toast,} from 'mint-ui';
@@ -368,7 +368,6 @@ import  nocheck_safe from '@/images/nocheck_safe.png'
 import sf from '@/images/sf.png'
 import nocheck_sf from '@/images/nocheck_sf.png'
 
-import '@/style/swiper.min.css'
 export default {
 	data() {
 		return {
@@ -445,7 +444,8 @@ export default {
 	watch:{
 		currentPrice(val){
 			return val
-		}
+		},
+		'$route':'banner_swiper'
 	},
 	filters:{
 		formatNum(val){
@@ -460,7 +460,7 @@ export default {
             	pagination: '.swiper-pagination',
             	speed: 400,
 				loop:true,
-				autoplay: 2000,
+				autoplay: 3000,
             	paginationElement : 'li',
         	});
     	},
