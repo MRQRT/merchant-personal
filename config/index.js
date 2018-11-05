@@ -38,20 +38,14 @@ module.exports = {
     // },
     proxyTable: {
         "/merchant-api/": {
-            // target:"http://192.168.10.100:8088",
             target:"https://sh-test.au32.cn",
-            // target:"https://api-test.au32.cn/",
-            // target:"http://10.88.88.3:9191",
             changeOrigin: true,
             pathRewrite: {
                 "^/merchant-api/": "/"
             },
         },
         "/api": {
-            // target:"http://192.168.10.100:8088",
             target:"https://api-test.au32.cn",
-            // target:"http://cjtsh.au32.cn/api/",
-            // target:"http://10.88.88.3:9191",
             changeOrigin: true,
             pathRewrite: {
                 "^/api": ""
