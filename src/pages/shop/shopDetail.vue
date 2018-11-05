@@ -29,6 +29,9 @@
                 <div class="labels">
                     <span v-for="item in detailInfo.label">{{item}}</span>
                 </div>
+                <!-- 认领按钮 -->
+                <div class="apply-shop" v-if="!detailInfo.owned" @click="applyShop">我要认领</div>
+                <div class="apply-shop applyed" v-else>已被认领</div>
             </div>
             <!-- 店铺介绍 -->
             <div class="shop-instruction">
@@ -62,6 +65,8 @@
 import headTop from '@/components/header/head.vue'
 import '@/style/swiper.min.css'
 import {shopDetail} from '@/service/getData.js';
+import { MessageBox,Toast } from 'mint-ui';
+
 
 
     export default {
@@ -110,6 +115,20 @@ import {shopDetail} from '@/service/getData.js';
                 var marker = new BMap.Marker(point);        // 创建标注
                 map.addOverlay(marker);                     // 将标注添加到地图中
             },
+            // 点击我要认领
+            applyShop(){
+                MessageBox({
+                    title:'',
+                    message: '即将前往“存金通商户版”',
+                    confirmButtonText: '立即前往',
+                    showCancelButton: true,
+                    cancelButtonText:'取消',
+                }).then((action)=>{
+                    if(action=='confirm'){
+                        window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?from=cjtsh&shopId='+this.id
+                    }
+                })
+            },
             // 请求详情数据
             async shopDetail(){
                 var res = await shopDetail(this.id);
@@ -132,6 +151,33 @@ import {shopDetail} from '@/service/getData.js';
     }
 
 </script>
+
+<style media="screen">
+    .mint-msgbox-wrapper .mint-msgbox{
+        width: 4.9rem;
+        border-radius: 4px;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-content{
+        height: 1.11rem;
+        border-bottom: 1px solid #eee;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-message{
+        color: #333;
+        font-size: .28rem;
+        line-height: .85rem;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-btns{
+        height: .88rem;
+        line-height: .88rem;
+        font-size: .32rem;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-cancel{
+        color: #999 !important;
+        border-right:1px solid #eee;
+    }
+
+</style>
+
 
 <style media="screen">
     .swiper-pagination{
@@ -159,6 +205,7 @@ import {shopDetail} from '@/service/getData.js';
     padding-top:.88rem;
     padding-bottom: 1.5rem;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 .main-cont{
 
@@ -175,6 +222,7 @@ import {shopDetail} from '@/service/getData.js';
     width: 100%;
     padding:0 .3rem;
     margin:.4rem 0 .6rem;
+    position: relative;
 }
 .shop-basic-info .name{
     color: #333333;
@@ -247,6 +295,23 @@ import {shopDetail} from '@/service/getData.js';
     margin-right:.1rem;
     border:1px solid #F2B643;
     border-radius: 3px;
+}
+.apply-shop{
+    width: 2rem;
+    height: .7rem;
+    text-align: center;
+    line-height: .7rem;
+    color: #EDA835;
+    font-size: .3rem;
+    border:1px solid #F2B643;
+    border-radius: 35px;
+    position: absolute;
+    right:.3rem;
+    bottom: .02rem;
+}
+.applyed{
+    color:#F4CB86;
+    border:1px solid #F7D38E;
 }
 .shop-instruction, .shop-address{
     width:100%;

@@ -30,6 +30,11 @@ export const cityList = (spell) => fetch('/merchant-api/area/city_list?spell='+s
 
 export const shopDetail = (id) => fetch('/merchant-api/personal/store_detail?id='+id,{},'get');
 
+/**
+ * 热门标签
+ */
+
+export const brand = (id) => fetch('/merchant-api/brand',{},'get');
 
 
 /**

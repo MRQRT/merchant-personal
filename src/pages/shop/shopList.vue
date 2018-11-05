@@ -6,28 +6,29 @@
         </head-top>
         <!-- 搜索框 -->
         <div class="search-wrap">
-            <div class="go-back"></div>
+            <div class="go-back" v-show="mainContStatus" @click="$router.go(-1)">
+                <img src="../../images/back.png" alt="">
+            </div>
             <div class="input-wrap">
                 <span class="icon">
                     <img src="../../images/search-icon.png" alt="">
                 </span>
-                <input type="text" name="" value="" placeholder="输入金店名称开始搜索">
+                <input type="text" v-model="searchValue" placeholder="输入金店名称开始搜索" @focus="focusInput()" @keyup.enter="enterInput" @blur="blurInput">
             </div>
-            <div class="cancel">取消</div>
+            <div class="cancel" v-show="labelStatus" @click="cancelSearch">取消</div>
         </div>
         <!-- 主体部分 -->
-        <div class="main-cont">
+        <div class="main-cont" v-show="mainContStatus">
             <!-- 顶部地址部分 -->
-            <div class="current-address">
+            <div class="current-address" v-show="searchValue==''">
                 <div class="left-text" @click="showCity">当前位置：{{localPosition | setShort}}</div>
                 <div class="right-text" @click="myPosition">
-                    <!-- <span class="icon" :class="{'icon-rotate':rotateStatus}"></span>重新定位 -->
                     <span class="icon"></span>重新定位
                 </div>
             </div>
             <!-- 列表部分 -->
             <!-- :style="{height: wrapperHeight + 'px' }" -->
-            <div class="list-wrap" v-show="showStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
+            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
@@ -51,7 +52,6 @@
                                     </div>
                                     <div class="distans" v-show="localPosition!='正在获取位置...'">
                                         <span>{{item.distance}}km</span>
-                                        <!-- <span>2.3km</span> -->
                                         <span class="left-line" v-if="index<=2"></span>
                                         <span class="instruction">{{instructionJson[index]}}</span>
                                     </div>
@@ -60,6 +60,13 @@
                         </li>
                     </ul>
                 </mt-loadmore>
+            </div>
+            <!-- 匹配不到相关搜索时 -->
+            <div class="no-shop" v-else>
+                <div class="top-img">
+                    <img src="../../images/no-shop.png" alt="">
+                </div>
+                <p>啊哦～，没有找到与您输入匹配的金店～</p>
             </div>
         </div>
         <!-- 城市选择弹框 -->
@@ -81,6 +88,13 @@
                 </mt-index-section>
             </mt-index-list>
         </div>
+        <!-- 热门标签 -->
+        <div class="label-wrap" v-show="labelStatus">
+            <h3>热门标签</h3>
+            <div class="label-list">
+                <span v-for="(item,index) in brandArr" :key="index">{{item.name}}</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -89,14 +103,18 @@ import headTop from '@/components/header/head.vue'
 import city from "@/json/city"             //导入所有城市的JSON
 import { makePy } from "@/config/pinying"  //导入插件获取所有城市中文的大写首字母
 import {mapState,mapMutations} from 'vuex';
-import { shopList, cityList } from '@/service/getData.js';
+import { shopList, cityList,brand } from '@/service/getData.js';
 import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 
     export default {
         data(){
             return{
+                mainContStatus:true, // 显示主体内容
+                labelStatus:false,   // 显示热门标签
                 showStatus:false,    // 是否显示内容
+                hasShopStatus:true,  // 是否有店铺列表
                 wrapperHeight:0,     // 加载内容动态高度
+                searchValue:'',      // 搜索框值
                 title:'更多门店',
                 starNum:'',            // 星级
                 localPosition:'正在获取位置...',  // 当前位置
@@ -115,6 +133,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                     '1':'回收最多',
                     '2':'评分最高',
                 },
+                brandArr:[],//热门标签
                 spell:'', //选择城市的首字母
                 arr: [],//存放初始筛选的城市名称
                 cityArr: [],//存放第二次筛选后所有城市名称
@@ -158,6 +177,26 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             ...mapMutations([
                 'RECORD_POSITION',
             ]),
+            // 搜索框获取焦点
+            focusInput(){
+                this.mainContStatus = false;
+                this.labelStatus = true;
+                this.brand();
+            },
+            // 搜索框失去焦点
+            blurInput(){
+                if(this.searchValue==''){
+                    return
+                }else{
+                    console.log(this.searchValue);
+                }
+            },
+            //点击取消搜索按钮
+            cancelSearch(){
+                this.searchValue = '';
+                this.mainContStatus = true;
+                this.labelStatus = false;
+            },
             // 显示城市选择
             showCity(){
                 this.cityShow = !this.cityShow;
@@ -212,6 +251,15 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 console.log(document.body.scrollTop,document.documentElement.scrollTop)
             	document.body.scrollTop = 0;
                 document.documentElement.scrollTop = 0
+            },
+            // 请求热门标签
+            async brand(){
+                var res = await brand();
+                if(res.code=='000000'){
+                    this.brandArr = res.data
+                }else{
+                    Toast(res.message)
+                }
             },
             // 首次进入请求数据
             async requestList(){
@@ -311,52 +359,6 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
         		},{enableHighAccuracy: true})//指示浏览器获取高精度的位置，默认false
             },
         },
-        // created () {
-        //     /**
-        //      * 将json数据中的无用数据剔除
-        //      */
-        //     for (let i in city) {
-        //       if (city[i].name != "请选择") {//将第一层数据中为 “请选择” 的剔除掉
-        //         this.arr.push(city[i].name);
-        //         for (let j in city[i].sub) {//将第二层数据中为 “请选择 和 其他” 的剔除掉
-        //           if (
-        //             city[i].sub[j].name != "请选择" &&
-        //             city[i].sub[j].name != "其他"
-        //           ) {
-        //             this.arr.push(city[i].sub[j].name);//将处理后的数据存放在数组中，等待第二次筛选处理
-        //           }
-        //         }
-        //       }
-        //     }
-        //
-        //     /**
-        //      * 配置相关数据
-        //      */
-        //     for (let k in this.arr) {
-        //       let cityKey = makePy(this.arr[k])[0].substring(0, 1);//获取每一个市区的首字母
-        //       let cityValue = this.arr[k];//获取所有市区
-        //       this.citySort[cityKey] = cityKey;//利用对象特性，剔除重复的字母，并将剔除后的字母存进对象中
-        //
-        //       //将所有市区信息 以（ 字母 - 市区名 ）的格式存在至数组中
-        //       this.cityArr[k] = {
-        //         key: cityKey,
-        //         value: cityValue
-        //       };
-        //     }
-        //
-        //     /**
-        //      * 将处理后的首字母数据对象，存放至数组中
-        //      */
-        //     for (let p in this.citySort) {
-        //         this.citySortArr.push(this.citySort[p]);
-        //     }
-        //
-        //     /**
-        //      * 将真实存在的市区首字母按A-Z进行排序
-        //      */
-        //     this.citySortArr = this.citySortArr.sort();
-        //     console.log(this.citySortArr)
-        // },
         mounted(){
             Indicator.open({
               // text: '加载中...',
@@ -489,20 +491,35 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
 }
 .shopList{
     width: 100%;
+    min-height: 100vh;
     position: relative;
+    margin-bottom: -.4rem;
     background-color: #F8F8F8;
     font-family:PingFangSC-Regular;
 }
 .search-wrap{
     width: 100%;
-    padding:.12rem 0;
+    padding:.2rem .3rem;
     background-color: #fff;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    align-items: center;
+    position: fixed;
+    top:0;
+    z-index: 1000;
+}
+.search-wrap .go-back{
+    width: .19rem;
+    height: .36rem;
+    margin-right:.45rem;
+}
+.go-back img{
+    width: 100%;
 }
 .input-wrap{
     position: relative;
+    margin-left:.35rem;
 }
 .input-wrap .icon{
     display: inline-block;
@@ -510,14 +527,15 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     height: .34rem;
     position: absolute;
     left:.2rem;
-    top:20%;
+    top:23%;
 }
 .search-wrap input{
     width: 5.6rem;
     height: .65rem;
+    color: #333;
     font-size: .28rem;
-    padding-left:.7rem;
-    background-color: rgba(245,245,245,1);
+    padding-left:.75rem;
+    background-color:#F5F5F5;
     border-radius:33px;
 }
 input::-webkit-input-placeholder{
@@ -532,7 +550,39 @@ input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
 input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
     color:#BCBCBC;
 }
-
+.search-wrap .cancel{
+    color: #333;
+    font-size: .28rem;
+    margin-left: .35rem;
+}
+.label-wrap{
+    width: 100%;
+    height: 100vh;
+    padding:1.7rem .4rem .5rem;
+}
+.label-wrap h3{
+    color: #333;
+    font-size: .3rem;
+    margin-bottom: .3rem;
+}
+.label-list{
+    width:100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.label-list span{
+    display: inline-block;
+    color: #666;
+    font-size: .26rem;
+    padding:.11rem .3rem;
+    margin:0 .2rem .2rem 0;
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow:0px 1px 15px 0px rgba(0, 0, 0, 0.06);
+}
 .main-cont{
     width: 100%;
     min-height: 100vh;
@@ -552,7 +602,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
     display: flex;
     justify-content: space-between;
     position: fixed;
-    top:.88rem;
+    top:1.02rem;
     z-index:1000;
 
 }
@@ -582,10 +632,29 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 .icon-rotate{
     animation: roundLoop2 1s linear infinite;
 }
+.no-shop{
+    width: 100%;
+    height: 100vh;
+    padding-top:2.8rem;
+}
+.no-shop .top-img{
+    width: 3.1rem;
+    height: 2.4rem;
+    margin:0 auto .8rem;
+}
+.no-shop .top-img img{
+    width: 100%;
+}
+.no-shop p{
+    color: #666;
+    font-size: .28rem;
+    text-align: center;
+    padding-left:.1rem;
+}
 .list-wrap{
     width:100%;
     /* min-height: 100vh; */
-    padding-top:1.48rem;
+    padding-top:1.58rem;
     overflow: scroll;
 }
 .list-wrap .shop-item{
