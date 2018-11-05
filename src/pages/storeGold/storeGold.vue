@@ -352,6 +352,7 @@
 <script>
 import foot from '@/components/footer/footGuid.vue'
 import headTop from '@/components/header/head.vue'
+import { MessageBox,Toast} from 'mint-ui';
 import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
