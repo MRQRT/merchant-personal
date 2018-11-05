@@ -278,22 +278,22 @@
 			format(reader,item){
 				const uuidv1 = require('uuid/v1');
 				var that = this,
-				    uuid = uuidv1();
+					uuid = uuidv1(),
+					random = Math.random().toString(36).substr(2);
 				let fd = new FormData();
 				fd.append('name',item.name)
-				fd.append('key',this.param_policy.dir+'/'+uuid+item.name)
+				fd.append('key',this.param_policy.dir+'/'+random+'-'+uuid+'-'+item.name)
 				fd.append('policy',this.param_policy.policy)
 				fd.append('OSSAccessKeyId',this.param_policy.accessKeyId)
 				fd.append('signature',this.param_policy.signature)
 				fd.append('success_action_status','200')
 				fd.append('file',item.file)
-				that.uploadImage(fd,item,uuid);
+				that.uploadImage(fd,item,uuid,random);
 			},
 			//上传图片接口(新-oss)
-			async uploadImage(val,item,uuid){
+			async uploadImage(val,item,uuid,random){
 				const res = await uploadimg(val);
-				var netimgurl = bucketName()+'.'+'oss-cn-beijing.aliyuncs.com/'+this.param_policy.dir+'/'+uuid+item.name;
-				console.log(netimgurl)
+				var netimgurl = bucketName()+'.'+'oss-cn-beijing.aliyuncs.com/'+this.param_policy.dir+'/'+random+'-'+uuid+'-'+item.name;
 				this.url=netimgurl;
 				Indicator.close()
 			},
