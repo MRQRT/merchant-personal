@@ -9,6 +9,41 @@ export function openAPI(){
 }
 
 /**
+ * 图片压缩
+ */
+export function compress(file,size,that){
+    //将base64文件转成二进制文件
+    var dataURLToBlob=function(url){
+        var arr=url.split(','),mime=arr[0].match(/:(.*?);/)[1],
+        bstr=atob(arr[1]),n=bstr.length,u8arr=new Uint8Array(n);
+        while(n--){
+            u8arr[n]=bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr],{type:mime});
+    }
+    var img = new Image,
+    canvas = document.createElement("canvas"),
+    ctx = canvas.getContext("2d");
+    img.crossOrigin = "Anonymous";
+    img.src = file.result
+    img.onload =() => {
+        var width = img.width;
+        var height = img.height;
+        var rate = ((size/1024/1024)*3).toFixed(1);
+        var real_rate = (width<height ? width/height : height/width)/rate;
+        canvas.width = width*real_rate;
+        canvas.height = height*real_rate;
+        ctx.drawImage(img,0,0,width,height,0,0,width*real_rate,height*real_rate);
+        var src1 = canvas.toDataURL("image/jpg");
+        var blob=dataURLToBlob(src1)
+        //base64转换成二进制文件
+        let formData = new FormData()
+        formData.append('files', blob,'image.jpg')
+        that.upload(formData);
+    }
+}
+
+/**
  * 测试网址和生产网址切换
  *
  */

@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8082,
+    port: 8083,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -40,6 +40,7 @@ module.exports = {
         "/api": {
             // target:"http://192.168.10.100:8088",
             target:"https://api-test.au32.cn/",
+            // target:"http://10.88.88.3:9191",
             changeOrigin: true,
             pathRewrite: {
                 "^/api": ""
@@ -48,6 +49,7 @@ module.exports = {
         "/api/merchant/": {
             // target:"http://192.168.10.100:8088",
             target:"http://cjtsh.au32.cn/api/",
+            // target:"http://10.88.88.3:9191",
             changeOrigin: true,
             pathRewrite: {
                 "^/api/merchant/": "/"

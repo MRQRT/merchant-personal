@@ -12,8 +12,17 @@ import { removeCookie }from '@/config/mUtils.js'
 axios.interceptors.request.use((config) => {
     //在发送请求之前将参数序列化
     if(config.method  === 'post' || config.method === 'put') {
-        config.data = qs.stringify(config.data);
-        config.params = qs.stringify(config.url)
+        let isFormData = (v) => {
+            return Object.prototype.toString.call(v) === '[object FormData]';
+        }
+        var a = isFormData(config.data);
+        if(!a){
+            config.data = qs.stringify(config.data,{ skipNulls: true });
+            config.params = qs.stringify(config.url,{ skipNulls: true });
+        }
+        config.headers['Accept'] = 'application/json'
+        // config.data = qs.stringify(config.data);
+        // config.params = qs.stringify(config.url)
     }
     if(config.method === 'get') {
         config.params = qs.stringify(config.data)
