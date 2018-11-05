@@ -39,12 +39,9 @@ module.exports = {
     proxyTable: {
         "/merchant-api/": {
             // target:"http://192.168.10.100:8088",
-<<<<<<< HEAD
             target:"https://sh-test.au32.cn",
-=======
-            target:"https://api-test.au32.cn/",
+            // target:"https://api-test.au32.cn/",
             // target:"http://10.88.88.3:9191",
->>>>>>> upload
             changeOrigin: true,
             pathRewrite: {
                 "^/merchant-api/": "/"
@@ -52,26 +49,14 @@ module.exports = {
         },
         "/api": {
             // target:"http://192.168.10.100:8088",
-<<<<<<< HEAD
             target:"https://api-test.au32.cn",
-=======
-            target:"http://cjtsh.au32.cn/api/",
+            // target:"http://cjtsh.au32.cn/api/",
             // target:"http://10.88.88.3:9191",
->>>>>>> upload
             changeOrigin: true,
             pathRewrite: {
                 "^/api": ""
             },
         },
-<<<<<<< HEAD
-
-        // "/gold": {
-        //     target: "https://openapitest.au32.cn",
-        //     pathRewrite: {"^/gold": ""},
-        //     secure: false,
-        //     changeOrigin: true
-        // }
-=======
         "/oss_api/": {
             target:"https://oss-test.au32.cn/",
             changeOrigin: true,
@@ -86,7 +71,6 @@ module.exports = {
                 "^/oss_upload/": "/"
             },
         }
->>>>>>> upload
     },
     //    proxyTable: {
     //     "/gold": {
