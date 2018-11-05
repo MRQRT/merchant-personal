@@ -682,6 +682,8 @@ img{
 }
 .store{
 	width: 100%;
+	min-height: 100vh;
+	padding-bottom: .98rem;
 	position: relative;
 	top: 0;
 	background-color: #fff;
