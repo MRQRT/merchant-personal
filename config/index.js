@@ -58,13 +58,6 @@ module.exports = {
                 "^/oss_api/": "/"
             },
         },
-        "/oss_upload/": {
-            target:"http://au32-cjt-test.oss-cn-beijing.aliyuncs.com",
-            changeOrigin: true,
-            pathRewrite: {
-                "^/oss_upload/": "/"
-            },
-        }
     },
     //    proxyTable: {
     //     "/gold": {
