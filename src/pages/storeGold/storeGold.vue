@@ -8,7 +8,7 @@
 			</div>
 		</head-top>
 		<!--存金banner-->
-		<div class="storBanner">
+		<!-- <div class="storBanner">
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 			<img src="../../images/storeGoldaBanner.jpg">
 			<div class="price_container">
@@ -23,19 +23,17 @@
 					</button>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 轮播图 -->
-		<!-- <div class="storBanner swiper-container swiper-container-1">
+		<div class="storBanner swiper-container swiper-container-1">
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 
 			<div class="swiper-wrapper">
+				<div class="swiper-slide swiper-slide-2">
+					<img src="../../images/banner-1.jpeg" alt="">
+				</div>
 				<div class="swiper-slide swiper-slide-1">
 					<img src="../../images/storeGoldaBanner.jpg" alt="">
-				</div>
-				<div class="swiper-slide swiper-slide-2">
-					<a href="http://activity.au32.cn/lottery?source=cjt">
-						<img src="../../images/banner-new.png" alt="">
-					</a>
 				</div>
 			</div>
 			<div class="price_container">
@@ -50,7 +48,7 @@
 					</button>
 				</div>
 			</div>
-		</div> -->
+		</div>
 		<!-- 特点 -->
 		<section class="character">
 			<div class="character_el character_el1">
@@ -445,7 +443,8 @@ export default {
 	watch:{
 		currentPrice(val){
 			return val
-		}
+		},
+		'$route':'banner_swiper'
 	},
 	filters:{
 		formatNum(val){
@@ -689,6 +688,7 @@ img{
 	top: 0;
 	background-color: #fff;
 	text-align: center;
+	overflow-x: hidden;
 }
 .storBanner{
 	width:100%;

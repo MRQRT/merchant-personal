@@ -6,7 +6,7 @@
         </head-top>
         <!-- 搜索框 -->
         <div class="search-wrap">
-            <div class="go-back" v-show="mainContStatus" @click="$router.go(-1)">
+            <div class="go-back" v-show="!isSearch" @click="$router.go(-1)">
                 <img src="../../images/back.png" alt="">
             </div>
             <div class="input-wrap">
@@ -15,7 +15,7 @@
                 </span>
                 <input type="text" v-model="searchValue" placeholder="输入金店名称开始搜索" @focus="focusInput()" @keyup.enter="enterInput" @blur="blurInput">
             </div>
-            <div class="cancel" v-show="labelStatus" @click="cancelSearch">取消</div>
+            <div class="cancel" v-show="isSearch" @click="cancelSearch">取消</div>
         </div>
         <!-- 主体部分 -->
         <div class="main-cont" v-show="mainContStatus">
@@ -28,7 +28,7 @@
             </div>
             <!-- 列表部分 -->
             <!-- :style="{height: wrapperHeight + 'px' }" -->
-            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :style="{height: wrapperHeight + 'px' }">
+            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :class="{'miniPadding':isSearch}" >
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
@@ -52,8 +52,8 @@
                                     </div>
                                     <div class="distans" v-show="localPosition!='正在获取位置...'">
                                         <span>{{item.distance}}km</span>
-                                        <span class="left-line" v-if="index<=2"></span>
-                                        <span class="instruction">{{instructionJson[index]}}</span>
+                                        <span class="left-line" v-if="index<=2&&!isSearch"></span>
+                                        <span class="instruction" v-show="!isSearch">{{instructionJson[index]}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
         <div class="label-wrap" v-show="labelStatus">
             <h3>热门标签</h3>
             <div class="label-list">
-                <span v-for="(item,index) in brandArr" :key="index">{{item.name}}</span>
+                <span v-for="(item,index) in brandArr" :key="index" @mousedown="searchShop(item.name)">{{item.name}}</span>
             </div>
         </div>
     </div>
@@ -111,10 +111,12 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             return{
                 mainContStatus:true, // 显示主体内容
                 labelStatus:false,   // 显示热门标签
+                isSearch:false,      // 是否是搜索状态
                 showStatus:false,    // 是否显示内容
                 hasShopStatus:true,  // 是否有店铺列表
                 wrapperHeight:0,     // 加载内容动态高度
                 searchValue:'',      // 搜索框值
+                isClick:false,       // 是否是点击标签事件
                 title:'更多门店',
                 starNum:'',            // 星级
                 localPosition:'正在获取位置...',  // 当前位置
@@ -179,21 +181,45 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             ]),
             // 搜索框获取焦点
             focusInput(){
-                this.mainContStatus = false;
-                this.labelStatus = true;
+                this.isSearch = true;   // 设为搜索状态
+                this.isClick = false;   // 初始化点击标签状态
+                this.mainContStatus = false; //初始化显示列表状态
+                this.labelStatus = true;     //初始化显示标签状态
+                this.hasShopStatus = true;   //初始化是否有数据状态
+                this.searchCondition.pageNo = 0;
                 this.brand();
+                this.initTop();
             },
             // 搜索框失去焦点
             blurInput(){
+                this.isSearch = true;
                 if(this.searchValue==''){
                     return
                 }else{
-                    console.log(this.searchValue);
+                    this.isClick ? '' : this.requestList();//如果是点击标签事件，不再请求数据
+                    this.mainContStatus = true;
+                    this.labelStatus = false;
                 }
             },
             //点击取消搜索按钮
             cancelSearch(){
                 this.searchValue = '';
+                this.isSearch = false;      // 是否是搜索状态
+                this.mainContStatus = true; // 是否显示主体内容
+                this.hasShopStatus = true;  // 是否有店铺数据
+                this.searchCondition.pageNo = 0;
+
+                if(this.labelStatus){
+                    this.labelStatus = false;
+                }else{
+                    this.requestList();
+                }
+            },
+            // 搜索店铺
+            searchShop(name){
+                this.isClick = true;  //将点击状态设未true
+                this.searchValue = name;
+                this.requestList();
                 this.mainContStatus = true;
                 this.labelStatus = false;
             },
@@ -248,9 +274,11 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 })
             },
             initTop(){
+                console.log(11111);
                 console.log(document.body.scrollTop,document.documentElement.scrollTop)
-            	document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0
+            	// document.body.scrollTop = 0;
+                // document.documentElement.scrollTop = 0
+                window.scrollTo(0,0);
             },
             // 请求热门标签
             async brand(){
@@ -263,14 +291,19 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             },
             // 首次进入请求数据
             async requestList(){
-                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize);
+                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize,this.searchValue);
                 if(res.code=='000000'){
                     this.showStatus = true;
                     Indicator.close();
                     this.shopList = res.data.content;
                     this.pages=res.data.totalPages;
-                    if(this.searchCondition.pageNo>=this.pages){
-                       this.allLoaded=true;  //数据加载完，bottomMethod则不再执行
+                    console.log('this.pages',this.pages);
+                    if(this.pages==0){
+                        console.log('没有数据')
+                        this.hasShopStatus = false;
+                        // this.allLoaded=true;
+                    }else{
+                        this.hasShopStatus = true;
                     }
                 }else{
                     Toast(res.message)
@@ -279,7 +312,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             // 加载更多
             async loadMore(){
                 this.searchCondition.pageNo=this.searchCondition.pageNo+1;
-                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize);
+                var res=await shopList(this.lat,this.lng,this.searchCondition.pageNo,this.searchCondition.pageSize,this.searchValue);
                 if(res.code=='000000'){
                   this.shopList=this.shopList.concat(res.data.content);
                   if(this.searchCondition.pageNo>=this.totalPages){
@@ -360,8 +393,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             },
         },
         mounted(){
+            this.$refs.wrapper.addEventListener('scroll', this.initTop())
             Indicator.open({
-              // text: '加载中...',
               spinnerType: 'fading-circle'
             });
             this.myPosition();
@@ -496,6 +529,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     margin-bottom: -.4rem;
     background-color: #F8F8F8;
     font-family:PingFangSC-Regular;
+    overflow-y: scroll;
 }
 .search-wrap{
     width: 100%;
@@ -507,6 +541,8 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
     align-items: center;
     position: fixed;
     top:0;
+    left:0;
+    right:0;
     z-index: 1000;
 }
 .search-wrap .go-back{
@@ -557,7 +593,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 }
 .label-wrap{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     padding:1.7rem .4rem .5rem;
 }
 .label-wrap h3{
@@ -656,6 +692,9 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
     /* min-height: 100vh; */
     padding-top:1.58rem;
     overflow: scroll;
+}
+.miniPadding{
+    padding-top:1.3rem;
 }
 .list-wrap .shop-item{
     width:100%;

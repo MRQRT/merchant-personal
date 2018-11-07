@@ -30,8 +30,8 @@
                     <span v-for="item in detailInfo.label">{{item}}</span>
                 </div>
                 <!-- 认领按钮 -->
-                <div class="apply-shop" v-if="!detailInfo.owned" @click="applyShop">我要认领</div>
-                <div class="apply-shop applyed" v-else>已被认领</div>
+                <div class="apply-shop" v-if="detailInfo.statusId==1" @click="applyShop">我要认领</div>
+                <div class="apply-shop applyed" v-else-if="detailInfo.statusId==3">已被认领</div>
             </div>
             <!-- 店铺介绍 -->
             <div class="shop-instruction">
@@ -125,7 +125,8 @@ import { MessageBox,Toast } from 'mint-ui';
                     cancelButtonText:'取消',
                 }).then((action)=>{
                     if(action=='confirm'){
-                        window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?from=cjtsh&shopId='+this.id
+                        var url = window.location.href;
+                        window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
                     }
                 })
             },

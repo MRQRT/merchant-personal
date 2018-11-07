@@ -16,7 +16,7 @@ export const shopIndex = (lat,lng) => fetch('/merchant-api/personal/store_list?l
  * 店铺列表
  */
 
-export const shopList = (lat,lng,page,size) => fetch('/merchant-api/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size,{},'get');
+export const shopList = (lat,lng,page,size,name) => fetch('/merchant-api/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size+'&name='+name,{},'get');
 
 /**
  * 城市选择
