@@ -1,7 +1,8 @@
 import {fetch} from '../config/fetch.js'
-import {getStore,openAPI,checkAndroAgent,iosVersion} from '../config/mUtils.js'
+import {checkAndroAgent,iosVersion,bucketName} from '../config/mUtils.js'
 const andVerson = checkAndroAgent();
 const iosVerson = iosVersion();
+var endPoint  = 'oss-cn-beijing.aliyuncs.com';
 // const gold = process.env.API_ROOT
 // const gold = 'https://openapi.au32.cn'
 
@@ -818,3 +819,22 @@ export const turnIntegral = (getUserName,integral) => fetch('/api/v3/integralOrd
 */
 
 export const queryProductId = () => fetch('/api/v3/integralOrder/queryProductId',{},'get')
+
+/** 
+ * 图片上传获取认证
+ * */ 
+
+export const getpolicy = () => fetch('/oss_api/oss/policy?endPoint='+endPoint,{},'get')
+
+/**
+ * 图片上传
+ * */
+
+export const uploadimg = (formdata) => fetch(bucketName()+'.oss-cn-beijing.aliyuncs.com',formdata,'post')
+
+
+
+/**
+ * 旧的上传图片
+ */
+export const upload = (fil) => fetch('https://api-test.au32.cn/v3/recycleOrder/uploadRecyclePic2',fil,'post');

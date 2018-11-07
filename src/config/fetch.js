@@ -2,9 +2,8 @@ import router from '@/main.js'
 import {a} from '@/main.js'//将vue实例引入
 import axios from 'axios'
 import qs from 'qs'
-import { Toast, MessageBox} from 'mint-ui'
+import { Toast, MessageBox,Indicator} from 'mint-ui'
 import store from '../store'
-import { removeCookie }from '@/config/mUtils.js'
 // axios.defaults.baseURL = process.env.API_ROOT   //配置接口地址
 // axios.defaults.baseURL = '/api'   //配置接口地址
 // axios.defaults.timeout = 5000; //配置请求的超时时间，超时将被中断
@@ -12,8 +11,17 @@ import { removeCookie }from '@/config/mUtils.js'
 axios.interceptors.request.use((config) => {
     //在发送请求之前将参数序列化
     if(config.method  === 'post' || config.method === 'put') {
-        config.data = qs.stringify(config.data);
-        config.params = qs.stringify(config.url)
+        let isFormData = (v) => {
+            return Object.prototype.toString.call(v) === '[object FormData]';
+        }
+        var a = isFormData(config.data);
+        if(!a){
+            config.data = qs.stringify(config.data,{ skipNulls: true });
+            config.params = qs.stringify(config.url,{ skipNulls: true });
+        }
+        config.headers['Accept'] = 'application/json'
+        // config.data = qs.stringify(config.data);
+        // config.params = qs.stringify(config.url)
     }
     if(config.method === 'get') {
         config.params = qs.stringify(config.data)
@@ -104,9 +112,11 @@ export function fetch(url, params, method) {
         .then(response => {
             resolve(response.data)
         }, err => {
+            Indicator.close()
             reject(error)
         })
         .catch((error) => {
+            Indicator.close()
            reject(error)
        })
     })

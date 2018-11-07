@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8082,
+    port: 8083,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -38,7 +38,6 @@ module.exports = {
     // },
     proxyTable: {
         "/merchant-api/": {
-            // target:"http://192.168.10.100:8088",
             target:"https://sh-test.au32.cn",
             changeOrigin: true,
             pathRewrite: {
@@ -46,20 +45,19 @@ module.exports = {
             },
         },
         "/api": {
-            // target:"http://192.168.10.100:8088",
             target:"https://api-test.au32.cn",
             changeOrigin: true,
             pathRewrite: {
                 "^/api": ""
             },
         },
-
-        // "/gold": {
-        //     target: "https://openapitest.au32.cn",
-        //     pathRewrite: {"^/gold": ""},
-        //     secure: false,
-        //     changeOrigin: true
-        // }
+        "/oss_api/": {
+            target:"https://oss-test.au32.cn/",
+            changeOrigin: true,
+            pathRewrite: {
+                "^/oss_api/": "/"
+            },
+        },
     },
     //    proxyTable: {
     //     "/gold": {

@@ -7,8 +7,8 @@
 		<mt-loadmore  :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"  ref="loadmore" class="loadmore orderInfo" v-if="hasStor">
 			<div class="all_order" v-if="storList.length">
 				<section v-for="(item,index) in storList" class="order_container" @click="order_det(item)" :key="index">
-					<img v-show="item.imageUrl.length>31?true:false" :src="item.imageUrl">
-					<img v-show="item.imageUrl.length==31?true:false" src="../../images/cjticon.png">
+					<img class='has' v-if="item.imageUrl.search('null')==-1?true:false" :src="item.imageUrl">
+					<img class="no" v-else src="../../images/cjticon.png">
 					<div class="order_desc">
 						<p class="order_p1">
 							<span class="order_p1_span1">订单编号&nbsp;:&nbsp;&nbsp;{{item.code}}</span>
