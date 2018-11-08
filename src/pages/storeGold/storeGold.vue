@@ -29,11 +29,11 @@
 			<span @click="goToMyOrder" class="my_store_order my_store_order_2">我的订单</span>
 
 			<div class="swiper-wrapper">
-				<div class="swiper-slide swiper-slide-1">
-					<img src="../../images/storeGoldaBanner.jpg" alt="">
-				</div>
 				<div class="swiper-slide swiper-slide-2">
 					<img src="../../images/banner-1.jpeg" alt="">
+				</div>
+				<div class="swiper-slide swiper-slide-1">
+					<img src="../../images/storeGoldaBanner.jpg" alt="">
 				</div>
 			</div>
 			<div class="price_container">
@@ -352,7 +352,7 @@ import '@/style/swiper.min.css'
 
 import foot from '@/components/footer/footGuid.vue'
 import headTop from '@/components/header/head.vue'
-import { MessageBox,Toast,} from 'mint-ui';
+import { MessageBox,Toast} from 'mint-ui';
 import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
 import message from '@/images/message.png'//消息图标白色
 import message2 from '@/images/message2.png'//消息图标黑色
@@ -689,6 +689,7 @@ img{
 	top: 0;
 	background-color: #fff;
 	text-align: center;
+	overflow-x: hidden;
 }
 .storBanner{
 	width:100%;

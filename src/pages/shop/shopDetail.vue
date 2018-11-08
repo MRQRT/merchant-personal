@@ -29,6 +29,9 @@
                 <div class="labels">
                     <span v-for="item in detailInfo.label">{{item}}</span>
                 </div>
+                <!-- 认领按钮 -->
+                <div class="apply-shop" v-if="detailInfo.statusId==1" @click="applyShop">我要认领</div>
+                <div class="apply-shop applyed" v-else-if="detailInfo.statusId==3">已被认领</div>
             </div>
             <!-- 店铺介绍 -->
             <div class="shop-instruction">
@@ -47,7 +50,7 @@
             <div class="appointment">
                 <div class="tel">
                     <span class="icon"></span>
-                    <span>{{detailInfo.phone}}</span>
+                    <span>{{phone}}</span>
                 </div>
                 <div class="btn">
                     <div class="" v-if="detailInfo.phone=='未知'">立即预约</div>
@@ -62,6 +65,8 @@
 import headTop from '@/components/header/head.vue'
 import '@/style/swiper.min.css'
 import {shopDetail} from '@/service/getData.js';
+import { MessageBox,Toast } from 'mint-ui';
+
 
 
     export default {
@@ -82,10 +87,10 @@ import {shopDetail} from '@/service/getData.js';
                 },
                 detailInfo:{
                     imageUrls:[{},{},{},{}],
-                    mark:'我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银',
+                    mark:'',
                     star:90,
-                    address:'北京市北京市北京市北京市北京市',
-                    phone:17600568656,
+                    address:'',
+                    phone:'',
                     lat:'',
                     lng:'',
                     label:['回购','存金'],
@@ -96,7 +101,17 @@ import {shopDetail} from '@/service/getData.js';
             headTop,
         },
         computed: {
-
+            phone(){ // 如果有2个电话号码只取第一个
+                var mobile = this.detailInfo.phone;
+                if(!mobile){
+                    return
+                }
+                if(mobile.indexOf(',')!=-1){
+                    return mobile.split(',')[0]
+                }else{
+                    return mobile;
+                }
+            }
         },
         watch:{
 
@@ -109,6 +124,23 @@ import {shopDetail} from '@/service/getData.js';
                 map.centerAndZoom(point, 15);               // 初始化
                 var marker = new BMap.Marker(point);        // 创建标注
                 map.addOverlay(marker);                     // 将标注添加到地图中
+            },
+            // 点击我要认领
+            applyShop(){
+                MessageBox({
+                    title:'',
+                    message: '即将前往“存金通商户版”',
+                    confirmButtonText: '立即前往',
+                    showCancelButton: true,
+                    cancelButtonText:'取消',
+                }).then((action)=>{
+                    if(action=='confirm'){
+                        var url = window.location.href;
+                        // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        window.location.href = 'https://cjtsh.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url+'&className='+this.className+'&name='+this.name;
+                    }
+                })
             },
             // 请求详情数据
             async shopDetail(){
@@ -132,6 +164,33 @@ import {shopDetail} from '@/service/getData.js';
     }
 
 </script>
+
+<style media="screen">
+    .mint-msgbox-wrapper .mint-msgbox{
+        width: 4.9rem;
+        border-radius: 4px;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-content{
+        height: 1.11rem;
+        border-bottom: 1px solid #eee;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-message{
+        color: #333;
+        font-size: .28rem;
+        line-height: .85rem;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-btns{
+        height: .88rem;
+        line-height: .88rem;
+        font-size: .32rem;
+    }
+    .mint-msgbox-wrapper .mint-msgbox-cancel{
+        color: #999 !important;
+        border-right:1px solid #eee;
+    }
+
+</style>
+
 
 <style media="screen">
     .swiper-pagination{
@@ -159,6 +218,7 @@ import {shopDetail} from '@/service/getData.js';
     padding-top:.88rem;
     padding-bottom: 1.5rem;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 .main-cont{
 
@@ -175,6 +235,7 @@ import {shopDetail} from '@/service/getData.js';
     width: 100%;
     padding:0 .3rem;
     margin:.4rem 0 .6rem;
+    position: relative;
 }
 .shop-basic-info .name{
     color: #333333;
@@ -247,6 +308,23 @@ import {shopDetail} from '@/service/getData.js';
     margin-right:.1rem;
     border:1px solid #F2B643;
     border-radius: 3px;
+}
+.apply-shop{
+    width: 2rem;
+    height: .7rem;
+    text-align: center;
+    line-height: .7rem;
+    color: #EDA835;
+    font-size: .3rem;
+    border:1px solid #F2B643;
+    border-radius: 35px;
+    position: absolute;
+    right:.3rem;
+    bottom: .02rem;
+}
+.applyed{
+    color:#F4CB86;
+    border:1px solid #F7D38E;
 }
 .shop-instruction, .shop-address{
     width:100%;

@@ -1,7 +1,8 @@
 import {fetch} from '../config/fetch.js'
-import {getStore,openAPI,checkAndroAgent,iosVersion} from '../config/mUtils.js'
+import {checkAndroAgent,iosVersion,bucketName} from '../config/mUtils.js'
 const andVerson = checkAndroAgent();
 const iosVerson = iosVersion();
+var endPoint  = 'oss-cn-beijing.aliyuncs.com';
 // const gold = process.env.API_ROOT
 // const gold = 'https://openapi.au32.cn'
 
@@ -9,27 +10,32 @@ const iosVerson = iosVersion();
  * 店铺首页
  */
 
-export const shopIndex = (lat,lng) => fetch('/api/merchant/personal/store_list?lat='+lat+'&lng='+lng,{},'get');
+export const shopIndex = (lat,lng) => fetch('/merchant-api/personal/store_list?lat='+lat+'&lng='+lng,{},'get');
 
 
 /**
  * 店铺列表
  */
 
-export const shopList = (lat,lng,page,size) => fetch('/api/merchant/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size,{},'get');
+export const shopList = (lat,lng,page,size,name) => fetch('/merchant-api/personal/store_detail_list?lat='+lat+'&lng='+lng+'&page='+page+'&size='+size+'&name='+name,{},'get');
 
 /**
  * 城市选择
  */
 
-export const cityList = (spell) => fetch('/api/merchant/area/city_list?spell='+spell,{},'get');
+export const cityList = (spell) => fetch('/merchant-api/area/city_list?spell='+spell,{},'get');
 
 /**
  * 店铺详情
  */
 
-export const shopDetail = (id) => fetch('/api/merchant/personal/store_detail?id='+id,{},'get');
+export const shopDetail = (id) => fetch('/merchant-api/personal/store_detail?id='+id,{},'get');
 
+/**
+ * 热门标签
+ */
+
+export const brand = (id) => fetch('/merchant-api/brand',{},'get');
 
 
 /**
@@ -813,3 +819,22 @@ export const turnIntegral = (getUserName,integral) => fetch('/api/v3/integralOrd
 */
 
 export const queryProductId = () => fetch('/api/v3/integralOrder/queryProductId',{},'get')
+
+/** 
+ * 图片上传获取认证
+ * */ 
+
+export const getpolicy = () => fetch('/oss_api/oss/policy?endPoint='+endPoint,{},'get')
+
+/**
+ * 图片上传
+ * */
+
+export const uploadimg = (formdata) => fetch(bucketName()+'.oss-cn-beijing.aliyuncs.com',formdata,'post')
+
+
+
+/**
+ * 旧的上传图片
+ */
+export const upload = (fil) => fetch('https://api-test.au32.cn/v3/recycleOrder/uploadRecyclePic2',fil,'post');
