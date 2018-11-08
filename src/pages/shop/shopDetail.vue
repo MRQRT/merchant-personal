@@ -50,7 +50,7 @@
             <div class="appointment">
                 <div class="tel">
                     <span class="icon"></span>
-                    <span>{{detailInfo.phone}}</span>
+                    <span>{{phone}}</span>
                 </div>
                 <div class="btn">
                     <div class="" v-if="detailInfo.phone=='未知'">立即预约</div>
@@ -87,10 +87,10 @@ import { MessageBox,Toast } from 'mint-ui';
                 },
                 detailInfo:{
                     imageUrls:[{},{},{},{}],
-                    mark:'我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银首饰等等等等等等，我卖黄金、收黄金、维修各种金银',
+                    mark:'',
                     star:90,
-                    address:'北京市北京市北京市北京市北京市',
-                    phone:17600568656,
+                    address:'',
+                    phone:'',
                     lat:'',
                     lng:'',
                     label:['回购','存金'],
@@ -101,7 +101,17 @@ import { MessageBox,Toast } from 'mint-ui';
             headTop,
         },
         computed: {
-
+            phone(){ // 如果有2个电话号码只取第一个
+                var mobile = this.detailInfo.phone;
+                if(!mobile){
+                    return
+                }
+                if(mobile.indexOf(',')!=-1){
+                    return mobile.split(',')[0]
+                }else{
+                    return mobile;
+                }
+            }
         },
         watch:{
 
@@ -127,6 +137,7 @@ import { MessageBox,Toast } from 'mint-ui';
                     if(action=='confirm'){
                         var url = window.location.href;
                         window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url+'&className='+this.className+'&name='+this.name;
                     }
                 })
             },

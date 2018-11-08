@@ -28,7 +28,7 @@
             </div>
             <!-- 列表部分 -->
             <!-- :style="{height: wrapperHeight + 'px' }" -->
-            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :class="{'miniPadding':isSearch}" >
+            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :class="{'miniPadding':isSearch}" :style="{height: wrapperHeight + 'px' }">
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
