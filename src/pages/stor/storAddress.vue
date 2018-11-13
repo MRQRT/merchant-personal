@@ -100,7 +100,7 @@
 			  bankImgUrl: '',
 			    bankName: '',
 			  bankCardNo: '',//用户银行卡号
-	      hasUploadPhoto: '',//已经上传了手持身份证 true表示没有上传，false表示上传了手持身份证
+	      hasUploadPhoto: false,//已经上传了手持身份证 true表示没有上传，false表示上传了手持身份证
 	                 url: '',//上传手持身份证图片后返回的地址
 	           bank_show: false,
 	                 rem: '',
@@ -173,7 +173,7 @@
 					this.RECORD_USERINFO(res.content)
 					this.realnamed=res.content.realnamed
 					if(this.userInfo){
-							this.userInfo.isHandheldIDphoto==1?this.hasUploadPhoto=0:this.hasUploadPhoto=1
+							// this.userInfo.isHandheldIDphoto==1?this.hasUploadPhoto=0:this.hasUploadPhoto=1
 						}
 				}
 			},
@@ -424,7 +424,6 @@
 	            	removeStore('obj','session')
 					removeStore('obj2','session')
 					this.set_initRulerData(Number(10))//将ruler的初始值设置为10
-
 					var tg=getStore('tg','session')?getStore('tg','session'):'#';
 					var browser=getStore('browser','local')?getStore('browser','local'):'#';
 					var yw=getStore('yw','session')?getStore('yw','session'):"#";
@@ -441,7 +440,6 @@
 						const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url,source)
 						this.fanhuidata(res);
 					}
-    	        	// const res = await addRecycleOrder(bb,this.realName,this.telNum,this.addr,isCash,this.url)
             	}
 			},
 			//提交订单返回处理

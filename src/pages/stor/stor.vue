@@ -424,7 +424,6 @@
 				var that = this,
 					uuid = uuidv1(),
 					random = Math.random().toString(36).substr(2);
-
 				let fd = new FormData();
 				fd.append('name',item.name)
 				fd.append('key',this.param_policy.dir+'/'+random+'-'+uuid+'-'+item.name)
@@ -432,10 +431,8 @@
 				fd.append('OSSAccessKeyId',this.param_policy.accessKeyId)
 				fd.append('signature',this.param_policy.signature)
 				fd.append('success_action_status','200')
-
 				fd.append('file',item.file);
 				that.uploadImage(fd,item,uuid,random);
-
 				// var img_size=item.size
 				// if(img_size/1024/1024>3){
 				// 	//进行压缩

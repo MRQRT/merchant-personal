@@ -262,13 +262,13 @@
                         position: 'bottom',
                         duration: 3000
                     });
-                     this.errTimes++;
+                    this.errTimes++;
                 }
             },
             resetPicCaptcha(){  //判断登入错误次数
-                    this.picCodeVisible=true;//输入图片验证码区域出现
-                    this.picture=''
-                    this.reloadCaptcha()
+                this.picCodeVisible=true;//输入图片验证码区域出现
+                this.picture=''
+                this.reloadCaptcha()
             },
             async goToNext(){   //点击登录
                 if(this.$refs.login.classList.contains('noActived')) {return;}//登录按钮未高亮不能进行下一步
@@ -313,22 +313,21 @@
                         localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
                         this.$router.push({path:'/makePwd'})
                     }else if(reObj.code=='-1004'){
-                            Toast({
-                                message: reObj.message,
-                                position: 'bottom',
-                                duration: 3000
-                            });
-                            this.errTimes++;//验证码错误次数加1
-                            if(this.errTimes>=3){
-                                this.resetPicCaptcha();
-                            }
+                        Toast({
+                            message: reObj.message,
+                            position: 'bottom',
+                            duration: 3000
+                        });
+                        this.errTimes++;//验证码错误次数加1
+                        if(this.errTimes>=3){
+                            this.resetPicCaptcha();
+                        }
                     }else if(reObj.code=='-1006'){ //手机号格式错误
-                            Toast({
-                                message: reObj.message,
-                                position: 'bottom',
-                                duration: 3000
-                            });
-
+                        Toast({
+                            message: reObj.message,
+                            position: 'bottom',
+                            duration: 3000
+                        });
                     }else if(reObj.code=='100'){
                         localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
                         //登录成功后获取用户基本概况
@@ -378,7 +377,6 @@
                         this.pwdWrong=true;
                         return;
                     }
-
                     const res=await login(this.account,this.password)
                     if(res.code==100){
                         localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
@@ -422,7 +420,6 @@
                         if(this.errTimes>=3){
                             this.resetPicCaptcha();
                         }
-
                     }
                 }
             },
@@ -490,13 +487,16 @@
                 this.close=true;
             }
         },
-
     }
 </script>
 
 <style scoped>
     .loginIn{
         padding-bottom: 40px;
+        background-color:#fff;
+        position: relative;
+        border:1px solid #fff;
+        min-height: 100vh;
     }
     input{
         caret-color: #333333;
@@ -614,6 +614,7 @@
         color:#333333;
         outline-style: none;
         padding-left:.22rem;
+        background-color:#fff;
     }
     #inputPwd.visibleYN{
         background-color: transparent;
