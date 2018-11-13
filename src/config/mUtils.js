@@ -20,7 +20,6 @@ export function bucketName(){
     return bucketName
 }
 
-
 /**
  * 图片压缩
  */
