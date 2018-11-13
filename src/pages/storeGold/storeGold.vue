@@ -829,7 +829,6 @@ img{
 	width:100%;
 	height:1rem;
 	line-height: 1rem;
-	/* margin-bottom: .3rem; */
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -934,7 +933,6 @@ img{
 	background-color: #fff;
 	width: 6.9rem;
 	height: 4rem;
-	/* margin-top: .6rem; */
 	display: inline-block;
 }
 .resume{
@@ -1186,21 +1184,12 @@ img{
 /*pc页面部分*/
 .pc_first{
 	width:100%;
-	/* height: 1080px; */
 	position:relative;
 	overflow: hidden;
-	/* display: flex;
-	justify-content: center; */
-	/* background: url('../../images/pcbg.png') no-repeat top center; */
-	/* background-size: 100% 100%; */
 }
 .pc_first>img{
 	width: 100%;
 	z-index: 99;
-	/* height: 1080px; */
-	/* position: absolute;
-	left:50%;
-	margin-left:-960px; */
 }
 .pc_banner_content{
 	width:1200px;
@@ -1228,9 +1217,6 @@ img{
 	margin-right:15px;
 }
 .cjtlogo{
-	/* width:134px;
-	height:37px;
-	float:left; */
 	width:286px;
 	height:37px;
 }
@@ -1293,11 +1279,8 @@ img{
 .pc_second{
 	width:100%;
 	height: 800px;
-	/* padding-top:340px; */
 	background-color: #FBFBFB;
 	position: relative;
-	/* background: url('../../images/lou.png') no-repeat center;
-	background-size: 100%; */
 }
 .pc_second>img{
 	width:100%;
@@ -1316,7 +1299,6 @@ img{
 	min-width: 569px;
 	float: left;
 	text-align: left
-	/* margin-right: 76px; */
 }
 
 .pc_report_right{
@@ -1367,7 +1349,6 @@ img{
 	min-width: 1200px;
 	font-size:15px;
 	color:#333;
-	/* margin-bottom:35px; */
 	letter-spacing: 2px;
 }
 .pc_third_img{
@@ -1420,8 +1401,6 @@ img{
 	width: 275px;
 	height: 300px;
 	position: relative;
-	/* margin-left:15px;
-	margin-right:15px; */
 }
 .pc_per_module_bg{
 	width: 275px;
@@ -1472,8 +1451,6 @@ img{
 	justify-content: space-between;
 }
 .pc_fifth_img{
-	/* margin-left: 15px;
-	margin-right:15px; */
 	width:184px;
 	height:80px;
 	border:1px solid #E1E1E1;
@@ -1490,7 +1467,6 @@ img{
 	height:480px;
 	background:rgba(249,249,249,1);
 	padding-top:90px;
-	/* margin-bottom:60px; */
 }
 .pc_sixth_desc{
 	margin-top:40px;
@@ -1502,7 +1478,6 @@ img{
 	line-height: 35px;
 	color:#666;
 	margin-top:60px;
-	/* padding:0 20% 0 20%; */
 }
 .pc_footer{
 	width: 100%;
@@ -1514,7 +1489,6 @@ img{
 }
 .pc_footer_content{
 	display: inline-block;
-	/* width: 1002px; */
 	width: 1200px;
 	height: 180px;
 	margin:0 auto;

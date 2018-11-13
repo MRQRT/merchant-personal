@@ -1,8 +1,8 @@
 <template>
 	<div class="makePassword">
 		<head-top class="head-top" id="head_top" headTitle='设置登录密码'>
-			<img slot='head_goback' class="head_goback" src='../../images/back.png' @click="$router.go(-1)">
-            <router-link slot="custom" class="custom" to="/storAddress" tag="span">跳过</router-link>
+			<img slot='head_goback' class="head_goback" src='../../images/back.png' @click="$router.push('/storeGold')">
+            <router-link slot="custom" class="custom" to="/storeGold" tag="span">跳过</router-link>
         </head-top>
         <!--温馨提示区-->
         <p class="orangeTip"><img src="../../images/yellowGTH.png">设置密码后,您就可以使用手机号+密码登录</p>
@@ -57,7 +57,7 @@
                             position: 'bottom',
                             duration: 3000
                         });
-                        this.$router.push({path:'/storAddress'})
+                        this.$router.push({path:'/storeGold'})
                     }else{
                         Toast({
                             message: makePwdRes.message,
