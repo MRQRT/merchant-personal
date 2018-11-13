@@ -65,7 +65,7 @@ import foot from '@/components/footer/footGuid'
             this.getCurrent();
             var that=this;
             /*五秒刷新一次*/
-            setInterval(function(){
+            window.queryPrice = setInterval(function(){
                 that.getCurrent();
             },5000)
         },
@@ -142,8 +142,24 @@ import foot from '@/components/footer/footGuid'
                     this.redCircle=false;
                 }
             },
-            $route(){
+            $route(to,from){
                 this.messageBoxRemove();
+				//只在首页和卖金页请求实时金价
+				if(to.path=='/storeGold' || to.path=='/stor'){
+                    if(window.queryPrice){
+                        clearInterval(window.queryPrice);
+                    }
+                    var that=this;
+                    /*5秒刷新一次*/
+                    window.queryPrice = setInterval(function(){
+                        that.getCurrent();
+                    },5000)
+                }else{
+                    if(window.queryPrice){
+                        clearInterval(window.queryPrice);
+                    }
+                }
+
                 if(this.$route.path=="/buy"){  //买金页软键盘弹起按钮顶起处理
                    this.className='buyBtn';
                    this.setResize()

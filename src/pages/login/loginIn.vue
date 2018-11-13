@@ -262,167 +262,172 @@
                         position: 'bottom',
                         duration: 3000
                     });
-                     this.errTimes++;
+                    this.errTimes++;
                 }
             },
             resetPicCaptcha(){  //判断登入错误次数
-                    this.picCodeVisible=true;//输入图片验证码区域出现
-                    this.picture=''
-                    this.reloadCaptcha()
+                this.picCodeVisible=true;//输入图片验证码区域出现
+                this.picture=''
+                this.reloadCaptcha()
             },
-            async goToNext(){   //点击登录
+            goToNext(){   //点击登录
                 if(this.$refs.login.classList.contains('noActived')) {return;}//登录按钮未高亮不能进行下一步
                 if(this.errTimes>=3){
                     this.resetPicCaptcha();
                     return;
                 }
                 if(this.fast){  //快捷登录
-                    var reg=/\d{6}/;
-                    var code=this.code,
-                        phone=this.num;
-                    if(!reg.test(code)){
-                        this.codeWrong=true;
+                    this.fast_login();
+                }else{  
+                    this.password_login();
+                }
+            },
+            //快捷登录
+            async fast_login(){
+                var reg=/\d{6}/;
+                var code=this.code,
+                    phone=this.num;
+                if(!reg.test(code)){
+                    this.codeWrong=true;
+                    return;
+                }
+                var invited = sessionStorage.getItem('invitedBy');
+                var tg=getStore('tg','session')?getStore('tg','session'):'#';
+                var browser=getStore('browser','local')?getStore('browser','local'):'#';
+                var yw=getStore('yw','session')?getStore('yw','session'):"#";
+                if(getStore('yw','session')!='undefined'&&getStore('yw','session')!=null&&getStore('yw','session')!=''){//业务类型为非自营
+                    let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
+                    if(invited){
+                        var reObj = await quickLogin3(phone,code,invited,source);
+                    }else{
+                        var reObj = await quickLogin1(phone,code,source);
+                    }
+                }else{//业务类型为自营
+                    if(isMiniProgram()=='YES'){ //如果是小程序
+                        var source='ZYPT'+'_'+tg+'_'+'MINIPROGRAM'+'_'+browser;
+                    }else{
+                        var source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+                    }
+                    if(invited){
+                        var reObj = await quickLogin3(phone,code,invited,source);
+                    }else{
+                        var reObj = await quickLogin1(phone,code,source);
+                    }
+                }
+                //用户未设置登录密码
+                if(reObj.code=='-1005'){
+                    this.RECORD_TOKEN(reObj.content)
+                    localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
+                    this.$router.push({path:'/makePwd'})
+                }else if(reObj.code=='-1004'){
+                    Toast({
+                        message: reObj.message,
+                        position: 'bottom',
+                        duration: 3000
+                    });
+                    this.errTimes++;//验证码错误次数加1
+                    if(this.errTimes>=3){
+                        this.resetPicCaptcha();
+                    }
+                }else if(reObj.code=='-1006'){ //手机号格式错误
+                    Toast({
+                        message: reObj.message,
+                        position: 'bottom',
+                        duration: 3000
+                    });
+                }else if(reObj.code=='100'){
+                    localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
+                    //登录成功后获取用户基本概况
+                    this.userInforma();
+                    //登入成功后去获取进入登入页的上一页,再跳转回去(带上对应的参数)
+                    this.RECORD_TOKEN(reObj.content)
+                    var path="", id="";
+                    if(this.$route.query.redirect){
+                        path=this.$route.query.redirect
+                    }
+                    if(this.$route.query.from){
+                        path=this.$route.query.from
+                    }
+                    if(this.$route.query.id){
+                        id=this.$route.query.id
+                    }
+                    if(path!='' && id==''){
+                        this.$router.push({
+                            path:path
+                        })
                         return;
                     }
-                    var invited = sessionStorage.getItem('invitedBy');
-                    var tg=getStore('tg','session')?getStore('tg','session'):'#';
-                    var browser=getStore('browser','local')?getStore('browser','local'):'#';
-                    var yw=getStore('yw','session')?getStore('yw','session'):"#";
-                    if(getStore('yw','session')!='undefined'&&getStore('yw','session')!=null&&getStore('yw','session')!=''){//业务类型为非自营
-                        let source=yw+'_'+tg+'_'+'H5'+'_'+browser;
-                        if(invited){
-                            var reObj = await quickLogin3(phone,code,invited,source);
-                        }else{
-                            var reObj = await quickLogin1(phone,code,source);
-                        }
-                    }else{//业务类型为自营
-                        if(isMiniProgram()=='YES'){ //如果是小程序
-							var source='ZYPT'+'_'+tg+'_'+'MINIPROGRAM'+'_'+browser;
-						}else{
-							var source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
-						}
-                        if(invited){
-                            var reObj = await quickLogin3(phone,code,invited,source);
-                        }else{
-                            var reObj = await quickLogin1(phone,code,source);
-                        }
-                    }
-                    //用户未设置登录密码
-                    if(reObj.code=='-1005'){
-                        this.RECORD_TOKEN(reObj.content)
-                        localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
-                        this.$router.push({path:'/makePwd'})
-                    }else if(reObj.code=='-1004'){
-                            Toast({
-                                message: reObj.message,
-                                position: 'bottom',
-                                duration: 3000
-                            });
-                            this.errTimes++;//验证码错误次数加1
-                            if(this.errTimes>=3){
-                                this.resetPicCaptcha();
+                    if(path!='' && id!=''){
+                        this.$router.push({
+                            path:path,
+                            query: {
+                                id: id
                             }
-                    }else if(reObj.code=='-1006'){ //手机号格式错误
-                            Toast({
-                                message: reObj.message,
-                                position: 'bottom',
-                                duration: 3000
-                            });
-
-                    }else if(reObj.code=='100'){
-                        localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
-                        //登录成功后获取用户基本概况
-                        this.userInforma();
-                        //登入成功后去获取进入登入页的上一页,再跳转回去(带上对应的参数)
-                        this.RECORD_TOKEN(reObj.content)
-                        var path="", id="";
-                        if(this.$route.query.redirect){
-                            path=this.$route.query.redirect
-                        }
-                        if(this.$route.query.from){
-                            path=this.$route.query.from
-                        }
-                        if(this.$route.query.id){
-                            id=this.$route.query.id
-                        }
-                        if(path!='' && id==''){
-                            this.$router.push({
-                                path:path
-                            })
-                            return;
-                        }
-                        if(path!='' && id!=''){
-                            this.$router.push({
-                                path:path,
-                                query: {
-                                    id: id
-                                }
-                            })
-                            return
-                        }
-                        this.$router.push({path:'/storeGold'})
-                    }else{
-                        Toast({
-                            message: reObj.message,
-                            position: 'bottom',
-                            duration: 3000
-                        });
+                        })
+                        return
                     }
-                }else{  //密码登录
-                    var regPwd=/^[0-9a-zA-Z]{6,20}$/;
-                    if(this.rightShow_2!=1){
-                        this.accWrong=true;
+                    this.$router.push({path:'/storeGold'})
+                }else{
+                    Toast({
+                        message: reObj.message,
+                        position: 'bottom',
+                        duration: 3000
+                    });
+                }
+            },
+            //密码登录
+            async password_login(){
+                var regPwd=/^[0-9a-zA-Z]{6,20}$/;
+                if(this.rightShow_2!=1){
+                    this.accWrong=true;
+                    return;
+                }
+                if(!regPwd.test(this.password)){
+                    this.pwdWrong=true;
+                    return;
+                }
+                const res=await login(this.account,this.password)
+                if(res.code==100){
+                    localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
+                    //登录成功后获取用户基本概况
+                    this.userInforma();
+                    //登入成功后去获取进入登入页的上一页,再跳转回去(带上对应的参数)
+                    this.RECORD_TOKEN(res.content)
+                    var path="",id="";
+                    if(this.$route.query.redirect){
+                        path=this.$route.query.redirect
+                    }
+                    if(this.$route.query.from){
+                        path=this.$route.query.from
+                    }
+                    if(this.$route.query.id){
+                        id=this.$route.query.id
+                    }
+                    if(path!=''&&id==''){
+                        this.$router.push({
+                            path:path
+                        })
                         return;
                     }
-                    if(!regPwd.test(this.password)){
-                        this.pwdWrong=true;
-                        return;
+                    if(path!=''&&id!=''){
+                        this.$router.push({
+                            path:path,
+                            query: {
+                                id: id
+                            }
+                        })
+                        return
                     }
-
-                    const res=await login(this.account,this.password)
-                    if(res.code==100){
-                        localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
-                        //登录成功后获取用户基本概况
-                        this.userInforma();
-                        //登入成功后去获取进入登入页的上一页,再跳转回去(带上对应的参数)
-                        this.RECORD_TOKEN(res.content)
-                        var path="",id="";
-                        if(this.$route.query.redirect){
-                            path=this.$route.query.redirect
-                        }
-                        if(this.$route.query.from){
-                            path=this.$route.query.from
-                        }
-                        if(this.$route.query.id){
-                            id=this.$route.query.id
-                        }
-                        if(path!=''&&id==''){
-                            this.$router.push({
-                                path:path
-                            })
-                            return;
-                        }
-                        if(path!=''&&id!=''){
-                            this.$router.push({
-                                path:path,
-                                query: {
-                                    id: id
-                                }
-                            })
-                            return
-                        }
-                        this.$router.push({path:'/storeGold'})
-                    }else{
-                        Toast({
-                            message: res.message,
-                            position: 'bottom',
-                            duration: 3000
-                        });
-                        this.errTimes++;//验证码错误次数加1
-                        if(this.errTimes>=3){
-                            this.resetPicCaptcha();
-                        }
-
+                    this.$router.push({path:'/storeGold'})
+                }else{
+                    Toast({
+                        message: res.message,
+                        position: 'bottom',
+                        duration: 3000
+                    });
+                    this.errTimes++;//验证码错误次数加1
+                    if(this.errTimes>=3){
+                        this.resetPicCaptcha();
                     }
                 }
             },
@@ -490,13 +495,16 @@
                 this.close=true;
             }
         },
-
     }
 </script>
 
 <style scoped>
     .loginIn{
         padding-bottom: 40px;
+        background-color:#fff;
+        position: relative;
+        border:1px solid #fff;
+        min-height: 100vh;
     }
     input{
         caret-color: #333333;
@@ -614,6 +622,7 @@
         color:#333333;
         outline-style: none;
         padding-left:.22rem;
+        background-color:#fff;
     }
     #inputPwd.visibleYN{
         background-color: transparent;

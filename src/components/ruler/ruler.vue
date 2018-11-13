@@ -41,7 +41,7 @@ export default{
 	},
 	watch:{
 		gram:function(value){
-			var str = clearNoNum(value,1);
+			var str = clearNoNum(value,2);
 			var that = this;
 			if(Number(str)>10000){
 				setTimeout(function(){
