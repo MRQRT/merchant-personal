@@ -47,7 +47,7 @@ export default{
 				setTimeout(function(){
 					that.gram=10000
 				},500)
-				this.$store.commit('set_rulerData', 5000)
+				this.$store.commit('set_rulerData', '10000')
 			}else if(str==''){
 				this.$store.commit('set_rulerData', '')
 			}else{
