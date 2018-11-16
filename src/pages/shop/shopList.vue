@@ -17,18 +17,19 @@
             </div>
             <div class="cancel" v-show="isSearch" @click="cancelSearch">取消</div>
         </div>
-        <!-- 主体部分 -->
-        <div class="main-cont" v-show="mainContStatus">
-            <!-- 顶部地址部分 -->
-            <div class="current-address" v-show="searchValue==''">
-                <div class="left-text" @click="showCity">当前位置：{{localPosition | setShort}}</div>
-                <div class="right-text" @click="myPosition">
-                    <span class="icon"></span>重新定位
-                </div>
+        <!-- 顶部地址部分 -->
+        <div class="current-address" v-show="searchValue=='' && mainContStatus">
+            <div class="left-text" @click="showCity">当前位置：{{localPosition | setShort}}</div>
+            <div class="right-text" @click="myPosition">
+                <span class="icon"></span>重新定位
             </div>
+        </div>
+        <!-- 主体部分 -->
+        <div class="main-cont" v-show="mainContStatus" :class="{'miniPadding':isSearch}" :style="{height: wrapperHeight + 'px' }">
+
             <!-- 列表部分 -->
             <!-- :style="{height: wrapperHeight + 'px' }" -->
-            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" :class="{'miniPadding':isSearch}" :style="{height: wrapperHeight + 'px' }">
+            <div class="list-wrap" v-show="showStatus" v-if="hasShopStatus" ref="wrapper" >
                 <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false"
                     bottomPullText="上拉加载更多" bottomDropText="松开立即加载" ref="loadmore" class="loadmore">
                     <ul class="shop-list">
@@ -393,7 +394,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             },
         },
         mounted(){
-            this.$refs.wrapper.addEventListener('scroll', this.initTop())
+            window.addEventListener('scroll', this.initTop())
             Indicator.open({
               spinnerType: 'fading-circle'
             });
@@ -621,11 +622,15 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 }
 .main-cont{
     width: 100%;
-    min-height: 100vh;
+    padding-top:1.58rem;
+    /* overflow: scroll; */
+    /* min-height: 100vh; */
     /* padding-top:.88rem; */
-    background-color: #F8F8F8;
+    /* background-color: #F8F8F8; */
+    /* background-color: red; */
+
 }
-.main-cont .current-address{
+.current-address{
     width: 100%;
     height: .6rem;
     line-height: .6rem;
@@ -690,8 +695,8 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 .list-wrap{
     width:100%;
     /* min-height: 100vh; */
-    padding-top:1.58rem;
-    overflow: scroll;
+    /* padding-top:1.58rem; */
+    /* overflow: scroll; */
 }
 .miniPadding{
     padding-top:1.3rem;
