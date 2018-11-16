@@ -136,8 +136,8 @@ import { MessageBox,Toast } from 'mint-ui';
                 }).then((action)=>{
                     if(action=='confirm'){
                         var url = window.location.href;
-                        // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
-                        window.location.href = 'https://cjtsh.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        // window.location.href = 'https://cjtsh.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
                         // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url+'&className='+this.className+'&name='+this.name;
                     }
                 })
