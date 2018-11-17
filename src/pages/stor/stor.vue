@@ -402,7 +402,7 @@
 					}
 					let reader = new FileReader()
 					reader.onload = (e) => {
-						this.$set(item, 'src', e.target.result)  
+						this.$set(item, 'src', e.target.result)
 						if(this.index<9||this.index==9){ //图片已达到6张 不在执行添加上传操作
 							this.files.push(item)
 							this.order.images.push(item)
