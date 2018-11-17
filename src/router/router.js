@@ -93,7 +93,7 @@ const rechargeResult = r => require.ensure([], () => r(require('../pages/recharg
 const benefitNewest = r => require.ensure([], () => r(require('../pages/benefit/benefitNewest.vue')), 'benefitNewest')
 const benefitHelp = r => require.ensure([], () => r(require('../pages/benefit/help.vue')), 'benefitHelp')
 
-const myCoupon = r => require.ensure([], () => r(require('../pages/mine/myCoupon')), 'myCoupon')
+const myCoupon = r => require.ensure([], () => r(require('../pages/ximalaya/myCoupon')), 'myCoupon')
 const spring = r => require.ensure([], () => r(require('../pages/activity/spring')), 'spring')
 
 const jiFen = r => require.ensure([], () => r(require('../pages/myJiFen/jiFen')), 'jiFen')

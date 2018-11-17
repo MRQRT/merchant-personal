@@ -28,6 +28,20 @@
 					<span>选择品牌</span>
 					<span><span style="color:#999999;" v-show="checkBrand">选填</span><span v-show="!checkBrand"  style="color:#333333;">{{order.brandType | brandTran}}</span></span>
 				</content>
+				<!-- 无福利券或未登录情况下显示 -->
+				<div class="welfare">
+					<content class="item_row item_row_4" v-if="!token || !hasWelfare || welfarePrice==''">
+						<span>福利券</span>
+						<span>暂无福利券可用</span>
+					</content>
+					<content class="item_row item_row_5" v-else>
+						<span>福利券</span>
+						<div class="has-coupon">
+							<p>¥{{welfarePrice}}福利券可用</p>
+							<p>以后期检测报告实测毛重为准自动匹配福利券</p>
+						</div>
+					</content>
+				</div>
 				<!-- 选择图片 -->
 				<h3 class="title_two">存金图片<span style="color:#999999;font-size: .28rem;">（请上传实物、发票等相关图片,最多9张）</span></h3>
 				<div class="uploadPho_photo">
@@ -138,6 +152,7 @@
 	export default{
 		data () {
 			return {
+				hasWelfare:true, //有无福利券
 				  checkBrand: true,//黄金品牌是否选择 true没有选择 false选择
 				        show: 0,//存金说明弹框切换的标记
 				clientHeight: document.documentElement.clientHeight,
@@ -211,6 +226,23 @@
 		   recycleParams: state => state.recycleParams,
 		   	   rulerData: state => state.rulerData
 		   }),
+		   //根据输入克重显示可用福利券
+		   welfarePrice(){
+			   var weight = this.order.applyWeight;
+			   if(weight>=200){
+				   return 748
+			   }else if(weight>=100){
+				   return 318
+			   }else if(weight>=50){
+				   return 108
+			   }else if(weight>=20){
+				   return 38
+			   }else if(weight>=10){
+				   return 18
+			   }else{
+				   return ''
+			   }
+		   },
 		},
 		watch:{
 			//监听品牌选择
@@ -588,7 +620,7 @@ td{
 .stor_content{
 	padding: 0;
 	margin-top: .88rem;
-	padding-bottom: .8rem;
+	padding-bottom: 1.2rem;
 }
 /*金价*/
 .price{
@@ -763,6 +795,43 @@ td{
     line-height: 1.1rem;
     padding-right: .4rem;
 }
+
+.item_row_4{
+	width: 92%;
+	height: 1.1rem;
+	margin-left: 4%;
+}
+.item_row_4>span:nth-of-type(2){
+	float: right;
+	color: #EDA835;
+    display: inline-block;
+    height: 1.1rem;
+    line-height: 1.1rem;
+}
+.item_row_5{
+	width: 92%;
+	margin-left: 4%;
+	height: 1.4rem;
+	padding:.4rem 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+.item_row_5>span{
+	height: 1.4rem;
+	line-height: normal;
+}
+.item_row_5 .has-coupon{
+	float: right;
+	color: #999;
+	font-size: .24rem;
+	text-align: right;
+}
+.item_row_5 .has-coupon>p:nth-of-type(1){
+	color: #EDA835;
+	font-size: .28rem;
+}
+
 /*上传图片*/
 .uploadPho_photo{
 	width: 100%;
