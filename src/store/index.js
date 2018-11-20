@@ -30,6 +30,7 @@ const state = {
 	rulerData: '10', //标尺刻度初始值为10，标尺刻度
 	initRulerData:10, //标尺默认的值
 	currentPosition:getStore('currentPosition','session'), // 用户当前位置
+	activityId:'2c93808f672a09f801672b45e5d40014',      //优惠券接口所需id
 }
 
 export default new Vuex.Store({

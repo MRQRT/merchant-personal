@@ -17,16 +17,16 @@
 				<div class="right-wrap">
 					<div class="right-info">
 						<h4>存金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
-						<p class="date" v-if="item.expireTime">有效期至<a href="javascript:void(0);">{{item.expireTime | changeTime}}</a></p>
+						<p class="date" v-if="item.expireTime">有效期至<a href="javascript:void(0);">{{item.expireTime}}</a></p>
 						<p class="use-limit">*仅限存金回购业务使用</p>
 					</div>
 					<!-- 使用情况 -->
 					<div class="useStatus">
 						<div class="use-rightNow" v-if="item.status==0 && !invalid(item.expireTime)" @click="$router.push({path:'/stor',query:{from:'coupon'}})">立即使用</div>
 						<!-- 已使用 -->
-						<div class="cup-has-used" v-if="item.status==1 || item.status==2"></div>
+						<div class="cup-has-used" v-else-if="item.status==1 || item.status==2"></div>
 						<!-- 已失效 -->
-						<div class="cup-invalid" v-if="invalid(item.expireTime)"></div>
+						<div class="cup-invalid" v-else-if="invalid(item.expireTime)"></div>
 					</div>
 				</div>
 			</section>
@@ -52,7 +52,7 @@
     					<!-- 左侧说明 -->
     					<div class="right-info">
     						<h4>存金实测毛重≥{{item.useLimit}}g</h4>
-    						<p class="date">有效期至{{item.expireTime | changeTime}}</p>
+    						<p class="date">有效期至{{item.expireTime}}</p>
     						<p class="use-limit">*仅限存金回购业务使用</p>
     					</div>
                     </li>
@@ -71,7 +71,7 @@
 <script>
 	import headTop from '../../components/header/head.vue';
     import { couponsList } from '@/service/getData'
-    import { getStore } from '@/config/mUtils'
+    import { setStore,getStore } from '@/config/mUtils'
     import {mapState} from 'vuex'
 	import { MessageBox,Toast,Popup} from 'mint-ui'
 
@@ -115,7 +115,6 @@
 			}
 		},
         created(){
-            // this.token ? this.coupons() : '';
         },
         computed:{
             ...mapState([
@@ -123,7 +122,7 @@
             ])
         },
 		mounted() {
-          	this.token ? this.queryCoupons() : '';
+          	this.token ? this.couponsList() : '';
 		},
         filters:{
            formatTime(val){
@@ -156,6 +155,16 @@
 			},
 			// 请求福利券信息
 			async couponsList(){
+				var tg=getStore('tg','session')?getStore('tg','session'):'#';
+				var browser=getStore('browser','local')?getStore('browser','local'):'#';
+				var yw=getStore('yw','session')?getStore('yw','session'):"#";
+
+				if(getStore('yw','session')!='undefined'&&getStore('yw','session')!=null&&getStore('yw','session')!=''){//业务类型为非自营
+					var source = yw+'_'+tg+'_'+'H5'+'_'+browser;
+				}else{
+					var source='ZYPT'+'_'+tg+'_'+'H5'+'_'+browser;
+				}
+
 				var res = await couponsList(this.activityId,source)
 				if(res.code==100){
 					if(res.content.length==0){
@@ -163,6 +172,7 @@
 					}else{
 						this.hasCoupon = true;
 						this.couponList = res.content;
+						setStore('couponStatus',true,'session')
 					}
 				}
 			},

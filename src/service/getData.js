@@ -16,7 +16,7 @@ export const coupons = (tradeType) => fetch('/api/v3/lottery/mine/coupons?tradeT
  * 获取福利券数组
  */
 
-export const couponsList = (activityId,source) => fetch('/api/v3/lottery/join?activityId='+activityId+'&source='+source,{},'get')
+export const couponsList = (activityId,source) => fetch('/api/v3/lottery/join',{'activityId':activityId,'source':source},'post')
 
 
 /**
