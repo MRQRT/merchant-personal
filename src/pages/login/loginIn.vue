@@ -318,7 +318,12 @@
                 if(reObj.code=='-1005'){
                     this.RECORD_TOKEN(reObj.content)
                     localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
-                    this.$router.push({path:'/makePwd'})
+                    this.$router.push({
+                        path:'/makePwd',
+                        query:{
+                            redirect:'/myCoupon'
+                        }    
+                    })
                 }else if(reObj.code=='-1004'){
                     Toast({
                         message: reObj.message,

@@ -57,7 +57,11 @@
                             position: 'bottom',
                             duration: 3000
                         });
-                        this.$router.push({path:'/storeGold'})
+                        if(this.$route.query.redirect){
+                            this.$router.push(this.$route.query.redirect);
+                        }else{
+                            this.$router.push({path:'/storeGold'});
+                        }
                     }else{
                         Toast({
                             message: makePwdRes.message,
