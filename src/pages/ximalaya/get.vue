@@ -59,10 +59,12 @@
 </template>
 <script>
 import {mapState} from 'vuex'
+import {couponsList} from '@/service/getData'
     export default {
     	data(){
             return{
                 cover_show:false,
+                activityId:'2c93808f672a09f801672b45e5d40014',
             }
         },
         mounted(){
@@ -74,9 +76,21 @@ import {mapState} from 'vuex'
         },
         methods: {
             //立即领取
-            get_voucher(){
-                if(this)
-                this.$router.push('/myCoupon');
+            async get_voucher(){
+                if(this.token){//有token进行优惠券领取，没有进行领取
+                        if(sessionStorage.getItem('couponStatus')=='true'){
+                            this.cover_show=true
+                        }else{
+                            this.$router.push('/myCoupon');
+                        }
+                }else{
+                    this.$router.push({
+                        path:'/loginIn',
+                        query:{
+                            redirect:'/myCoupon',
+                        }
+                    });
+                }
             },
             //去估价
             to_estima(){
