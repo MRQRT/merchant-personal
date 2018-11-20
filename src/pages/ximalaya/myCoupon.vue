@@ -70,7 +70,7 @@
 
 <script>
 	import headTop from '../../components/header/head.vue';
-    import { queryCoupons,coupons } from '@/service/getData'
+    import { couponsList } from '@/service/getData'
     import { getStore } from '@/config/mUtils'
     import {mapState} from 'vuex'
 	import { MessageBox,Toast,Popup} from 'mint-ui'
@@ -78,16 +78,8 @@
 	export default {
 		data(){
 			return {
-				CouponList:[],
 				hasCoupon:true,
 				popupVisible:true,  //奖品弹窗
-                searchCondition: {  //分页属性
-                    pageNo: 1,
-                   	pageSize: 600
-                },
-                userId:'',  //用户id
-                counpon1:[],
-                counpon2:[],
 				couponList:[
 					{
 						'amount':18,
@@ -131,17 +123,7 @@
             ])
         },
 		mounted() {
-           var t=this;
-           // setTimeout(function(){
-           //    t.$nextTick(function(){
-			// 	if(t.couponList.length==0){
-           //          t.hasCoupon=false;
-           //          var hgt=window.innerHeight;
-           //          // document.querySelector('.noCoupon').style.height=hgt-t.$refs.topHead.$el.offsetHeight+'px';
-           //      }
-           //   })
-           // },1000)
-
+          	this.token ? this.queryCoupons() : '';
 		},
         filters:{
            formatTime(val){
@@ -172,30 +154,15 @@
 					return false
 				}
 			},
-            async queryCoupons(){  //请求优惠券信息
-                this.userId=getStore("token","local").split("_")[0];
-                var res1=await queryCoupons(this.searchCondition.pageNo,this.searchCondition.pageSize,this.userId,"1");
-                if(res1.code==100){
-                    if(res1.content.total==0) return;
-
-                    this.counpon1=res1.content.list;
-
-                }
-                var res2=await queryCoupons(this.searchCondition.pageNo,this.searchCondition.pageSize,this.userId,"2");
-                if(res2.code==100){
-                    if(res2.content.total==0) return;
-                    this.counpon2=res2.content.list;
-                }
-            },
 			// 请求福利券信息
-			async coupons(){
-				var res = await coupons(4)
+			async couponsList(){
+				var res = await couponsList(this.activityId,source)
 				if(res.code==100){
 					if(res.content.length==0){
 						this.hasCoupon = false;
 					}else{
 						this.hasCoupon = true;
-						this.couponList = res.content.all;
+						this.couponList = res.content;
 					}
 				}
 			},
@@ -204,15 +171,7 @@
 			}
 		},
         watch:{
-            counpon2(val){
-				this.CouponList=this.CouponList.concat(val);
-            },
-            counpon1(val){
-				this.CouponList=this.CouponList.concat(val);
-            },
-            token(){
-                this.token ? this.queryCoupons() : '';
-            }
+
         },
         components:{
             headTop
@@ -434,6 +393,7 @@
 	.welfare-prize .title{
 		color: #fff;
 		font-size: .3rem;
+		padding-left:.5rem;
 		font-family:PingFangSC-Medium;
 	}
 	.welfare-prize ul{

@@ -105,9 +105,9 @@
     <!-- 福利券 -->
     <div class="welfare">
         <span>福利券<b @click="showCoupon()"></b></span>
-        <span class="no-use" v-if="orderDetail.status==1 || orderDetail.status==5 ||orderDetail.status==9 || orderDetail.status==10">存金检验环节，系统将按照您的实测毛重自动匹配</span>
-        <span class="no-use" v-else-if="(orderDetail.status==6 || orderDetail.status==8) && couponAmount===''">暂无福利券可用</span>
-        <span class="price" v-else-if="(orderDetail.status==6 || orderDetail.status==8) && couponAmount!=''" style="font-size:.28rem">¥{{couponAmount}}</span>
+        <span class="no-use" v-if="orderDetail.status==1 || orderDetail.status==5 ||orderDetail.status==9 || orderDetail.status==10">未使用</span>
+        <span class="no-use" v-else-if="(orderDetail.status==6 || orderDetail.status==8) && couponAmount===''">未使用</span>
+        <span class="price" v-else-if="(orderDetail.status==6 || orderDetail.status==8) && couponAmount!=''">¥{{couponAmount}}</span>
         <span v-else>存金检验环节，系统将按照您的实测毛重自动匹配</span>
     </div>
     <div class="distance"></div>
@@ -199,7 +199,7 @@
   export default{
     data(){
       return {
-        couponAmount:38,  // 福利券金额
+        couponAmount:'',  // 福利券金额
         orderId: null,//存金订单Id
         stateShow:false,//状态默认不显示(延迟渲染)
         orderDetail:{},//存金订单
@@ -371,7 +371,7 @@
       },
       // 点击问号显示福利券说明
       showCoupon(){
-          var html = '<div style="font-size:.26rem;text-align:left;color:#333;padding-left:.2rem">系统已根据存金检验结果自动为您匹配最优福利券。</div><div style="font-size:.26rem;text-align:left;color:#333;padding-left:.2rem">福利券会在卖金时为您加价。</div>'
+          var html = '<div style="font-size:.26rem;text-align:left;color:#333;padding-left:.2rem">系统将会根据存金检验结果自动为您匹配最优福利券，当您确认检测报告时，福利金额将会发放到您的银行卡中或黄金管家账户余额。</div>'
           MessageBox({
             title: '提示',
             message:html ,
@@ -404,6 +404,9 @@
         if (res.code == 100) {
           this.orderDetail = res.content
           this.isCash=res.content.isCash
+          if(res.content.couponAmount){ //福利券金额
+            this.couponAmount = res.content.couponAmount;
+          }
           if(this.isCash==4) this.cashAmount=res.content.cashAmount
           var arrDocument=res.content.recycleDocumentVos;
           for(var i=0,length=arrDocument.length;i<length;i++){
@@ -1053,15 +1056,15 @@
   }
 </style>
 <style>
-  .mint-popup{
+  .storOrderDet .mint-popup{
     width:6.7rem;
     border-radius: 10px;
   }
-  .mint-popup#popupVisibleReport{
+  .storOrderDet .mint-popup#popupVisibleReport{
     width:6.7rem;
     height:auto;
   }
-  .mint-button:after{
+   .storOrderDet .mint-button:after{
     border-radius: 2px;
   }
 </style>

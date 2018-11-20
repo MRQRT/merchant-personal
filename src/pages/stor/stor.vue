@@ -144,7 +144,7 @@
 	import headTop from '@/components/header/head.vue'
 	import ruler from '@/components/ruler/ruler.vue'
 	import { clearNoNum, formatDate,isMiniProgram,check } from '../../config/mUtils.js'
-	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary,upload,getpolicy,uploadimg } from '@/service/getData.js'
+	import { queryRecycleProduct,queryRecycleOrderDetail,queryChildDictionary,upload,getpolicy,uploadimg,coupons } from '@/service/getData.js'
 	import { mapState,mapMutations } from 'vuex'
 	import { MessageBox, Toast, Indicator,Popup } from 'mint-ui'
 	import { getRem,setStore,bucketName,compress } from "@/config/mUtils"
@@ -152,7 +152,7 @@
 	export default{
 		data () {
 			return {
-				hasWelfare:true, //有无福利券
+				hasWelfare:false, //有无福利券
 				  checkBrand: true,//黄金品牌是否选择 true没有选择 false选择
 				        show: 0,//存金说明弹框切换的标记
 				clientHeight: document.documentElement.clientHeight,
@@ -217,6 +217,10 @@
 				this.set_initRulerData(this.order.applyWeight)
 
 				// this.estimatePrice = this.order.applyWeight * this.currentPrice;
+			}
+			//登录状态下请求福利券
+			if(this.token){
+				this.coupons();
 			}
 		},
 		computed:{
@@ -326,6 +330,17 @@
 					}else{
 						this.order.checkType = res.content[res.content.length-1].name//加载选中第一个的name值
 						this.order.productId = res.content[res.content.length-1].id//加载选中第一个的id值
+					}
+				}
+			},
+			// 查询有无福利券
+			async coupons(){
+				var res = await coupons(4);//4--交易类型为存金
+				if(res.code==100){
+					if(res.content.usable.length==0){
+						this.hasWelfare = false;
+					}else{
+						this.hasWelfare = true;
 					}
 				}
 			},

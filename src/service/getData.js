@@ -7,6 +7,19 @@ var endPoint  = 'oss-cn-beijing.aliyuncs.com';
 // const gold = 'https://openapi.au32.cn'
 
 /**
+ * 获取有无福利券
+ */
+
+export const coupons = (tradeType) => fetch('/api/v3/lottery/mine/coupons?tradeType='+tradeType,{},'get')
+
+/**
+ * 获取福利券数组
+ */
+
+export const couponsList = (activityId,source) => fetch('/api/v3/lottery/join?activityId='+activityId+'&source='+source,{},'get')
+
+
+/**
  * 店铺首页
  */
 
@@ -820,9 +833,9 @@ export const turnIntegral = (getUserName,integral) => fetch('/api/v3/integralOrd
 
 export const queryProductId = () => fetch('/api/v3/integralOrder/queryProductId',{},'get')
 
-/** 
+/**
  * 图片上传获取认证
- * */ 
+ * */
 
 export const getpolicy = () => fetch('/oss_api/oss/policy?endPoint='+endPoint,{},'get')
 
