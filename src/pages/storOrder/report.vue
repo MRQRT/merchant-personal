@@ -25,7 +25,7 @@
             <p><span>检测说明：</span><span>{{orderDetail.verifyRemark || '--'}}</span></p>
             <p><span>检测结果：</span><span>{{orderDetail.verifyResult==0?'通过':'不通过'}}</span></p>
 
-            <div class="warming-tip" v-show="orderDetail.couponAmount">* 温馨提示：若您的存金方式为直接变现，福利金额将会在您确认检测报告后连同回收总额一起发放到您的银行卡中，若您的存金方式为存入克重，福利金额将会发放到您的黄金管家账户余额中。</div>
+            <div class="warming-tip" v-show="orderDetail.couponAmount">* 温馨提示：若您的存金方式为直接变现，福利金额将会在您确认检测报告后连同卖金总额一起发放到您的银行卡中，若您的存金方式为存入克重，福利金额将会发放到您的黄金管家账户余额中。</div>
 
             <img :src="checkImg" alt="检测报告" preview="1">
 

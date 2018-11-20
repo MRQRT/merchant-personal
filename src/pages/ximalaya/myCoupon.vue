@@ -17,7 +17,7 @@
 				<div class="right-wrap">
 					<div class="right-info">
 						<h4>存金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
-						<p class="date" v-if="item.expireTime">有效期至<a href="javascript:void(0);">{{item.expireTime}}</a></p>
+						<p class="date" v-if="item.expireTime">有效期至<a href="javascript:void(0);">{{item.expireTime | changeTime}}</a></p>
 						<p class="use-limit">*仅限存金回购业务使用</p>
 					</div>
 					<!-- 使用情况 -->
@@ -46,12 +46,12 @@
                     <li v-for="(item,index) in couponList" :key="index">
                         <!-- 右侧金额 -->
     					<div class="left-price">
-    						<p class="price"><span>¥</span>{{item.amount}}</p>
+    						<p class="price"><span>¥</span>{{parseFloat(item.amount)}}</p>
     						<p class="name">福利券</p>
     					</div>
     					<!-- 左侧说明 -->
     					<div class="right-info">
-    						<h4>存金实测毛重≥{{item.useLimit}}g</h4>
+    						<h4>存金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
     						<p class="date">有效期至{{item.expireTime}}</p>
     						<p class="use-limit">*仅限存金回购业务使用</p>
     					</div>
@@ -70,7 +70,7 @@
 
 <script>
 	import headTop from '../../components/header/head.vue';
-    import { couponsList } from '@/service/getData'
+    import { couponsList,coupons } from '@/service/getData'
     import { setStore,getStore } from '@/config/mUtils'
     import {mapState} from 'vuex'
 	import { MessageBox,Toast,Popup} from 'mint-ui'
@@ -82,7 +82,7 @@
 				popupVisible:true,  //奖品弹窗
 				couponList:[
 					{
-						'amount':18,
+						'amount':'18.00',
 						'useLimit':10,
 						'expireTime':'2018-12-02 12:13:14',
 						'status':0,
@@ -130,15 +130,19 @@
            },
 		   /* 改变时间样式(月-日 时-分) */
 		   changeTime(val){
-			   var arr=val.split(' ');
+			   if(val.indexOf(":") != -1){
+				   var arr=val.split(' ');
 
-		       var timeArr1=arr[0].split('-');
-		       timeArr1=timeArr1.join('-');
+			       var timeArr1=arr[0].split('-');
+			       timeArr1=timeArr1.join('-');
 
-		       var timeArr2=arr[1].split(':');
-		       timeArr2.pop();
-		       timeArr2=timeArr2.join(':');
-		       return timeArr1;
+			       var timeArr2=arr[1].split(':');
+			       timeArr2.pop();
+			       timeArr2=timeArr2.join(':');
+			       return timeArr1;
+			   }else{
+				   return val
+			   }
 		   }
         },
 		methods:{
@@ -172,7 +176,22 @@
 					}else{
 						this.hasCoupon = true;
 						this.couponList = res.content;
-						setStore('couponStatus',true,'session')
+						setStore('couponStatus',true,'local')
+					}
+				}else if(res.code==8002){
+					this.popupVisible = false;
+					this.coupons();
+				}
+			},
+			// 如已经领取过，在进入优惠券页面，则调用存金优惠券接口
+			async coupons(){
+				var res = await coupons(4)
+				if(res.code==100){
+					if(res.content.length==0){
+						this.hasCoupon = false;
+					}else{
+						this.hasCoupon = true;
+						this.couponList = res.content.usable;
 					}
 				}
 			},
