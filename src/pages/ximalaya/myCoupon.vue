@@ -79,7 +79,7 @@
 		data(){
 			return {
 				hasCoupon:true,
-				popupVisible:true,  //奖品弹窗
+				popupVisible:false,  //奖品弹窗
 				couponList:[
 					{
 						'amount':'18.00',
@@ -174,6 +174,7 @@
 					if(res.content.length==0){
 						this.hasCoupon = false;
 					}else{
+						this.popupVisible = true;
 						this.hasCoupon = true;
 						this.couponList = res.content;
 						setStore('couponStatus',true,'local')
@@ -218,11 +219,11 @@
 <style scoped>
     .coupon-container {
     	background-color: #fff;
-        padding-top:0.88rem;
+        /* padding-top:0.88rem; */
     }
     .coupon-container .couponBox{
     	min-height: 100vh;
-     	padding:.3rem .3rem .2rem;
+     	padding:1.2rem .3rem .2rem;
 		background-color: #F5F5F5;
      }
 	 /* 福利券 */
