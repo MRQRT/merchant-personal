@@ -8,7 +8,7 @@
        <section class="Voucher">
            <p class="voucher-title">组合福利券</p>
            <p class="voucher-time">有效期：2018/11/28--2018/12/28</p>
-           <div class="get_button"><span>立即领取</span></div>
+           <div class="get_button"><span @click="get_voucher">立即领取</span></div>
        </section>
        <!-- icon -->
        <section class="icon">
@@ -27,7 +27,7 @@
         </section>
         <!-- 估价 -->
         <section class="estima_button">
-            <div>立即免费估价</div>
+            <div @click="to_estima">立即免费估价</div>
         </section>
         <!-- activity-des -->
         <section class="activity-des">
@@ -51,11 +51,14 @@
             <div class="pop_button_outer">
                 <div class="pop_button_inner" @click="to_estima">立即前往</div>
             </div>
+            <div class="closepopup">
+                <img @click="closepop" src="../../images/closepop.png" alt="">
+            </div>
         </section>
     </div>
 </template>
-
 <script>
+import {mapState} from 'vuex'
     export default {
     	data(){
             return{
@@ -65,11 +68,23 @@
         mounted(){
         },
         computed: {
-
+            ...mapState([
+                'token'
+            ])
         },
         methods: {
+            //立即领取
+            get_voucher(){
+                if(this)
+                this.$router.push('/myCoupon');
+            },
+            //去估价
             to_estima(){
-                
+                this.$router.push('/stor');
+            },
+            //关闭弹框
+            closepop(){
+                this.cover_show=false
             }
         },
 
@@ -295,7 +310,7 @@ ul li:nth-child(4):before{
     margin-top:-1.35rem;
     padding-top:.74rem;
 }
-.popup img{
+.popup>img{
     width:1.82rem;
     height:1.4rem;
     position: absolute;
@@ -324,5 +339,15 @@ ul li:nth-child(4):before{
     background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1));
     border-radius:.35rem;
     margin-top:.23rem;
+}
+.closepopup{
+    position: absolute;
+    left:50%;
+    margin-left:-.32rem;
+    bottom: -1.25rem;
+}
+.closepopup img{
+    width: .64rem;
+    opacity: 1;
 }
 </style>
