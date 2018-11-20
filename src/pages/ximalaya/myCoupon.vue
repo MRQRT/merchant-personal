@@ -182,6 +182,7 @@
 				}else if(res.code==8002){
 					this.popupVisible = false;
 					this.coupons();
+					setStore('couponStatus',true,'local')
 				}
 			},
 			// 如已经领取过，在进入优惠券页面，则调用存金优惠券接口
