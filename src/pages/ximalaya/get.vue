@@ -78,11 +78,11 @@ import {couponsList} from '@/service/getData'
             //立即领取
             async get_voucher(){
                 if(this.token){//有token进行优惠券领取，没有进行领取
-                        if(localStorage.getItem('couponStatus')=='true'){
-                            this.cover_show=true
-                        }else{
-                            this.$router.push('/myCoupon');
-                        }
+                    if(localStorage.getItem('couponStatus')=='true'){
+                        this.cover_show=true
+                    }else{
+                        this.$router.push('/myCoupon');
+                    }
                 }else{
                     this.$router.push({
                         path:'/loginIn',
@@ -309,7 +309,7 @@ ul li:nth-child(4):before{
     background-color:rgba(0,000,0000,.5);
     z-index: 1000;
     position: fixed;
-    top:0; 
+    top:0;
 }
 .popup{
     width:4.90rem;
