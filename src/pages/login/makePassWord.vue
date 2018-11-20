@@ -2,11 +2,10 @@
 	<div class="makePassword">
 		<head-top class="head-top" id="head_top" headTitle='设置登录密码'>
 			<img slot='head_goback' class="head_goback" src='../../images/back.png' @click="$router.push('/storeGold')">
-            <router-link slot="custom" class="custom" to="/storeGold" tag="span">跳过</router-link>
+            <span slot="custom" class="custom" @click="cross">跳过</span>
         </head-top>
         <!--温馨提示区-->
         <p class="orangeTip"><img src="../../images/yellowGTH.png">设置密码后,您就可以使用手机号+密码登录</p>
-        
         <!--设置密码区-->
         <section class="makePwd">
             <div class="core">
@@ -39,6 +38,14 @@
             },
             toggleOpen(){
                 this.close=true;
+            },
+            //跳过
+            cross(){
+                if(this.$route.query.redirect){
+                    this.$router.push(this.$route.query.redirect);
+                }else{
+                    this.$router.push({path:'/storeGold'});
+                }
             },
             async checkPwd(){
                 var regExp=/^[0-9a-zA-Z]{6,20}$/;
