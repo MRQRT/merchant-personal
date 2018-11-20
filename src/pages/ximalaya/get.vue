@@ -78,7 +78,7 @@ import {couponsList} from '@/service/getData'
             //立即领取
             async get_voucher(){
                 if(this.token){//有token进行优惠券领取，没有进行领取
-                        if(sessionStorage.getItem('couponStatus')=='true'){
+                        if(localStorage.getItem('couponStatus')=='true'){
                             this.cover_show=true
                         }else{
                             this.$router.push('/myCoupon');
