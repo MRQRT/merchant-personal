@@ -94,6 +94,7 @@ const benefitNewest = r => require.ensure([], () => r(require('../pages/benefit/
 const benefitHelp = r => require.ensure([], () => r(require('../pages/benefit/help.vue')), 'benefitHelp')
 
 const myCoupon = r => require.ensure([], () => r(require('../pages/ximalaya/myCoupon')), 'myCoupon')
+const get = r => require.ensure([], () => r(require('../pages/ximalaya/get')), 'get')
 const spring = r => require.ensure([], () => r(require('../pages/activity/spring')), 'spring')
 
 const jiFen = r => require.ensure([], () => r(require('../pages/myJiFen/jiFen')), 'jiFen')
@@ -550,6 +551,10 @@ export default [{
         {
             path: '/report',//检测报告
             component: report,
+        },
+        {
+            path:'get',//喜马拉雅获取优惠券页面
+            component: get
         }
     ]
 }];
