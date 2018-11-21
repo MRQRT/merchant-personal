@@ -39,8 +39,8 @@
                         <p class="name">福利券</p>
                     </div>
                     <div class="right-info">
-                        <p>存金实测毛重≥{{parseFloat(orderDetail.couponLimit)}}g</p>
-                        <p>有效期至{{orderDetail.couponTime | changeTime}}</p>
+                        <p>存金实测毛重≥{{parseFloat(orderDetail.couponUseLimit)}}g</p>
+                        <p>有效期至{{orderDetail.couponExpireTime | changeTime}}</p>
                         <!-- <p>*仅限存金回购业务使用</p> -->
                     </div>
                 </div>

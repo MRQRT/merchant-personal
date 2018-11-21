@@ -80,38 +80,39 @@
 			return {
 				hasCoupon:true,
 				popupVisible:false,  //奖品弹窗
-				couponList:[
-					{
-						'amount':'18.00',
-						'useLimit':10,
-						'expireTime':'2018-12-02 12:13:14',
-						'status':0,
-					},
-					{
-						'amount':38,
-						'useLimit':10,
-						'expireTime':'2018-12-02 12:13:14',
-						'status':1,
-					},
-					{
-						'amount':108,
-						'useLimit':10,
-						'expireTime':'2018-12-02 12:13:14',
-						'status':2,
-					},
-					{
-						'amount':318,
-						'useLimit':10,
-						'expireTime':'2018-09-02 12:13:14',
-						'status':0,
-					},
-					{
-						'amount':748,
-						'useLimit':10,
-						'expireTime':'2018-12-02 12:13:14',
-						'status':0,
-					},
-				],
+				couponList:[],
+				// couponList:[
+				// 	{
+				// 		'amount':'18.00',
+				// 		'useLimit':10,
+				// 		'expireTime':'2018-12-02 12:13:14',
+				// 		'status':0,
+				// 	},
+				// 	{
+				// 		'amount':38,
+				// 		'useLimit':10,
+				// 		'expireTime':'2018-12-02 12:13:14',
+				// 		'status':1,
+				// 	},
+				// 	{
+				// 		'amount':108,
+				// 		'useLimit':10,
+				// 		'expireTime':'2018-12-02 12:13:14',
+				// 		'status':2,
+				// 	},
+				// 	{
+				// 		'amount':318,
+				// 		'useLimit':10,
+				// 		'expireTime':'2018-09-02 12:13:14',
+				// 		'status':0,
+				// 	},
+				// 	{
+				// 		'amount':748,
+				// 		'useLimit':10,
+				// 		'expireTime':'2018-12-02 12:13:14',
+				// 		'status':0,
+				// 	},
+				// ],
 			}
 		},
         created(){

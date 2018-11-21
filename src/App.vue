@@ -62,12 +62,14 @@ import foot from '@/components/footer/footGuid'
                 this.redCircle=false;
             }
             /*调用实时金价*/
-            this.getCurrent();
-            var that=this;
+            // this.getCurrent();
+            // var that=this;
             /*五秒刷新一次*/
-            window.queryPrice = setInterval(function(){
-                that.getCurrent();
-            },5000)
+            // window.queryPrice = setInterval(function(){
+            //     that.getCurrent();
+            // },5000)
+			this.isShowQueryPrice();
+
         },
         methods:{
             ...mapMutations([
@@ -126,6 +128,25 @@ import foot from '@/components/footer/footGuid'
                     this.RECORD_CURRENPRICE(price)
                 }
             },
+			//根据路由判断是否发起金价请求
+			isShowQueryPrice(){
+				console.log(this.$route.path)
+				if(this.$route.path=='/storeGold' || this.$route.path=='/stor'){
+					if(window.queryPrice){
+						clearInterval(window.queryPrice);
+					}
+					this.getCurrent();
+					var that=this;
+					/*5秒刷新一次*/
+					window.queryPrice = setInterval(function(){
+						that.getCurrent();
+					},5000)
+				}else{
+					if(window.queryPrice){
+						clearInterval(window.queryPrice);
+					}
+				}
+			}
         },
         watch:{
             hasInterest(val){
@@ -145,20 +166,7 @@ import foot from '@/components/footer/footGuid'
             $route(to,from){
                 this.messageBoxRemove();
 				//只在首页和卖金页请求实时金价
-				if(to.path=='/storeGold' || to.path=='/stor'){
-                    if(window.queryPrice){
-                        clearInterval(window.queryPrice);
-                    }
-                    var that=this;
-                    /*5秒刷新一次*/
-                    window.queryPrice = setInterval(function(){
-                        that.getCurrent();
-                    },5000)
-                }else{
-                    if(window.queryPrice){
-                        clearInterval(window.queryPrice);
-                    }
-                }
+				this.isShowQueryPrice();
 
                 if(this.$route.path=="/buy"){  //买金页软键盘弹起按钮顶起处理
                    this.className='buyBtn';

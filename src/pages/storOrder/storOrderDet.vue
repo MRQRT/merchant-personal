@@ -869,6 +869,7 @@
    }
    .welfare .price{
        color: #EDA835 !important;
+       font-size: .28rem !important;
    }
    .welfare .no-use{
        color: #333 !important;
