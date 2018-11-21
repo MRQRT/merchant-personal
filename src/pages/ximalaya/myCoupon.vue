@@ -122,8 +122,15 @@
                 'token','activityId'
             ])
         },
+		watch:{
+			popupVisible(val){
+				this.fixed();
+			}
+		},
 		mounted() {
           	this.token ? this.couponsList() : '';
+			this.fixed();
+
 		},
         filters:{
            formatTime(val){
@@ -147,6 +154,11 @@
 		   }
         },
 		methods:{
+			//弹窗显示页面固定
+			fixed(){
+				var el = document.body || document.getElementsByTagName('html');
+				el.style.position = this.popupVisible ? 'fixed' : 'static';
+			},
 			// 福利券失效判断
 			invalid(val){
 				var now = Date.parse(new Date());
@@ -202,12 +214,14 @@
 				this.popupVisible = false;
 			}
 		},
-        watch:{
-
-        },
         components:{
             headTop
         },
+		beforeRouteLeave(to,from,next){
+			var el = document.body || document.getElementsByTagName('html');
+			el.style.position = 'static';
+			next()
+		}
 	}
 </script>
 
