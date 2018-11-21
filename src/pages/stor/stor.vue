@@ -153,6 +153,7 @@
 		data () {
 			return {
 				hasWelfare:false, //有无福利券
+				couponLimitArr:[],//可使用福利券克重
 				  checkBrand: true,//黄金品牌是否选择 true没有选择 false选择
 				        show: 0,//存金说明弹框切换的标记
 				clientHeight: document.documentElement.clientHeight,
@@ -233,19 +234,21 @@
 		   //根据输入克重显示可用福利券
 		   welfarePrice(){
 			   var weight = this.order.applyWeight;
-			   if(weight>=200){
-				   return 748
-			   }else if(weight>=100){
-				   return 318
-			   }else if(weight>=50){
-				   return 108
-			   }else if(weight>=20){
-				   return 38
-			   }else if(weight>=10){
-				   return 18
-			   }else{
-				   return ''
-			   }
+			   var limitArr = this.couponLimitArr;
+
+ 			   if(weight>=200 && limitArr.indexOf(200)!=-1){
+ 				   return 748
+ 			   }else if(weight>=100 && limitArr.indexOf(100)!=-1){
+ 				   return 318
+ 			   }else if(weight>=50 && limitArr.indexOf(50)!=-1){
+ 				   return 108
+ 			   }else if(weight>=20 && limitArr.indexOf(20)!=-1){
+ 				   return 38
+ 			   }else if(weight>=10 && limitArr.indexOf(10)!=-1){
+ 				   return 18
+ 			   }else{
+ 				   return ''
+ 			   }
 		   },
 		},
 		watch:{
@@ -335,12 +338,16 @@
 			},
 			// 查询有无福利券
 			async coupons(){
+				var that = this;
 				var res = await coupons(4);//4--交易类型为存金
 				if(res.code==100){
 					if(res.content.usable.length==0){
 						this.hasWelfare = false;
 					}else{
 						this.hasWelfare = true;
+						res.content.usable.forEach(item=>{
+							that.couponLimitArr.push(parseFloat(item.useLimit));
+						})
 					}
 				}
 			},

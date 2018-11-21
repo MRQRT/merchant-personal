@@ -865,7 +865,7 @@
    }
    .welfare>span:nth-of-type(2){
        color: #999;
-       font-size: .11rem;
+       font-size: .24rem;
    }
    .welfare .price{
        color: #EDA835 !important;
