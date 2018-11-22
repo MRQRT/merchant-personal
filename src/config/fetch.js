@@ -64,6 +64,13 @@ axios.interceptors.response.use(
                                 redirect:'/storAddress'
                             }
                         })
+                    }else if(a.$route.path=='/get'){
+                        router.replace({
+                            path:'/loginIn',
+                            query:{
+                                redirect:'/get'
+                            }
+                        })
                     }else{
                         router.replace({path:'/loginIn'})
                     }
