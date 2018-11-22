@@ -117,6 +117,7 @@ import {couponsList} from '@/service/getData'
     min-height:100vh;
     background-image: url("../../images/xbg.jpg");
     background-repeat: no-repeat;
+    background-size: 100% 100%;
     position: relative;
 }
 .logo{
@@ -173,12 +174,17 @@ import {couponsList} from '@/service/getData'
     width:1.5rem;
     height:.5rem;
     line-height: .5rem;
-    background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1));
+    /* background:linear-gradient(-45deg,rgba(221,200,153,1),rgba(192,156,96,1)); */
     border-radius:.25rem;
     font-size:.24rem;
     font-family:"PingFangSC-Regular";
     font-weight:400;
     color:rgba(255,255,255,1);
+    background: -moz-linear-gradient(left, #C09C60 30%, #DDC899 100%);
+    background: -webkit-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -o-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -ms-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: linear-gradient(to right, #C09C60 30%,#DDC899 100%);
 }
 .icon{
     overflow: hidden;
@@ -242,8 +248,13 @@ import {couponsList} from '@/service/getData'
     display: inline-block;
     width:5.6rem;
     height:.88rem;
-    background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1));
+    /* background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1)); */
     border-radius:.44rem;
+    background: -moz-linear-gradient(left, #C09C60 30%, #DDC899 100%);
+    background: -webkit-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -o-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -ms-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: linear-gradient(to right, #C09C60 30%,#DDC899 100%);
 }
 .activity-des{
     width: 100%;
@@ -350,9 +361,14 @@ ul li:nth-child(4):before{
     line-height: .7rem;
     color:#fff;
     text-align:center;
-    background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1));
+    /* background:linear-gradient(-45deg,rgba(192,156,96,1),rgba(221,200,153,1)); */
     border-radius:.35rem;
     margin-top:.23rem;
+    background: -moz-linear-gradient(left, #C09C60 30%, #DDC899 100%);
+    background: -webkit-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -o-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: -ms-linear-gradient(left, #C09C60 30%,#DDC899 100%);
+    background: linear-gradient(to right, #C09C60 30%,#DDC899 100%);
 }
 .closepopup{
     position: absolute;
