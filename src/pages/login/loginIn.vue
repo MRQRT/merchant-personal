@@ -278,7 +278,7 @@
                 }
                 if(this.fast){  //快捷登录
                     this.fast_login();
-                }else{  
+                }else{
                     this.password_login();
                 }
             },
@@ -318,11 +318,12 @@
                 if(reObj.code=='-1005'){
                     this.RECORD_TOKEN(reObj.content)
                     localStorage.setItem('needRender',true)  //依据此变量判断生金需不需要初始化数据
+                    var redirectUrl = this.$route.query.redirect ? this.$route.query.redirect :'';
                     this.$router.push({
                         path:'/makePwd',
                         query:{
-                            redirect:'/myCoupon'
-                        }    
+                            redirect:redirectUrl
+                        }
                     })
                 }else if(reObj.code=='-1004'){
                     Toast({
