@@ -16,9 +16,9 @@
 				<!-- 左侧说明 -->
 				<div class="right-wrap">
 					<div class="right-info">
-						<h4>存金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
+						<h4>黄金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
 						<p class="date" v-if="item.expireTime">有效期至<a href="javascript:void(0);">{{item.expireTime | changeTime}}</a></p>
-						<p class="use-limit">*仅限存金回购业务使用</p>
+						<p class="use-limit">*仅限黄金回收业务使用</p>
 					</div>
 					<!-- 使用情况 -->
 					<div class="useStatus">
@@ -51,9 +51,9 @@
     					</div>
     					<!-- 左侧说明 -->
     					<div class="right-info">
-    						<h4>存金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
+    						<h4>黄金实测毛重≥{{parseFloat(item.useLimit)}}g</h4>
     						<p class="date">有效期至{{item.expireTime}}</p>
-    						<p class="use-limit">*仅限存金回购业务使用</p>
+    						<p class="use-limit">*仅限黄金回收业务使用</p>
     					</div>
                     </li>
                 </ul>

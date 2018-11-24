@@ -20,10 +20,28 @@
 					<span>黄金类型<span class="must">（必填）</span></span>
 					<span class="item_row_1_unchecked" :class="{'item_row_1_checked':order.checkType==item.name}" @click="checkTypeFun(item.id,item.name,index)" v-for="(item, index) in productType" :key="index">{{item.name}}</span>
 				</content>
-				<content class="item_row item_row_2" @click="checkGramFun()">
+				<content class="item_row item_row_2">
 					<span>黄金克重<span class="must">（必填）</span></span>
-					<span>{{order.applyWeight}}克</span>
+					<span>
+						<input type="number" class="input_gram" ref="weightInput" v-model="order.applyWeight" v-focus="focusState" @keyup="checkInput(order.applyWeight+'')" @blur="focusState = false">
+					</span>
+					<span class="right-icon" @click="focusclick">
+						<b>克</b>
+						<b class="edit-icon"></b>
+					</span>
 				</content>
+				<!-- 相关提示 -->
+				<div class="warming-tips" v-if="order.applyWeigh !='' && order.applyWeight<10">
+					<div class="tip-icon"></div>
+					<div class="" >小于10克，需承担运保费</div>
+				</div>
+				<div class="warming-tips" v-else-if="order.applyWeight>10000">
+					<div class="tip-icon"></div>
+					<div class="">
+						<p>最大输入克重为10000克</p>
+						<p>若您有更大需求请联系客服：400-8196-199</p>
+					</div>
+				</div>
 				<content class="item_row item_row_3" @click="checkBrandFun()" style="display:none;">
 					<span>选择品牌</span>
 					<span><span style="color:#999999;" v-show="checkBrand">选填</span><span v-show="!checkBrand"  style="color:#333333;">{{order.brandType | brandTran}}</span></span>
@@ -138,6 +156,17 @@
 				</section>
 			</div>
 		</mt-popup>
+		<!-- 输入克重大于10000克弹窗 -->
+		<mt-popup position="center"  :closeOnClickModal="false" v-model="popupVisible1">
+			<div class="max-limit">
+				<h4>提示</h4>
+				<p>您输入的克重超过最大回收克重10000克，请重新输入回收克重，若您有更大需求请联系客服400-8196-196。</p>
+				<div class="btn">
+					<span @click="closeLimit()">重试</span>
+					<span class="tel"><a href="tel:4008-196-199">联系客服</a></span>
+				</div>
+			</div>
+		</mt-popup>
 	</div>
 </template>
 <script type="text/javascript">
@@ -161,6 +190,7 @@
 				popInputType: 'brand_frame',
  		   stor_content_show: 1,
 		   	    popupVisible: false,//克重的弹出层
+				popupVisible1:false, //最大输入克重限制弹窗
 		         productType: null,
 		    	  brandArray: null,//1、周大福，2、老凤祥，3、菜百，4、周生生，5、周大生，6老庙，7、中国黄金，8、山东黄金，9、中金
 					  brand1: [],//饰品品牌数组
@@ -184,8 +214,18 @@
 					  canAdd: true, //添加图片加号是否显示
 				   isMiniProgram:'',
 				   param_policy:{},//上传图片凭证参数
+				   focusState:false,
 
  			}
+		},
+		directives: {
+		    focus: {
+		      update: function (el, {value}) {
+		        if (value) {
+		          el.focus()
+		        }
+		      }
+		    }
 		},
 		created(){
 		},
@@ -223,6 +263,17 @@
 			if(this.token){
 				this.coupons();
 			}
+			window.onresize = () => {
+                var h=document.documentElement.clientHeight;
+
+                //处理键盘弹出的沉底按钮顶上去的兼容问题
+		    	if((this.screenHeight-h)>50){
+					console.log(1111)
+					document.querySelector('.submit_buyBack_order').style.position = 'relative'
+		    	}else{
+                    document.querySelector('.submit_buyBack_order').style.position = 'fixed'
+		    	}
+            }
 		},
 		computed:{
 			...mapState({
@@ -273,7 +324,7 @@
 				}else{
 					this.canAdd=true
 				}
-			}
+			},
 		},
 		filters:{
 			formatNum(val){
@@ -319,6 +370,18 @@
 					wx.miniProgram.navigateTo({url: '/pages/index/main'})
 				}
 
+			},
+			//点击编辑icon输入框获取焦点
+			focusclick () {
+		      this.focusState = true;
+			  this.$refs.weightInput.focus();
+		  	},
+			// 监听输入克重
+			checkInput(val){
+				this.order.applyWeight = clearNoNum(val,2);
+			},
+			closeLimit(){
+				this.popupVisible1 = false;
 			},
 			//查询存金产品列表
 			async queryRecycleProduct(){
@@ -541,6 +604,10 @@
 					})
 					return
 				}
+				if(this.order.applyWeight>10000){
+					this.popupVisible1 = true;
+					return
+				}
 					// }else if( this.order.images.length==0 ){
 					// 	Toast({
 					// 		message:'至少上传一张存金图片',
@@ -636,6 +703,7 @@ td{
 }
 .write_order{
 	width: 100%;
+	min-height: 100vh;
 	position: relative;
 	background-color: #ffffff;
 }
@@ -792,13 +860,44 @@ td{
 		left: 0;
 	}
 }
-.item_row_2,.item_row_3{
+.item_row_3{
 	margin-left: 4%;
 	width: 92%;
 	background-image: url(../../images/right_jian.png);
 	background-position: right .37rem;
     background-repeat: no-repeat;
     background-size: .15rem;
+}
+.item_row_2{
+	margin-left: 4%;
+	width: 92%;
+}
+.item_row_2 .right-icon {
+	width: .8rem;
+	height: 1.1rem;
+	line-height: 1.1rem;
+	position: absolute;
+	right:-.2rem;
+	top:0;
+	color: #333;
+}
+.item_row_2 .right-icon .edit-icon{
+	display: inline-block;
+	width: .24rem;
+	height: .24rem;
+	background-image: url(../../images/weight-edit.png);
+	background-size: 100%;
+
+}
+.item_row_2 .input_gram{
+	text-align: right;
+	width: 2.5rem;
+	/* height: 1.1rem;
+	line-height: 1.1rem; */
+	font-size: .28rem;
+	color: #333;
+	/* margin-right:-1rem; */
+	padding-right:.7rem;
 }
 .item_row_2>span:first-child,item_row_3>span:first-child{
 	float: left;
@@ -809,7 +908,28 @@ td{
     float: right;
     height: 1.1rem;
     line-height: 1.1rem;
-    padding-right: .4rem;
+    /* padding-right: .4rem; */
+	position: relative;
+}
+.warming-tips{
+	width: 100%;
+	padding:.2rem 0;
+	background-color: #f5f5f5;
+	font-size: .22rem;
+	color: #FF6D39;
+	padding-left:4%;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: flex-start;
+}
+.warming-tips .tip-icon{
+	width: .24rem;
+	height: .24rem;
+	margin-right:.2rem;
+	margin-top:.06rem;
+	background:url('../../images/gantanhao.png') no-repeat;
+	background-size: 100%;
 }
 .item_row_3>span:nth-child(2){
 	float: right;
@@ -932,6 +1052,47 @@ width: 100%;
 }
 .mint-popup.mint-popup-bottom{
 	border-radius: 0;
+}
+.max-limit{
+	width: 4.9rem;
+	color: #333;
+	font-size: .26rem;
+	padding-bottom: 0.01rem;
+}
+.max-limit h4{
+	font-size:.32rem;
+	font-family:PingFangSC-Medium;
+	font-weight:500;
+	text-align: center;
+	padding:.3rem 0 .25rem;
+}
+.max-limit p{
+	padding:0 .25rem;
+	color: #333;
+	font-family:PingFangSC-Light;
+	line-height: .36rem;
+}
+.max-limit .btn{
+	height: .88rem;
+	border-top:1px solid #eee;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin-top:.4rem;
+}
+.max-limit .btn span{
+	width: 50%;
+	text-align: center;
+	height: .88rem;
+	line-height: .88rem;
+	color: #EDA835;
+	font-size: .34rem;
+}
+.max-limit .btn .tel{
+	border-left:1px solid #eee;
+}
+.max-limit .btn .tel a{
+	color: #EDA835;
 }
 .gram_tip{
    	width: 100%;

@@ -1,7 +1,7 @@
 <template>
     <div class="get">
         <!-- logo -->
-       <section class="logo"><img src="../../images/cjt-logo.png" alt=""></section>
+       <section class="logo"><img src="../../images/logo-xmly.png" alt=""></section>
        <!-- title -->
        <section class="title"><img src="../../images/text.png" alt=""></section>
        <!-- Voucher -->
