@@ -263,17 +263,17 @@
 			if(this.token){
 				this.coupons();
 			}
-			window.onresize = () => {
-                var h=document.documentElement.clientHeight;
-
-                //处理键盘弹出的沉底按钮顶上去的兼容问题
-		    	if((this.screenHeight-h)>50){
-					console.log(1111)
-					document.querySelector('.submit_buyBack_order').style.position = 'relative'
-		    	}else{
-                    document.querySelector('.submit_buyBack_order').style.position = 'fixed'
-		    	}
-            }
+			// window.onresize = () => {
+            //     var h=document.documentElement.clientHeight;
+			//
+            //     //处理键盘弹出的沉底按钮顶上去的兼容问题
+		    // 	if((this.screenHeight-h)>50){
+			// 		console.log(1111)
+			// 		document.querySelector('.submit_buyBack_order').style.position = 'relative'
+		    // 	}else{
+            //         document.querySelector('.submit_buyBack_order').style.position = 'fixed'
+		    // 	}
+            // }
 		},
 		computed:{
 			...mapState({

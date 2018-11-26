@@ -50,10 +50,11 @@
             <div class="appointment">
                 <div class="tel">
                     <span class="icon"></span>
-                    <span>{{phone}}</span>
+                    <span v-if="detailInfo.phone=='未知'">4008-196-199</span>
+                    <span v-else>{{phone}}</span>
                 </div>
                 <div class="btn">
-                    <div class="" v-if="detailInfo.phone=='未知'">立即预约</div>
+                    <a class="" href="tel:4008-196-199" v-if="detailInfo.phone=='未知'">立即预约</a>
                     <a :href="'tel:'+ detailInfo.phone" v-else>立即预约</a>
                 </div>
             </div>
