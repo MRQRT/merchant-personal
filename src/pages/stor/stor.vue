@@ -263,17 +263,6 @@
 			if(this.token){
 				this.coupons();
 			}
-			// window.onresize = () => {
-            //     var h=document.documentElement.clientHeight;
-			//
-            //     //处理键盘弹出的沉底按钮顶上去的兼容问题
-		    // 	if((this.screenHeight-h)>50){
-			// 		console.log(1111)
-			// 		document.querySelector('.submit_buyBack_order').style.position = 'relative'
-		    // 	}else{
-            //         document.querySelector('.submit_buyBack_order').style.position = 'fixed'
-		    // 	}
-            // }
 		},
 		computed:{
 			...mapState({
@@ -325,6 +314,14 @@
 					this.canAdd=true
 				}
 			},
+			// 解决键盘弹起底部按钮顶起问题
+			focusState(val){
+				if(val){
+					document.querySelector('.submit_buyBack_order').style.position = 'relative'
+				}else{
+					document.querySelector('.submit_buyBack_order').style.position = 'fixed'
+				}
+			}
 		},
 		filters:{
 			formatNum(val){
@@ -708,9 +705,12 @@ td{
 	background-color: #ffffff;
 }
 .stor_content{
+	width:100%;
+	min-height: 100vh;
 	padding: 0;
-	margin-top: .88rem;
-	padding-bottom: 1.2rem;
+	/* margin-top: .88rem; */
+	padding-top:.88rem;
+	padding-bottom: 1rem;
 }
 /*金价*/
 .price{
