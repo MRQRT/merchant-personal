@@ -142,7 +142,7 @@
 		<!-- 副标题 -->
 		<section class="subtitle">股东背景</section>
 		<div class="gudong">
-			<div style="overflow: scroll;width: 10rem;">
+			<div style="overflow: scroll;width: 12rem;">
 				<div class="pe">
 				<img src="../../images/zhongx.png" alt="">
 				</div>
@@ -150,10 +150,13 @@
 					<img src="../../images/lan.png" alt="">
 				</div>
 				<div class="pe">
-					<img src="../../images/yi.png" alt="">
+					<img src="../../images/zhong2.png" alt="">
 				</div>
 				<div class="pe">
-					<img src="../../images/zhong2.png" alt="">
+					<img src="../../images/360.png" alt="">
+				</div>
+				<div class="pe">
+					<img src="../../images/yi.png" alt="">
 				</div>
 				<div class="pe">
 					<img src="../../images/bai.png" alt="">
