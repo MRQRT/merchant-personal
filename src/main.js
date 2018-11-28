@@ -14,8 +14,25 @@ import vueScrollBehavior from '@/config/vue-scroll-behevior.js'
 import './style/common.css'
 import preview from 'vue-photo-preview'
 import 'vue-photo-preview/dist/skin.css'
-// import './config/vconsole.min.js'
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
 
+const sentyDSN = 'https://61c306951db74a0da51d11e7c34a1d76@sentry.au32.cn/17';
+process.env.NODE_ENV === 'production' && window.location.host == "cjt.au32.cn" && Raven.config(sentyDSN,
+{
+    environment: 'prod'
+},
+{
+    release:'3.1.0'
+})
+.addPlugin(RavenVue, Vue)
+.install()
+if(process.env.NODE_ENV == 'production' && window.location.host == "cjt.au32.cn"){
+    Vue.config.errorHandler = function(err, vm, info) {
+        Raven.captureException(err)
+    }
+}
+// import './config/vconsole.min.js'
 var options={
     fullscreenEl:true, //关闭全屏按钮
     showHideOpacity:true,
