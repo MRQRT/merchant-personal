@@ -39,9 +39,15 @@
                 <p>{{detailInfo.mark}}</p>
             </div>
             <!-- 店铺地址 -->
-            <div class="shop-address">
+            <div class="shop_address_content">
                 <h3>店铺地址</h3>
-                <p>{{detailInfo.address}}</p>
+                <p class="shop_address">
+                    <span>{{detailInfo.provinceName}} | </span>
+                    <span>{{detailInfo.cityName}} | </span>
+                    <span>{{detailInfo.areaName}}</span>
+                </p>
+                <p class="shop_location">{{detailInfo.address}}</p>
+                <p class="shop_nearby">{{detailInfo.nearby}}</p>
                 <div class="position-img" id="container">
                     <img src="" alt="">
                 </div>
@@ -327,32 +333,53 @@ import { MessageBox,Toast } from 'mint-ui';
     color:#F4CB86;
     border:1px solid #F7D38E;
 }
-.shop-instruction, .shop-address{
+.shop-instruction, .shop_address_content{
     width:100%;
     padding:0 .3rem;
     position: relative;
 }
-.shop-instruction h3, .shop-address h3{
+.shop-instruction h3, .shop_address_content h3{
     color: #000;
     font-size: .3rem;
     margin-bottom: .25rem;
 }
-.shop-instruction p, .shop-address p{
+.shop-instruction p, .shop_address_content p{
     color: #666;
     font-size: .26rem;
-    line-height: .4rem;
+    line-height: .5rem;
 }
-.shop-address{
+.shop_address_content{
     margin-top:.6rem;
 }
-.shop-address .position-img{
+.shop_address_content .position-img{
     height: 3.5rem;
     margin-top:.1rem;
     border:1px solid #eee;
 }
-.shop-address .position-img img{
+.shop_address_content .position-img img{
     width: auto;
     height: 100%;
+}
+.shop_address{
+    background-image:url('../../images/address_icon.png');
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: .28rem;
+    padding-left: .5rem;
+}
+.shop_location{
+    background-image:url('../../images/location_icon.png');
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: .28rem;
+    padding-left: .5rem;
+}
+.shop_nearby{
+    background-image:url('../../images/nearby_icon.png');
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    background-size: .28rem;
+    padding-left: .5rem;
 }
 .appointment{
     width:100%;

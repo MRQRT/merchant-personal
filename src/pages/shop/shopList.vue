@@ -275,8 +275,7 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                 })
             },
             initTop(){
-                console.log(11111);
-                console.log(document.body.scrollTop,document.documentElement.scrollTop)
+                // console.log(document.body.scrollTop,document.documentElement.scrollTop)
             	// document.body.scrollTop = 0;
                 // document.documentElement.scrollTop = 0
                 window.scrollTo(0,0);
