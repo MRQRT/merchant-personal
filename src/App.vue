@@ -130,7 +130,6 @@ import foot from '@/components/footer/footGuid'
             },
 			//根据路由判断是否发起金价请求
 			isShowQueryPrice(){
-				console.log(this.$route.path)
 				if(this.$route.path=='/storeGold' || this.$route.path=='/stor'){
 					if(window.queryPrice){
 						clearInterval(window.queryPrice);

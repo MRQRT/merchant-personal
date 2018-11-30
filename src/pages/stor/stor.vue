@@ -23,7 +23,7 @@
 				<content class="item_row item_row_2">
 					<span>黄金克重<span class="must">（必填）</span></span>
 					<span>
-						<input type="number" class="input_gram" ref="weightInput" v-model="order.applyWeight" v-focus="focusState" @keyup="checkInput(order.applyWeight+'')" @blur="focusState = false">
+						<input class="input_gram" ref="weightInput" v-model="order.applyWeight" v-focus="focusState" @keyup="checkInput(order.applyWeight+'')" @blur="focusState=false">
 					</span>
 					<span class="right-icon" @click="focusclick">
 						<b>克</b>
@@ -234,7 +234,6 @@
 			// if(yw){
 			// 	setStore('yw',yw,'local');
 			// }
-
 			this.queryRecycleProduct();//查询存金产品列表
 			this.queryChildDictionary();//查询存金产品品牌
 			this.orderChange();//计算克重
@@ -595,23 +594,20 @@
             //提交订单
             submitBuyBackOrder(){
 				if(this.order.applyWeight==0){
-					Toast({
-						message:'克重不能为0',
-						position: 'bottom'
-					})
+					Toast('克重不能为0')
 					return
 				}
 				if(this.order.applyWeight>10000){
 					this.popupVisible1 = true;
 					return
 				}
-					// }else if( this.order.images.length==0 ){
-					// 	Toast({
-					// 		message:'至少上传一张存金图片',
-					// 		position: 'bottom'
-					// 	})
-					// 	return
-					// }
+				// }else if( this.order.images.length==0 ){
+				// 	Toast({
+				// 		message:'至少上传一张存金图片',
+				// 		position: 'bottom'
+				// 	})
+				// 	return
+				// }
     			if(!this.token){
 					this.RECORD_RECYCLEPARAMS(this.order)
 					this.$router.push({
@@ -885,21 +881,18 @@ td{
 	display: inline-block;
 	width: .24rem;
 	height: .24rem;
-	background-image: url(../../images/weight-edit.png);
+	background-image: url('../../images/weight-edit.png');
 	background-size: 100%;
-
+	background-repeat: no-repeat;
 }
 .item_row_2 .input_gram{
 	text-align: right;
 	width: 2.5rem;
-	/* height: 1.1rem;
-	line-height: 1.1rem; */
 	font-size: .28rem;
 	color: #333;
-	/* margin-right:-1rem; */
-	padding-right:.7rem;
+	margin-right:.7rem;
 }
-.item_row_2>span:first-child,item_row_3>span:first-child{
+.item_row_2>span:first-child,.item_row_3>span:first-child{
 	float: left;
     height: 1.1rem;
     line-height: 1.1rem;
@@ -908,7 +901,6 @@ td{
     float: right;
     height: 1.1rem;
     line-height: 1.1rem;
-    /* padding-right: .4rem; */
 	position: relative;
 }
 .warming-tips{

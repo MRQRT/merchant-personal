@@ -17,6 +17,9 @@ export function bucketName(){
     }else{
         bucketName='https://au32-cjt-p';//正式
     }
+    if(herf.search('8083')>0){
+        bucketName='https://au32-cjt-p-test';
+    }
     return bucketName
 }
 
