@@ -41,7 +41,7 @@
             <!-- 店铺地址 -->
             <div class="shop_address_content">
                 <h3>店铺地址</h3>
-                <p class="shop_address">
+                <p class="shop_address" v-show="detailInfo.provinceName">
                     <span>{{detailInfo.provinceName}} | </span>
                     <span>{{detailInfo.cityName}} | </span>
                     <span>{{detailInfo.areaName}}</span>
@@ -362,21 +362,21 @@ import { MessageBox,Toast } from 'mint-ui';
 }
 .shop_address{
     background-image:url('../../images/address_icon.png');
-    background-position: 0 center;
+    background-position: 0 .09rem;
     background-repeat: no-repeat;
     background-size: .28rem;
     padding-left: .5rem;
 }
 .shop_location{
     background-image:url('../../images/location_icon.png');
-    background-position: 0 center;
+    background-position: 0 .09rem;
     background-repeat: no-repeat;
     background-size: .28rem;
     padding-left: .5rem;
 }
 .shop_nearby{
     background-image:url('../../images/nearby_icon.png');
-    background-position: 0 center;
+    background-position: 0 .09rem;
     background-repeat: no-repeat;
     background-size: .28rem;
     padding-left: .5rem;
