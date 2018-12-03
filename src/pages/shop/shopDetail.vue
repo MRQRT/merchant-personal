@@ -27,7 +27,7 @@
                     <span></span>
                 </div>
                 <div class="labels">
-                    <span v-for="item in detailInfo.label">{{item}}</span>
+                    <span v-for="(item,index) in detailInfo.label" :key="index">{{item}}</span>
                 </div>
                 <!-- 认领按钮 -->
                 <div class="apply-shop" v-if="detailInfo.statusId==1" @click="applyShop">我要认领</div>
@@ -40,7 +40,9 @@
             </div>
             <!-- 店铺地址 -->
             <div class="shop_address_content">
-                <h3>店铺地址</h3>
+                <!-- 地图导航 -->
+                <div class="open_map" @click="open_m_baidumap()">去这里</div>
+                <h3 style="margin-bottom:.7rem;">店铺地址</h3>
                 <p class="shop_address" v-show="detailInfo.provinceName">
                     <span>{{detailInfo.provinceName}} | </span>
                     <span>{{detailInfo.cityName}} | </span>
@@ -102,6 +104,10 @@ import { MessageBox,Toast } from 'mint-ui';
                     lng:'',
                     label:['回购','存金'],
                 },
+                toGo:false,
+                startPoint:'',
+                endPoint:'',
+                city:'',//城市
             }
         },
         components:{
@@ -131,7 +137,41 @@ import { MessageBox,Toast } from 'mint-ui';
                 map.centerAndZoom(point, 15);               // 初始化
                 var marker = new BMap.Marker(point);        // 创建标注
                 map.addOverlay(marker);                     // 将标注添加到地图中
+                this.get_location(map,point);
             },
+            //定位
+            get_location(map,endPoint){
+                var v_this=this;
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function(r){
+                    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                        var mk = new BMap.Marker(r.point);
+                        if(r.point.lng=='116.40387397'&&r.point.lat=='39.91488908'){
+                        }else{
+                        }
+                        v_this.toGo=true
+                        v_this.startPoint=r.point;
+                        v_this.endPoint=endPoint;
+                    }
+                    else {
+                        alert('failed'+this.getStatus());//定位失败，不进行导航；
+                    }
+                });
+            },
+            //打开百度地图
+            open_m_baidumap(){
+                if(!this.toGo){
+                    return false
+                }
+                var start_lat=this.startPoint.lat,
+                start_lng=this.startPoint.lng,
+                endPoint_lat=this.endPoint.lat,
+                endPoint_lng=this.endPoint.lng;
+                // var a = 'http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=webapp.baidu.openAPIdemo';
+                   var a = 'http://api.map.baidu.com/direction?origin=latlng:'+start_lat+','+start_lng+'|name:我家&destination=故宫&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
+                // var a = 'http://api.map.baidu.com/direction?origin=latlng:'+start_lat+','+start_lng+'|name:我的位置&destination=latlng:'+endPoint_lat+','+endPoint_lng+'|name:大雁塔&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
+                window.location.href=a;
+            },  
             // 点击我要认领
             applyShop(){
                 MessageBox({
@@ -157,6 +197,7 @@ import { MessageBox,Toast } from 'mint-ui';
                     this.lat = res.data.lat; // 纬度
                     this.lng = res.data.lng; // 经度
                     this.getMap();           // 展示地图
+                    this.city=res.data.cityName;//
                 }
             }
         },
@@ -390,10 +431,6 @@ import { MessageBox,Toast } from 'mint-ui';
     font-family:PingFangSC-Medium;
     position: fixed;
     bottom: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -ms-flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -435,5 +472,18 @@ import { MessageBox,Toast } from 'mint-ui';
     height: 100%;
     color: #fff;
     font-size: .3rem;
+}
+.open_map{
+    width:1.2rem;
+    height:1.2rem;
+    line-height:1.2rem;
+    text-align:center;
+    position:absolute;
+    background-color: #1414ff;
+    display: inline-block;
+    right: .4rem;
+    top: -.2rem;
+    color: #fff;
+    border-radius: 50%;
 }
 </style>
