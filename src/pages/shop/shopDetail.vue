@@ -149,6 +149,7 @@ import { MessageBox,Toast } from 'mint-ui';
                         if(r.point.lng=='116.40387397'&&r.point.lat=='39.91488908'){
                         }else{
                         }
+                        // alert(r.point.lng)
                         v_this.toGo=true
                         v_this.startPoint=r.point;
                         v_this.endPoint=endPoint;
@@ -167,9 +168,8 @@ import { MessageBox,Toast } from 'mint-ui';
                 start_lng=this.startPoint.lng,
                 endPoint_lat=this.endPoint.lat,
                 endPoint_lng=this.endPoint.lng;
-                // var a = 'http://api.map.baidu.com/direction?origin=latlng:34.264642646862,108.95108518068|name:我家&destination=大雁塔&mode=driving&region=西安&output=html&src=webapp.baidu.openAPIdemo';
-                   var a = 'http://api.map.baidu.com/direction?origin=latlng:'+start_lat+','+start_lng+'|name:我家&destination=故宫&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
-                // var a = 'http://api.map.baidu.com/direction?origin=latlng:'+start_lat+','+start_lng+'|name:我的位置&destination=latlng:'+endPoint_lat+','+endPoint_lng+'|name:大雁塔&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
+                // var a = 'http://api.map.baidu.com/direction?origin=latlng:'+start_lat+','+start_lng+'|name:我的位置&destination=name:'+this.name+'|latlng:'+endPoint_lat+','+endPoint_lng+'&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
+                var a = 'http://api.map.baidu.com/direction?origin=name:我的位置'+'|latlng:'+start_lat+','+start_lng+'&destination=name:'+this.name+'|latlng:'+endPoint_lat+','+endPoint_lng+'&mode=driving&region=北京&output=html&src=webapp.baidu.openAPIdemo';
                 window.location.href=a;
             },  
             // 点击我要认领
@@ -182,9 +182,13 @@ import { MessageBox,Toast } from 'mint-ui';
                     cancelButtonText:'取消',
                 }).then((action)=>{
                     if(action=='confirm'){
-                        var url = window.location.href;
-                        // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
-                        window.location.href = 'https://cjtsh.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        const host = window.location.host;
+                        const url = window.location.href;
+                        if(host.search('test')>0){
+                            window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        }else{
+                            window.location.href = 'https://cjtsh.au32.cn/openshopguide?shopId='+this.id+'&from='+url;
+                        }
                         // window.location.href = 'https://cjtsh-test.au32.cn/openshopguide?shopId='+this.id+'&from='+url+'&className='+this.className+'&name='+this.name;
                     }
                 })
