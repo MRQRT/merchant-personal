@@ -480,14 +480,19 @@ import { MessageBox,Toast } from 'mint-ui';
 .open_map{
     width:1.2rem;
     height:1.2rem;
-    line-height:1.2rem;
+    line-height:1.6rem;
     text-align:center;
     position:absolute;
-    background-color: #1414ff;
+    background-color:#5858ff;
+    background-image:url('../../images/daohang.png');
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center .03rem;
     display: inline-block;
     right: .4rem;
     top: -.2rem;
     color: #fff;
     border-radius: 50%;
+    font-size: .26rem;
 }
 </style>
