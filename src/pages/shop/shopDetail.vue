@@ -41,12 +41,12 @@
             <!-- 店铺地址 -->
             <div class="shop_address_content">
                 <!-- 地图导航 -->
-                <div class="open_map" @click="open_m_baidumap()">去这里</div>
-                <h3 style="margin-bottom:.7rem;">店铺地址</h3>
+                <div class="open_map" @click="open_m_baidumap()"></div>
+                <h3 style="margin-bottom:.5rem;">店铺地址</h3>
                 <p class="shop_address" v-show="detailInfo.provinceName">
-                    <span>{{detailInfo.provinceName}} | </span>
-                    <span>{{detailInfo.cityName}} | </span>
-                    <span>{{detailInfo.areaName}}</span>
+                    <span>{{detailInfo.provinceName}}</span>
+                    <span v-show="detailInfo.cityName">| {{detailInfo.cityName}}</span>
+                    <span v-show="detailInfo.areaName">| {{detailInfo.areaName}}</span>
                 </p>
                 <p class="shop_location">{{detailInfo.address}}</p>
                 <p class="shop_nearby">{{detailInfo.nearby}}</p>
@@ -75,8 +75,7 @@ import headTop from '@/components/header/head.vue'
 import '@/style/swiper.min.css'
 import {shopDetail} from '@/service/getData.js';
 import { MessageBox,Toast } from 'mint-ui';
-
-
+import icons from "../../images/move.png"
 
     export default {
         data(){
@@ -135,9 +134,30 @@ import { MessageBox,Toast } from 'mint-ui';
                 var map = new BMap.Map("container");        // 创建地图实例
                 var point = new BMap.Point(this.lng,this.lat); // 创建点坐标
                 map.centerAndZoom(point, 15);               // 初始化
-                var marker = new BMap.Marker(point);        // 创建标注
-                map.addOverlay(marker);                     // 将标注添加到地图中
+                // var marker = new BMap.Marker(point);        // 创建标注
+                // map.addOverlay(marker);                     // 将标注添加到地图中
+                this.v_mark(map,point.lng,point.lat);
                 this.get_location(map,point);
+            },
+            //地图标记(map，经度，纬度)
+            v_mark(val,val1,val2){
+                var point = new BMap.Point(val1, val2);
+                val.centerAndZoom(point, 17);
+                //自定义标注  1、map  2、经纬度对象
+                this.v_zidingyi_marker(val,point)
+            },
+            //自定义标注
+            v_zidingyi_marker(val,val1){
+                var v_this=this
+                // 创建图标对象
+                var myIcon = new BMap.Icon(icons, new BMap.Size(23, 45), {
+                    anchor: new BMap.Size(10, 25),
+                    // imageOffset: new BMap.Size(0, 0 - index * 25)   // 设置图片偏移
+                });
+                // 创建标注对象并添加到地图
+                var marker = new BMap.Marker(val1, {icon: myIcon});
+                val.addOverlay(marker);
+                val.panTo(val1);
             },
             //定位
             get_location(map,endPoint){
@@ -478,21 +498,12 @@ import { MessageBox,Toast } from 'mint-ui';
     font-size: .3rem;
 }
 .open_map{
-    width:1.2rem;
-    height:1.2rem;
-    line-height:1.6rem;
-    text-align:center;
+    width:2.2rem;
+    height:.9rem;
     position:absolute;
-    background-color:#5858ff;
+    top:0;
+    right:.25rem;
     background-image:url('../../images/daohang.png');
-    background-repeat: no-repeat;
-    background-size: 50%;
-    background-position: center .03rem;
-    display: inline-block;
-    right: .4rem;
-    top: -.2rem;
-    color: #fff;
-    border-radius: 50%;
-    font-size: .26rem;
+    background-size:100%;
 }
 </style>
