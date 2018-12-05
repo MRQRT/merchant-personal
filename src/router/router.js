@@ -16,12 +16,6 @@ const report = r => require.ensure([], () => r(require('../pages/storOrder/repor
 const storAddress = r => require.ensure([], () => r(require('../pages/stor/storAddress.vue')), 'storAddress')
 const modifiRecycleOrder = r => require.ensure([], () => r(require('../pages/stor/modifiRecycleOrder.vue')), 'modifiRecycleOrder')
 
-const buyInvestment = r => require.ensure([], () => r(require('../pages/buyInvestment/buyInvestment.vue')), 'buyInvestment')
-const investmentSetUp = r => require.ensure([], () => r(require('../pages/buyInvestment/setupInvestment.vue')), 'setupInvestment')
-const buyInvestmentDetail = r => require.ensure([], () => r(require('../pages/buyInvestment/investmentDetail.vue')), 'investmentDetail')
-const investmentMess = r => require.ensure([], () => r(require('../pages/buyInvestment/particularSetUp.vue')), 'particularSetUp')
-const investSuc = r => require.ensure([], () => r(require('../pages/buyInvestment/investSuc.vue')), 'investSuc')
-
 const currentAndHistory = r => require.ensure([], () => r(require('../pages/currentAndHistory/currentAndHistory.vue')), 'currentAndHistory')
 const goldPriceOrigin = r => require.ensure([], () => r(require('../pages/currentAndHistory/goldPriceOrigin.vue')), 'goldPriceOrigin')
 const extractGoldList = r => require.ensure([], () => r(require('../pages/extractGold/extractGoldList.vue')), 'extractGoldList')
@@ -58,9 +52,6 @@ const findDelivery = r => require.ensure([], () => r(require('../pages/extractGo
 
 const tranDetail = r => require.ensure([], () => r(require('../pages/tranDetail/tranDetail.vue')), 'tranDetail')
 const tranDetailInfo = r => require.ensure([], () => r(require('../pages/tranDetail/tranDetailInfo.vue')), 'tranDetailInfo')
-
-const investmentOrder = r => require.ensure([], () => r(require('../pages/investmentOrder/investmentOrder.vue')), 'investmentOrder')
-const investmentOrderDetail = r => require.ensure([], () => r(require('../pages/investmentOrder/investmentOrderDetail.vue')), 'investmentOrderDetail')
 
 const commonProblem = r => require.ensure([], () => r(require('../pages/commonProblem/commonProblem.vue')), 'commonProblem')
 
@@ -248,33 +239,6 @@ export default [{
             component: getBackPwd
         },
         {
-            path: '/buyInvestment', //定投列表页
-            component: buyInvestment,
-            // meta:{
-            //     keepAlive:true
-            // }
-        },
-        {
-            path: '/investmentDetail', //定投详情页
-            component: buyInvestmentDetail,
-        },
-        {
-            path: '/investmentSetUp', //定投设置页番内
-            component: investmentSetUp,
-            meta: {
-                    requireAuth: true,
-                    deal:3
-                },
-        },
-        {
-            path: '/investmentMess', //定投设置页番外
-            component: investmentMess
-        },
-        {
-            path: '/investSuc', //定投设置成功页
-            component: investSuc
-        },
-        {
             path: '/uploadIdCard', //上传身份证照片页
             component: uploadIdCard
         },
@@ -352,18 +316,6 @@ export default [{
         {
             path: '/tranDetailInfo',//交易明细详情
             component: tranDetailInfo
-        },
-        {
-            path: '/investmentOrder', //定投订单页
-            component: investmentOrder,
-            meta: {
-                    requireAuth: true,
-                    // keepAlive:true
-            },
-        },
-        {
-            path: '/investmentOrderDetail', //定投订单详情页
-            component: investmentOrderDetail
         },
         {
             path: '/storOrder',//存金订单
