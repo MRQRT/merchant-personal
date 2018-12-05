@@ -25,12 +25,6 @@ const bindBank = r => require.ensure([], () => r(require('../pages/mine/children
 const address = r => require.ensure([], () => r(require('../pages/mine/children/address.vue')), 'address')
 const addAddress = r => require.ensure([], () => r(require('../pages/mine/children/addAddress.vue')), 'addAddress')
 
-const myGold = r => require.ensure([], () => r(require('../pages/myGold/myGold.vue')), 'myGold')
-const sell = r => require.ensure([], () => r(require('../pages/sell/sell.vue')), 'sell')
-const makePrice2 = r => require.ensure([], () => r(require('../pages/sell/children/makePrice2.vue')), 'makePrice2')
-const sellResult = r => require.ensure([], () => r(require('../pages/sell/sellResult.vue')), 'sellResult')
-
-const balance = r => require.ensure([], () => r(require('../pages/balance/balance.vue')), 'balance')
 const myBank = r => require.ensure([], () => r(require('../pages/myBank/myBank.vue')), 'myBank')
 
 const findDelivery = r => require.ensure([], () => r(require('../pages/extractGoldOrder/findDelivery.vue')), 'findDelivery')
@@ -135,13 +129,6 @@ export default [{
             ]
         },
         {
-            path: '/myGold',
-            component: myGold,//我的黄金
-            meta: {
-                    requireAuth: true,
-                },
-        },
-        {
             path: '/arguments', //黄金管家服务协议
             component: arg
         },
@@ -180,33 +167,6 @@ export default [{
         {
             path: '/getBackPwd', //找回密码页
             component: getBackPwd
-        },
-        {
-            path: '/sell', //卖金
-            component: sell,
-            meta: {
-                deal: 2//交易开关判断
-            },
-            children: [
-                {
-                    path: 'makePrice2',
-                    component: makePrice2,
-                    meta: {
-                       deal: 2//交易开关判断
-                    },
-                }
-            ]
-        },
-        {
-            path: '/sellResult', //卖金
-            component: sellResult,
-        },
-        {
-            path: '/balance',//我的现金
-            component: balance,
-            meta: {
-                    requireAuth: true,
-                },
         },
         {
             path: '/myBank', //我的银行卡页
