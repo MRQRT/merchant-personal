@@ -1,6 +1,5 @@
 import App from '../App'
 
-
 const shopList = r => require.ensure([], () => r(require('../pages/shop/shopList.vue')), 'shopList')
 const shopDetail = r => require.ensure([], () => r(require('../pages/shop/shopDetail.vue')), 'shopDetail')
 
@@ -19,15 +18,10 @@ const modifiRecycleOrder = r => require.ensure([], () => r(require('../pages/sto
 const loginIn = r => require.ensure([], () => r(require('../pages/login/loginIn.vue')), 'loginIn')
 const makePwd = r => require.ensure([], () => r(require('../pages/login/makePassWord.vue')), 'makePassWord')
 const getBackPwd = r => require.ensure([], () => r(require('../pages/login/getBackPsw.vue')), 'getBackPsw')
-const uploadPho = r => require.ensure([], () => r(require('../pages/stor/children/uploadPho.vue')), 'uploadPho')
-const writeData = r => require.ensure([], () => r(require('../pages/stor/children/writeData.vue')), 'writeData')
-const storSuc = r => require.ensure([], () => r(require('../pages/stor/children/storSuc.vue')), 'storSuc')
-const uploadIdCard = r => require.ensure([], () => r(require('../pages/uploadIdCard/uploadIdCard.vue')), 'uploadIdCard')
 
 const personHomepage = r => require.ensure([], () => r(require('../pages/mine/personHomepage.vue')), 'personHomepage')
 const authentication = r => require.ensure([], () => r(require('../pages/mine/children/authentication.vue')), 'authentication')
 const bindBank = r => require.ensure([], () => r(require('../pages/mine/children/bindBank.vue')), 'bindBank')
-const safety = r => require.ensure([], () => r(require('../pages/safety/safety.vue')), 'safety')
 const address = r => require.ensure([], () => r(require('../pages/mine/children/address.vue')), 'address')
 const addAddress = r => require.ensure([], () => r(require('../pages/mine/children/addAddress.vue')), 'addAddress')
 
@@ -158,29 +152,6 @@ export default [{
                 deal:4,
                 // keepAlive:true
             },
-            children:[
-                {
-                    path: 'uploadPho',
-                    component: uploadPho,//上传存金照片
-                    meta:{
-                        deal:4
-                    },
-                },
-                {
-                    path: 'storSuc',
-                    component: storSuc,//存金成功
-                    meta:{
-                        deal:4
-                    },
-                },
-                {
-                    path: 'writeData',
-                    component: writeData,//填写信息
-                    meta:{
-                        deal:4
-                    },
-                }
-            ]
         },
         {
             path: '/storAddress',//存金地址
@@ -211,10 +182,6 @@ export default [{
             component: getBackPwd
         },
         {
-            path: '/uploadIdCard', //上传身份证照片页
-            component: uploadIdCard
-        },
-        {
             path: '/sell', //卖金
             component: sell,
             meta: {
@@ -233,10 +200,6 @@ export default [{
         {
             path: '/sellResult', //卖金
             component: sellResult,
-        },
-        {
-            path: '/safety', //安全保障页
-            component: safety
         },
         {
             path: '/balance',//我的现金
