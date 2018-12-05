@@ -1,12 +1,12 @@
 import App from '../App'
 
-const storeGold = r => require.ensure([], () => r(require('../pages/storeGold/storeGold')), 'storeGold')
 
 const shopList = r => require.ensure([], () => r(require('../pages/shop/shopList.vue')), 'shopList')
 const shopDetail = r => require.ensure([], () => r(require('../pages/shop/shopDetail.vue')), 'shopDetail')
 
 const arg = r => require.ensure([], () => r(require('../pages/arguments/arg.vue')), 'arg')
 
+const storeGold = r => require.ensure([], () => r(require('../pages/storeGold/storeGold')), 'storeGold')
 const stor = r => require.ensure([], () => r(require('../pages/stor/stor.vue')), 'stor')
 const storResult = r => require.ensure([], () => r(require('../pages/stor/storResult.vue')), 'storResult')
 const storOrder = r => require.ensure([], () => r(require('../pages/storOrder/storOrder.vue')), 'storOrder')
@@ -16,8 +16,6 @@ const report = r => require.ensure([], () => r(require('../pages/storOrder/repor
 const storAddress = r => require.ensure([], () => r(require('../pages/stor/storAddress.vue')), 'storAddress')
 const modifiRecycleOrder = r => require.ensure([], () => r(require('../pages/stor/modifiRecycleOrder.vue')), 'modifiRecycleOrder')
 
-const currentAndHistory = r => require.ensure([], () => r(require('../pages/currentAndHistory/currentAndHistory.vue')), 'currentAndHistory')
-const goldPriceOrigin = r => require.ensure([], () => r(require('../pages/currentAndHistory/goldPriceOrigin.vue')), 'goldPriceOrigin')
 const extractGoldList = r => require.ensure([], () => r(require('../pages/extractGold/extractGoldList.vue')), 'extractGoldList')
 const productDetail = r => require.ensure([], () => r(require('../pages/extractGold/productDetail.vue')), 'productDetail')
 const fillInOrder = r => require.ensure([], () => r(require('../pages/extractGold/fillInOrder.vue')), 'fillInOrder')
@@ -26,7 +24,7 @@ const extractGoldResult = r => require.ensure([], () => r(require('../pages/extr
 const loginIn = r => require.ensure([], () => r(require('../pages/login/loginIn.vue')), 'loginIn')
 const makePwd = r => require.ensure([], () => r(require('../pages/login/makePassWord.vue')), 'makePassWord')
 const getBackPwd = r => require.ensure([], () => r(require('../pages/login/getBackPsw.vue')), 'getBackPsw')
-const uploadPho = r => require.ensure([], () => r(require('../pages/stor/children/uploadPho.vue')), 'goldPriceOrigin')
+const uploadPho = r => require.ensure([], () => r(require('../pages/stor/children/uploadPho.vue')), 'uploadPho')
 const writeData = r => require.ensure([], () => r(require('../pages/stor/children/writeData.vue')), 'writeData')
 const storSuc = r => require.ensure([], () => r(require('../pages/stor/children/storSuc.vue')), 'storSuc')
 const uploadIdCard = r => require.ensure([], () => r(require('../pages/uploadIdCard/uploadIdCard.vue')), 'uploadIdCard')
@@ -202,14 +200,6 @@ export default [{
         {
             path: '/storResult', //存金
             component: storResult,
-        },
-        {
-            path: '/currentAndHistory', //实时金价页
-            component: currentAndHistory,
-        },
-        {
-            path: '/goldPriceOrigin', //金价来源页
-            component: goldPriceOrigin
         },
         {
             path: '/extractGoldList', //提金列表页
