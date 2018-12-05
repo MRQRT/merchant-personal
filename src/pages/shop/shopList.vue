@@ -719,6 +719,7 @@ input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
 .shop-item .left-img img{
     width:100%;
     height:100%;
+    object-fit:cover;
 }
 .shop-item .right-text{
     width:70%;

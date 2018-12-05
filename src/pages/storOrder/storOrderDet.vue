@@ -735,6 +735,7 @@
   .store_order_info img{
     width:1.2rem;
     height:1.2rem;
+    object-fit:cover;
   }
   .store_order_info .store_info_text{
     width:100%;
@@ -905,6 +906,7 @@
     float:left;
     margin-right:.24rem;
     margin-bottom:.1rem;
+    object-fit:cover;
   }
   .contact_service{
     width:2.2rem;

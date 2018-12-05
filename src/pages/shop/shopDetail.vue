@@ -302,6 +302,7 @@ import icons from "../../images/move.png"
 .main-cont .banner img{
     width: 100%;
     height: 5rem;
+    object-fit:cover;
 }
 .shop-basic-info{
     width: 100%;

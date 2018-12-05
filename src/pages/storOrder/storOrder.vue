@@ -246,6 +246,7 @@ export default{
 .order_container img{
 	width:1.2rem;
 	height:1.2rem;
+	object-fit:cover;
 }
 .order_desc{
 	width:100%;
