@@ -16,11 +16,6 @@ const report = r => require.ensure([], () => r(require('../pages/storOrder/repor
 const storAddress = r => require.ensure([], () => r(require('../pages/stor/storAddress.vue')), 'storAddress')
 const modifiRecycleOrder = r => require.ensure([], () => r(require('../pages/stor/modifiRecycleOrder.vue')), 'modifiRecycleOrder')
 
-const extractGoldList = r => require.ensure([], () => r(require('../pages/extractGold/extractGoldList.vue')), 'extractGoldList')
-const productDetail = r => require.ensure([], () => r(require('../pages/extractGold/productDetail.vue')), 'productDetail')
-const fillInOrder = r => require.ensure([], () => r(require('../pages/extractGold/fillInOrder.vue')), 'fillInOrder')
-const extractGoldResult = r => require.ensure([], () => r(require('../pages/extractGold/extractGoldResult.vue')), 'extractGoldResult')
-
 const loginIn = r => require.ensure([], () => r(require('../pages/login/loginIn.vue')), 'loginIn')
 const makePwd = r => require.ensure([], () => r(require('../pages/login/makePassWord.vue')), 'makePassWord')
 const getBackPwd = r => require.ensure([], () => r(require('../pages/login/getBackPsw.vue')), 'getBackPsw')
@@ -44,8 +39,6 @@ const sellResult = r => require.ensure([], () => r(require('../pages/sell/sellRe
 const balance = r => require.ensure([], () => r(require('../pages/balance/balance.vue')), 'balance')
 const myBank = r => require.ensure([], () => r(require('../pages/myBank/myBank.vue')), 'myBank')
 
-const myExtractOrder = r => require.ensure([], () => r(require('../pages/extractGoldOrder/extractOrder.vue')), 'extractOrder')
-const extractOrderDetail = r => require.ensure([], () => r(require('../pages/extractGoldOrder/extractOrderDetail.vue')), 'extractOrderDetail')
 const findDelivery = r => require.ensure([], () => r(require('../pages/extractGoldOrder/findDelivery.vue')), 'findDelivery')
 
 const tranDetail = r => require.ensure([], () => r(require('../pages/tranDetail/tranDetail.vue')), 'tranDetail')
@@ -202,19 +195,8 @@ export default [{
             component: storResult,
         },
         {
-            path: '/extractGoldList', //提金列表页
-            component: extractGoldList,
-            // meta:{
-            //     keepAlive:true
-            // }
-        },
-        {
             path: '/modifiRecycleOrder',//修改回购订单
             component: modifiRecycleOrder,
-        },
-        {
-            path: '/productDetail', //提金详情页
-            component: productDetail
         },
         {
             path: '/loginIn', //登入页
@@ -231,14 +213,6 @@ export default [{
         {
             path: '/uploadIdCard', //上传身份证照片页
             component: uploadIdCard
-        },
-        {
-            path: '/fillInOrder', //填写订单页
-            component: fillInOrder
-        },
-        {
-            path: '/extractGoldResult', //提金成功页
-            component: extractGoldResult
         },
         {
             path: '/sell', //卖金
@@ -277,19 +251,6 @@ export default [{
              meta: {
                     requireAuth: true,
                 },
-        },
-        {
-            path: '/myExtractOrder', //提金订单页
-            component: myExtractOrder,
-            meta: {
-                    requireAuth: true,
-                    keepAlive:true,
-                    savedPosition:null
-                },
-        },
-        {
-            path: '/extractOrderDetail', //提金订单详情页
-            component: extractOrderDetail
         },
         {
             path: '/findDelivery', //查看物流页
