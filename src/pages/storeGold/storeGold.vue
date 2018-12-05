@@ -353,7 +353,6 @@
 <script>
 import '@/style/swiper.min.css'
 
-import foot from '@/components/footer/footGuid.vue'
 import headTop from '@/components/header/head.vue'
 import { MessageBox,Toast} from 'mint-ui';
 import { queryMessagUnreadCount,shopIndex } from '@/service/getData'
@@ -599,7 +598,6 @@ export default {
 		}
 	},
 	components:{
-		foot,
 		headTop,
 	},
 	activated: function () {

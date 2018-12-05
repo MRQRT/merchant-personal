@@ -196,11 +196,6 @@ if(agent=='And'){
         if(!window.stub) return;
         window.stub.sobotTo(p);
     }
-    //当前处于首页(app双击可返回)
-    window.tellHome=function(p){
-        if(!window.stub) return;
-        window.stub.atHome(p);
-    }
     //打开拍照功能判断权限
     window.openPhoto=function(){
         if(!window.stub) return;
@@ -243,11 +238,6 @@ if(agent=='And'){
     window.openRobot=function(p){
         if(!window.sobotTo) return;
         window.sobotTo(p);
-    }
-    //当前处于首页(app双击可返回)
-    window.tellHome=function(p){
-        if(!window.atHome) return;
-        window.atHome(p);
     }
     //IOS呼叫客服
     window.phone=function(value){
