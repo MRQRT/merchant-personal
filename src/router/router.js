@@ -1,15 +1,11 @@
 import App from '../App'
 
 const storeGold = r => require.ensure([], () => r(require('../pages/storeGold/storeGold')), 'storeGold')
-const buy = r => require.ensure([], () => r(require('../pages/buy/buy.vue')), 'buy')
-const coupon = r => require.ensure([], () => r(require('../pages/buy/children/coupon.vue')), 'coupon')
-const makePrice = r => require.ensure([], () => r(require('../pages/buy/children/makePrice.vue')), 'makePrice')
 
 const shopList = r => require.ensure([], () => r(require('../pages/shop/shopList.vue')), 'shopList')
 const shopDetail = r => require.ensure([], () => r(require('../pages/shop/shopDetail.vue')), 'shopDetail')
 
 const arg = r => require.ensure([], () => r(require('../pages/arguments/arg.vue')), 'arg')
-const physicalArg = r => require.ensure([], () => r(require('../pages/arguments/physicalArg.vue')), 'physicalArg')
 
 const stor = r => require.ensure([], () => r(require('../pages/stor/stor.vue')), 'stor')
 const storResult = r => require.ensure([], () => r(require('../pages/stor/storResult.vue')), 'storResult')
@@ -17,8 +13,6 @@ const storOrder = r => require.ensure([], () => r(require('../pages/storOrder/st
 const storArg = r => require.ensure([], () => r(require('../pages/arguments/storArg.vue')), 'storArg')
 const storOrderDet = r => require.ensure([], () => r(require('../pages/storOrder/storOrderDet.vue')), 'storOrderDet')
 const report = r => require.ensure([], () => r(require('../pages/storOrder/report.vue')), 'report')
-const buyResult = r => require.ensure([], () => r(require('../pages/buy/buyResult.vue')), 'buyResult')
-const receiveCard = r => require.ensure([], () => r(require('../pages/buy/receiveCard.vue')), 'receiveCard')
 const storAddress = r => require.ensure([], () => r(require('../pages/stor/storAddress.vue')), 'storAddress')
 const modifiRecycleOrder = r => require.ensure([], () => r(require('../pages/stor/modifiRecycleOrder.vue')), 'modifiRecycleOrder')
 
@@ -172,43 +166,8 @@ export default [{
                 },
         },
         {
-            path: '/buy', //买金
-            component: buy,
-            meta: {
-                requireAuth: true,
-                deal: 1//交易开关判断
-            },
-            children:[
-                {
-                    path: 'coupon', //优惠券页
-                    component: coupon,
-                    meta:{
-                        deal: 1//交易开关判断
-                    }
-                },
-                {
-                    path: 'makePrice', //价格设置页
-                    component: makePrice,
-                    meta:{
-                        deal: 1//交易开关判断
-                    }
-                }
-            ]
-        },
-        {
-            path: '/receiveCard', //获取金卡
-            component: receiveCard,
-            meta: {
-                    requireAuth: true,
-                },
-        },
-        {
             path: '/arguments', //黄金管家服务协议
             component: arg
-        },
-        {
-            path: '/physicalArg', //黄金管家提金服务协议
-            component: physicalArg
         },
         {
             path: '/stor', //存金
@@ -252,10 +211,6 @@ export default [{
         {
             path: '/storResult', //存金
             component: storResult,
-        },
-        {
-            path:'/buyResult', //买金成功页
-            component: buyResult
         },
         {
             path: '/currentAndHistory', //实时金价页
