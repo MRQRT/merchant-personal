@@ -1,11 +1,6 @@
 import App from '../App'
 
-const buyGold = r => require.ensure([], () => r(require('../pages/buyGold/buyGold')), 'buyGold')
 const storeGold = r => require.ensure([], () => r(require('../pages/storeGold/storeGold')), 'storeGold')
-const benefit = r => require.ensure([], () => r(require('../pages/benefit/benefit')), 'benefit')
-const mine = r => require.ensure([], () => r(require('../pages/mine/mine')), 'mine')
-const infoList = r => require.ensure([], () => r(require('../pages/infoList/infoList.vue')), 'infoList')
-const infoDet = r => require.ensure([], () => r(require('../pages/infoList/children/infoDetail.vue')), 'infoDetail')
 const buy = r => require.ensure([], () => r(require('../pages/buy/buy.vue')), 'buy')
 const coupon = r => require.ensure([], () => r(require('../pages/buy/children/coupon.vue')), 'coupon')
 const makePrice = r => require.ensure([], () => r(require('../pages/buy/children/makePrice.vue')), 'makePrice')
@@ -103,29 +98,11 @@ export default [{
             }
         },
         {
-            path: '/buyGold', //首页
-            component: buyGold,
-            meta:{
-                keepAlive:true
-            }
-        },
-        {
             path: '/storeGold',
             component: storeGold,//导航存金页
             meta:{
                 keepAlive:true
             }
-        },
-        {
-            path: '/benefit',
-            component: benefit,//生金页
-            meta:{
-                keepAlive:true
-            }
-        },
-        {
-            path: '/mine',
-            component: mine//我的页面
         },
         {
             path: '/jiFen',
@@ -193,19 +170,6 @@ export default [{
             meta: {
                     requireAuth: true,
                 },
-        },
-        {
-            path: '/infoList', //资讯列表
-            component: infoList,
-            // meta: {
-            //     keepAlive: true,
-            // },
-            children:[
-                {
-                    path: 'infoDetail', //资讯详情页
-                    component: infoDet
-                }
-            ]
         },
         {
             path: '/buy', //买金
@@ -457,10 +421,6 @@ export default [{
         {
             path: '/storOrderDet',//存金详情
             component: storOrderDet
-        },
-        {
-            path: '/contact', //关于我们之联系方式页
-            component: contact
         },
         {
             path: '/commonProblem', //常见问题页
