@@ -29,18 +29,6 @@ const myBank = r => require.ensure([], () => r(require('../pages/myBank/myBank.v
 
 const findDelivery = r => require.ensure([], () => r(require('../pages/extractGoldOrder/findDelivery.vue')), 'findDelivery')
 
-const tranDetail = r => require.ensure([], () => r(require('../pages/tranDetail/tranDetail.vue')), 'tranDetail')
-const tranDetailInfo = r => require.ensure([], () => r(require('../pages/tranDetail/tranDetailInfo.vue')), 'tranDetailInfo')
-
-const commonProblem = r => require.ensure([], () => r(require('../pages/commonProblem/commonProblem.vue')), 'commonProblem')
-
-const messCenter = r => require.ensure([], () => r(require('../pages/messageCenter/messCenter.vue')), 'messCenter')
-const newsDetail = r => require.ensure([], () => r(require('../pages/messageCenter/newsDetail.vue')), 'newsDetail')
-const setNews = r => require.ensure([], () => r(require('../pages/messageCenter/setNews.vue')), 'setNews')
-const newsList = r => require.ensure([], () => r(require('../pages/messageCenter/newsList.vue')), 'newsList')
-
-const withdraw = r => require.ensure([], () => r(require('../pages/withdraw/withdraw.vue')), 'withdraw')
-const withdrawResult = r => require.ensure([], () => r(require('../pages/withdraw/withdrawResult.vue')), 'withdrawResult')
 const recharge = r => require.ensure([], () => r(require('../pages/recharge/recharge.vue')), 'recharge')
 const rechargeResult = r => require.ensure([], () => r(require('../pages/recharge/rechargeResult.vue')), 'rechargeResult')
 
@@ -180,18 +168,6 @@ export default [{
             component: findDelivery
         },
         {
-            path: '/tranDetail',//交易明细
-            component: tranDetail,
-            meta:{
-                keepAlive:true,
-                savedPosition:null
-            }
-        },
-        {
-            path: '/tranDetailInfo',//交易明细详情
-            component: tranDetailInfo
-        },
-        {
             path: '/storOrder',//存金订单
             component: storOrder,
             meta: {
@@ -202,17 +178,6 @@ export default [{
         {
             path: '/storOrderDet',//存金详情
             component: storOrderDet
-        },
-        {
-            path: '/commonProblem', //常见问题页
-            component: commonProblem
-        },
-        {
-            path: '/messCenter', //消息中心页
-            component: messCenter,
-            meta: {
-                    requireAuth: true,
-                },
         },
         {
             path: '/newsList', //消息列表页newsList
@@ -228,17 +193,6 @@ export default [{
         {
             path: '/newsDetail', //消息中心详情页
             component: newsDetail
-        },
-        {
-            path: '/withdraw',//提现
-            component: withdraw,
-            meta:{
-                deal:12
-            }
-        },
-        {
-            path: '/withdrawResult',//提现结果
-            component: withdrawResult
         },
         {
             path: '/recharge',//充值
