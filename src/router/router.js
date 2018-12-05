@@ -29,14 +29,8 @@ const myBank = r => require.ensure([], () => r(require('../pages/myBank/myBank.v
 
 const findDelivery = r => require.ensure([], () => r(require('../pages/extractGoldOrder/findDelivery.vue')), 'findDelivery')
 
-const recharge = r => require.ensure([], () => r(require('../pages/recharge/recharge.vue')), 'recharge')
-const rechargeResult = r => require.ensure([], () => r(require('../pages/recharge/rechargeResult.vue')), 'rechargeResult')
-
 const myCoupon = r => require.ensure([], () => r(require('../pages/ximalaya/myCoupon')), 'myCoupon')
 const get = r => require.ensure([], () => r(require('../pages/ximalaya/get')), 'get')
-
-const jiFen = r => require.ensure([], () => r(require('../pages/myJiFen/jiFen')), 'jiFen')
-const inviteFriend = r => require.ensure([], () => r(require('../pages/myJiFen/inviteFriend')), 'jiFen')
 
 export default [{
     path: '/',
@@ -55,17 +49,6 @@ export default [{
             meta:{
                 keepAlive:true
             }
-        },
-        {
-            path: '/jiFen',
-            component: jiFen,//我的积分页面
-            meta: {
-                requireAuth: true,
-            }
-        },
-        {
-            path: '/inviteFriend',
-            component: inviteFriend,//邀请好友页面
         },
         {
             path: '/myCoupon',
@@ -178,32 +161,6 @@ export default [{
         {
             path: '/storOrderDet',//存金详情
             component: storOrderDet
-        },
-        {
-            path: '/newsList', //消息列表页newsList
-            component: newsList,
-            // meta:{
-            //     keepAlive:true
-            // }
-        },
-        {
-            path: '/setNews', //消息设置页
-            component: setNews
-        },
-        {
-            path: '/newsDetail', //消息中心详情页
-            component: newsDetail
-        },
-        {
-            path: '/recharge',//充值
-            component: recharge,
-            meta:{
-                deal:11
-            }
-        },
-        {
-            path: '/rechargeResult',//充值结果
-            component: rechargeResult
         },
         {
             path: '/report',//检测报告
