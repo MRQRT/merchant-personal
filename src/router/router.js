@@ -52,7 +52,6 @@ const personHomepage = r => require.ensure([], () => r(require('../pages/mine/pe
 const authentication = r => require.ensure([], () => r(require('../pages/mine/children/authentication.vue')), 'authentication')
 const bindBank = r => require.ensure([], () => r(require('../pages/mine/children/bindBank.vue')), 'bindBank')
 const safety = r => require.ensure([], () => r(require('../pages/safety/safety.vue')), 'safety')
-const aboutUs = r => require.ensure([], () => r(require('../pages/aboutUs/aboutUs.vue')), 'aboutUs')
 const address = r => require.ensure([], () => r(require('../pages/mine/children/address.vue')), 'address')
 const addAddress = r => require.ensure([], () => r(require('../pages/mine/children/addAddress.vue')), 'addAddress')
 
@@ -74,10 +73,6 @@ const tranDetailInfo = r => require.ensure([], () => r(require('../pages/tranDet
 const investmentOrder = r => require.ensure([], () => r(require('../pages/investmentOrder/investmentOrder.vue')), 'investmentOrder')
 const investmentOrderDetail = r => require.ensure([], () => r(require('../pages/investmentOrder/investmentOrderDetail.vue')), 'investmentOrderDetail')
 
-const myAbout = r => require.ensure([], () => r(require('../pages/myAbout/myAbout.vue')), 'myAbout')
-const feedback = r => require.ensure([], () => r(require('../pages/myAbout/feedback.vue')), 'feedback')
-const contact = r => require.ensure([], () => r(require('../pages/myAbout/contact.vue')), 'contact')
-
 const commonProblem = r => require.ensure([], () => r(require('../pages/commonProblem/commonProblem.vue')), 'commonProblem')
 
 const messCenter = r => require.ensure([], () => r(require('../pages/messageCenter/messCenter.vue')), 'messCenter')
@@ -90,16 +85,11 @@ const withdrawResult = r => require.ensure([], () => r(require('../pages/withdra
 const recharge = r => require.ensure([], () => r(require('../pages/recharge/recharge.vue')), 'recharge')
 const rechargeResult = r => require.ensure([], () => r(require('../pages/recharge/rechargeResult.vue')), 'rechargeResult')
 
-const benefitNewest = r => require.ensure([], () => r(require('../pages/benefit/benefitNewest.vue')), 'benefitNewest')
-const benefitHelp = r => require.ensure([], () => r(require('../pages/benefit/help.vue')), 'benefitHelp')
-
 const myCoupon = r => require.ensure([], () => r(require('../pages/ximalaya/myCoupon')), 'myCoupon')
 const get = r => require.ensure([], () => r(require('../pages/ximalaya/get')), 'get')
-const spring = r => require.ensure([], () => r(require('../pages/activity/spring')), 'spring')
 
 const jiFen = r => require.ensure([], () => r(require('../pages/myJiFen/jiFen')), 'jiFen')
 const inviteFriend = r => require.ensure([], () => r(require('../pages/myJiFen/inviteFriend')), 'jiFen')
-const invitePage = r => require.ensure([], () => r(require('../pages/myJiFen/invitePage')), 'invitePage')
 
 export default [{
     path: '/',
@@ -120,10 +110,6 @@ export default [{
             }
         },
         {
-            path: '/spring', //活动
-            component: spring
-        },
-        {
             path: '/storeGold',
             component: storeGold,//导航存金页
             meta:{
@@ -136,14 +122,6 @@ export default [{
             meta:{
                 keepAlive:true
             }
-        },
-        {
-            path: '/benefitNewest',
-            component: benefitNewest //生金页之最新动态
-        },
-        {
-            path: '/benefitHelp',
-            component: benefitHelp//生金攻略页
         },
         {
             path: '/mine',
@@ -159,10 +137,6 @@ export default [{
         {
             path: '/inviteFriend',
             component: inviteFriend,//邀请好友页面
-        },
-        {
-            path: '/invitePage',
-            component: invitePage,//邀请好友打开页面
         },
         {
             path: '/myCoupon',
@@ -418,10 +392,6 @@ export default [{
             component: safety
         },
         {
-            path: '/aboutUs', //了解我们页
-            component: aboutUs
-        },
-        {
             path: '/balance',//我的现金
             component: balance,
             meta: {
@@ -487,14 +457,6 @@ export default [{
         {
             path: '/storOrderDet',//存金详情
             component: storOrderDet
-        },
-        {
-            path: '/myAbout', //关于我们页
-            component: myAbout
-        },
-        {
-            path: '/feedback', //意见反馈页
-            component: feedback
         },
         {
             path: '/contact', //关于我们之联系方式页
