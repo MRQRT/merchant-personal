@@ -297,7 +297,6 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
                     Indicator.close();
                     this.shopList = res.data.content;
                     this.pages=res.data.totalPages;
-                    console.log('this.pages',this.pages);
                     if(this.pages==0){
                         console.log('没有数据')
                         this.hasShopStatus = false;
@@ -401,7 +400,13 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             // this.requestList();
             this.cityList();
             // 计算滚动内容的高度
-    		this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;;
+            this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
+            var iframes = document.getElementsByTagName('iframe');
+            if(iframes&&iframes!=undefined&&iframes.length!=0){
+                for(var i=0;i++;i<iframes.length){
+                    iframes[i].allow="geolocation"
+                }
+            }
         },
         updated(){
           if(this.allLoaded){
