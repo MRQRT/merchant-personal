@@ -401,12 +401,14 @@ import { MessageBox,Toast,Popup,Indicator } from 'mint-ui';
             this.cityList();
             // 计算滚动内容的高度
             this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top;
-            var iframes = document.getElementsByTagName('iframe');
-            if(iframes&&iframes!=undefined&&iframes.length!=0){
-                for(var i=0;i++;i<iframes.length){
-                    iframes[i].allow="geolocation"
+            setTimeout(function(){
+                var iframes = document.getElementsByTagName('iframe');
+                if(iframes&&iframes!=undefined&&iframes.length!=0){
+                    for(var i=0;i++;i<iframes.length){
+                        iframes[i].setAttribute("allow", "geolocation");
+                    }
                 }
-            }
+            },500)
         },
         updated(){
           if(this.allLoaded){
